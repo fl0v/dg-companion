@@ -165,7 +165,7 @@ const resourceTemplate = (code, content) =>
 
 document.querySelector('#planetList').insertAdjacentHTML('afterbegin',
     `
-        <div class="opacDarkBackground lightBorder ofHidden seperator planetStats collapsed">
+        <div class="opacDarkBackground lightBorder ofHidden seperator planetStats expanded">
             <span class="right copy-hint">Click to copy to clipboard</span>
             <div class="header border">
                 Total resources (planets: ${totalStats.planetsCount})

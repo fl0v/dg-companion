@@ -24,6 +24,14 @@
     "content_scripts": [
         {
             "matches": [
+                "https://*.darkgalaxy.com/*"
+            ],
+            "css": [
+                "scripts/ui20/content.css"
+            ]
+        },
+        {
+            "matches": [
                 "https://*.darkgalaxy.com/rankings/alliances/"
             ],
             "js": [
@@ -81,6 +89,18 @@
             ],
             "css": [
                 "scripts/planetsstats/content.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/fleets/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/fleetlist/content.js"
+            ],
+            "css": [
+                "scripts/fleetlist/content.css"
             ]
         }
     ]
