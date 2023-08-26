@@ -1,0 +1,23 @@
+
+.planetStats .copy-hint { padding:5px; line-height:20px;}
+.planetStats .resource-container {  }
+.planetStats .activity-container { max-width:600px; }
+.planetStats .resource { height:auto; width:auto; }
+.planetStats .activity-item { white-space:nowrap; }
+.planetStats .activity-producing, .planetStats .activity-training { display:inline-block; }
+.planetStats .activity { text-align:right; padding-right:5px; font-size:12px; line-height:18px; font-weight:normal; }
+.planetStats .planets-not-building .planet-item { color:#eb8c34; font-size:14px; }
+
+.planetStats .actions { padding:4px; }
+.planetStats .actions .collapse { display:inline-block; cursor:pointer; }
+.planetStats .actions .expand { display:none; cursor:pointer; }
+.planetStats.collapsed .planetStatsContent { display:none; }
+.planetStats.collapsed .actions .collapse { display:none; }
+.planetStats.collapsed .actions .expand { display:inline-block; }
+
+.d-flex { display:flex; }
+.d-flex-grow { flex-grow:1; }
+.d-flex-wrap { flex-wrap:wrap; }
+.d-flex-jce { justify-content: flex-end; }
+.d-flex-jcsb { justify-content: space-between; }
+.d-flex-column { flex-direction: column; }

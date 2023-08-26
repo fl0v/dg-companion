@@ -1,0 +1,87 @@
+{
+    "manifest_version": 3,
+    "name": "Dark Galaxy Companion",
+    "description": "Adds QoL features to Dark Galaxy interface",
+    "author": "Biggy",
+    "version": "0.0.1",
+    "options_page": "options/index.html",
+    "action": {
+        "default_popup": "popup/index.html",
+        "default_title": "Dark Galaxy Companion"
+    },
+    "icons": {
+        "32": "assets/icons/dg32x32.png"
+    },
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "permissions": [
+        "declarativeContent",
+        "scripting",
+        "activeTab",
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/rankings/alliances/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/alliance/content.js"
+            ],
+            "css": [
+                "scripts/alliance/content.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/news/view/*/",
+                "https://*.darkgalaxy.com/planet/*/comms/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/fleetscan/content.js"
+            ],
+            "css": [
+                "scripts/fleetscan/content.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/radar/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/radar/content.js"
+            ],
+            "css": [
+                "scripts/radar/content.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/news/view/*/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/battlereport/content.js"
+            ],
+            "css": [
+                "scripts/battlereport/content.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/planets/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/planetsstats/content.js"
+            ],
+            "css": [
+                "scripts/planetsstats/content.css"
+            ]
+        }
+    ]
+}

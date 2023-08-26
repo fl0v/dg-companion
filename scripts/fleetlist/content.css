@@ -1,0 +1,10 @@
+.d-flex { display:flex; }
+.relative-container { position:relative; }
+
+#quick-search { display:inline-block; margin-right:15px; }
+#quick-filter { font-family: Tahoma, sans-serif; font-size:12px; text-shadow:none; text-align:center; flex-grow:1; }
+
+.blinking { animation: blinker 1s linear infinite; }
+@keyframes blinker {
+    50% { opacity: 0; }
+}

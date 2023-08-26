@@ -1,0 +1,4 @@
+ .rankingsList .name { width: 450px!important; }
+        .rankingsList .members { width: 80px; text-align:right; }
+        .rankingsList .score { width: 80px; text-align:right; }
+        .rankingsList .average { width: 80px; text-align:right; }
