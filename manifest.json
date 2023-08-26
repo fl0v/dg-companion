@@ -102,6 +102,18 @@
             "css": [
                 "scripts/fleetlist/content.css"
             ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/fleet/*"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/fleetpage/content.js"
+            ],
+            "css": [
+                "scripts/fleetpage/content.css"
+            ]
         }
     ]
 }
