@@ -1,52 +1,39 @@
-/*
- * @todo Change companion layout
- * @todo Filter by score
- */
 
-const pattern = /([1-9]+)\.(\d+)\.(\d+)[\s]+(.*)/;
-const radarsSelector = '#planetList .planetHeadSection';
-const fleetsSelector = '#planetList .entry';
-const planetShortcut = (p) => `
-        <a class="planet" href="#${p.id}">${p.coords.split('\.')[0]}.${p.coords.split('\.')[1]}</a>
-    `;
 const searchMinLength = 3; // search only if atleast 3 chars
-const toggleFleet = (el, toggle) => { el.style = toggle ? 'display:block;' : 'display:none;'; };
+const allRadars = Array.from(document.querySelectorAll('#planetList .planetHeadSection'));
+const allFleets =  Array.from(document.querySelectorAll('#planetList .entry'));
+
+ // will hide a radar if all entries are hidden
+const checkFleets = () => allRadars.forEach((el) => {
+    const hasFleets = Array.from(el.querySelectorAll('.entry'))
+        .reduce((carry, entry) => carry || entry.style.display !== 'none', false);
+    el.parentNode.classList.toggle('hide', !hasFleets);
+});
+
 const showAllFleets = () => {
-    document.querySelectorAll(fleetsSelector).forEach((el) => toggleFleet(el, true));
-    checkEntries();
-};
-const checkEntries = () => {
-    // will hide a radar if all entries are hidden
-    document.querySelectorAll(radarsSelector).forEach((el) => {
-        const hasFleets = Array.from(el.querySelectorAll('.entry'))
-            .reduce((carry, entry) => {
-                return carry || entry.style.display !== 'none';
-            }, false)
-            ;
-        el.parentNode.classList.toggle('hide', !hasFleets);
-    });
+    allFleets.forEach((el) => toggleElement(el, true));
+    checkFleets();
 };
 
-let planets = [];
-let systems = [];
-document.querySelectorAll(radarsSelector).forEach((el) => {
-    const planet = el.querySelector(':first-child').innerText;
-    if (planet.match(pattern)) {
-        const [, g, s, p, n] = pattern.exec(planet);
-        const id = 'p-' + g + '-' + s + '-' + p;
-        const sys = g + '-' + s;
-        el.id = id;
-        planets.push({
-            id: id,
-            coords: g + '.' + s + '.' + p,
-            name: n
-        });
-        if (!systems.includes(sys)) {
-            systems.push(sys);
+
+let allPlanets = [];
+let allSystems = [];
+let systemsLinks = [];
+allRadars.forEach((el) => {
+    const text = el.querySelector(':first-child').innerText;
+    const p = new Planet(text);
+    if (p.isValid()) {
+        el.id = p.id;
+        allPlanets.push(p);
+        if (!allSystems.includes(p.coordsSystem)) {
+            allSystems.push(p.coordsSystem);
+            systemsLinks.push(p.linkSystem());
         } else {
             el.parentNode.classList.add('collapsed');
         }
-        el.querySelector('.planetName').insertAdjacentHTML('afterend', `
+
+        el.querySelector('.planetName')
+            .insertAdjacentHTML('afterend', `
                 <div class="actions right">
                     <span class="collapse">[&minus;]</span>
                     <span class="expand">[&plus;]</span>
@@ -55,38 +42,26 @@ document.querySelectorAll(radarsSelector).forEach((el) => {
         el.querySelector('.actions')
             .addEventListener('click', (event) => {
                 el.parentNode.classList.toggle('collapsed', !event.target.classList.contains('expand'));
-            })
-            ;
+            });
     }
 });
 
-/**
+/*
  * Lets build a companion box with shortcuts to each radar
  */
-let singlePlanetSystem = [];
-let uniqueSystems = [];
-planets.forEach((p) => {
-    const [g, s] = p.coords.split('\.');
-    if (!uniqueSystems.includes(g + '.' + s)) {
-        uniqueSystems.push(g + '.' + s);
-        singlePlanetSystem.push(p);
-    }
-});
-const tplPlanets = singlePlanetSystem.reduce((carry, p) => carry + planetShortcut(p), '');
-
 const container = document.querySelector('#contentBox');
 if (container) {
     container.classList.add("relative-container");
     container.insertAdjacentHTML('afterbegin', `
-            <div class="radar-companion-container">
+        <div class="radar-companion-container">
             <div class="lightBorder opacDarkBackground radar-companion">
                 <div class="links-container">
-                    ${tplPlanets}
+                    ${systemsLinks.join(' ')}
                     <span class="top"><a href="#">Top</a></span>
                 </div>
             </div>
-            </div>
-        `);
+        </div>
+    `);
 }
 
 /**
@@ -146,25 +121,25 @@ document.querySelector('#quick-filter')
     .addEventListener('input', (event) => {
         inputSearch.value = '';
         const [owner, destination] = event.target.value.split('-');
-        document.querySelectorAll(fleetsSelector).forEach((el) => {
+        allFleets.forEach((el) => {
             const info = parseEntry(el);
             let valid = true;
             valid = valid && (owner == 'any' || owner.includes(info.ownerType));
             valid = valid && (destination == 'any' || destination.includes(info.destinationType));
-            toggleFleet(el, valid);
+            toggleElement(el, valid);
         });
-        checkEntries();
+        checkFleets();
     })
     ;
 
 // quick search action
 const filterFleets = (search) => {
     showAllFleets();
-    document.querySelectorAll(fleetsSelector).forEach((el) => {
+    allFleets.forEach((el) => {
         const searchPattern = new RegExp(search, 'gi');
-        toggleFleet(el, el.innerText.match(searchPattern));
+        toggleElement(el, el.innerText.match(searchPattern));
     });
-    checkEntries();
+    checkFleets();
 };
 inputSearch.addEventListener('keydown', (event) => {
     if (event.keyCode == 27) {
@@ -184,7 +159,7 @@ inputSearch.addEventListener('input', (event) => {
  * Incoming warning
  */
 let incoming = {};
-document.querySelectorAll(fleetsSelector).forEach((entry) => {
+allFleets.forEach((entry) => {
     const info = parseEntry(entry);
     if (info.ownerType == 'hostile' && ['friendly', 'allied'].includes(info.destinationType)) {
         if (!incoming[info.destination]) {

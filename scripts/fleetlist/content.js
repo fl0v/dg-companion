@@ -115,42 +115,29 @@ if (header) {
 const elSearchInput = document.querySelector('#input-quick-search');
 const elFiltersContainer = document.querySelector('#quick-filter');
 const elResetFilters = document.querySelector('#quick-filter #id-qf-reset');
+const allFilters = header.querySelectorAll('.filter');
 
-const toggleFleet = (el, toggle) => { el.style = toggle ? 'display:block;' : 'display:none;'; };
-const resetFleets = () => listFleets.forEach((el) => toggleFleet(el, true));
+const resetFleets = () => listFleets.forEach((el) => toggleElement(el, true));
 const searchFleets = (search) => {
     const searchPattern = new RegExp(search, 'gi');
-    listFleets.forEach((el) => toggleFleet(el, el.innerText.match(searchPattern)));
-};
-const resetFilters = (exclude) => {
-    Array.from(header.querySelectorAll('.filter')).forEach((el) => {
-        if (el !== exclude) {
-            if (el.options) {
-                Array.from(el.options).forEach((opt) => opt.selected = false);
-            } else if (el.checked) {
-                el.checked = false;
-            } else if (el.type === 'text' && String(el.value).length > 0) {
-                el.value = '';
-            }
-        }
-    });
+    listFleets.forEach((el) => toggleElement(el, el.innerText.match(searchPattern)));
 };
 
-elResetFilters.addEventListener('click', () => { resetFilters(); resetFleets(); });
+elResetFilters.addEventListener('click', () => { resetFilters(allFilters); resetFleets(); });
 elFiltersContainer.addEventListener('input', (event) => {
-    resetFilters(event.target);
+    resetFilters(allFilters, event.target);
     resetFleets();
     const filterByValue = event.target.value;
-    listFleets.forEach((el) => toggleFleet(el, el.classList.contains(filterByValue)));
+    listFleets.forEach((el) => toggleElement(el, el.classList.contains(filterByValue)));
 });
 elSearchInput.addEventListener('keydown', (event) => {
     if (event.keyCode == 27) {
-        resetFilters();
+        resetFilters(allFilters);
         resetFleets();
     }
 });
 elSearchInput.addEventListener('input', (event) => {
-    resetFilters(event.target);
+    resetFilters(allFilters, event.target);
     const search = event.target.value;
     if (String(search).length >= searchMinLength) {
         searchFleets(search);
