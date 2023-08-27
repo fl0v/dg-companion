@@ -4,7 +4,6 @@
     "description": "Adds QoL features to Dark Galaxy interface",
     "author": "Biggy",
     "version": "0.0.1",
-    "options_page": "options/index.html",
     "action": {
         "default_popup": "popup/index.html",
         "default_title": "Dark Galaxy Companion"
@@ -12,13 +11,8 @@
     "icons": {
         "32": "assets/icons/dg32x32.png"
     },
-    "background": {
-        "service_worker": "service-worker.js"
-    },
     "permissions": [
-        "declarativeContent",
         "scripting",
-        "activeTab",
         "storage"
     ],
     "content_scripts": [
