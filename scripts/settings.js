@@ -1,4 +1,6 @@
 
+// WIP
+
 const companionMeta = [
     {
         name: 'allianceRanking',
@@ -66,3 +68,26 @@ const usefullLinks = [
         cateogry: 'Scripts',
     },
 ];
+
+
+const getSettings = () => {
+    return chrome.storage.sync.get(settings, (items) => {
+        // document.getElementById(__setting__).value = items.__setting__;
+    });
+}
+
+const saveSettings = (settings) => {
+    chrome.storage.sync.set(settings, () => {
+        // settings saved feedback
+        // const status = document.getElementById('status');
+        //   status.textContent = 'Settings saved.';
+        //   setTimeout(() => {
+        //     status.textContent = '';
+        //   }, 750);
+    });
+    chrome.runtime.sendMessage({
+        name: "settings",
+        data: settings,
+    });
+
+};
