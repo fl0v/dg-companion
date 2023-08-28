@@ -231,31 +231,31 @@ document.querySelector('#planetList').insertAdjacentHTML('afterbegin',
             <div class="planetStatsContent d-flex d-flex-jcsb">
                 <div class="resource-container">
                     <div class="resource metal">
-                        ${resourceTemplate('metal', formatNumber(totalStats.metal) + ' (+' + formatNumber(totalStats.metalProd) + ') AVG: ' + formatNumber(totalStats.metalAvgRate) + '%')}
+                        ${resourceTemplate('metal', formatNumberInt(totalStats.metal) + ' (+' + formatNumberInt(totalStats.metalProd) + ') AVG: ' + formatNumber(totalStats.metalAvgRate) + '%')}
                     </div>
                     <div class="resource mineral">
-                        ${resourceTemplate('mineral', formatNumber(totalStats.mineral) + ' (+' + formatNumber(totalStats.mineralProd) + ') AVG: ' + formatNumber(totalStats.mineralAvgRate) + '%')}
+                        ${resourceTemplate('mineral', formatNumberInt(totalStats.mineral) + ' (+' + formatNumberInt(totalStats.mineralProd) + ') AVG: ' + formatNumber(totalStats.mineralAvgRate) + '%')}
                     </div>
                     <div class="resource food">
-                        ${resourceTemplate('food', formatNumber(totalStats.food) + ' (+' + formatNumber(totalStats.foodProd) + ') AVG: ' + formatNumber(totalStats.foodAvgRate) + '%')}
+                        ${resourceTemplate('food', formatNumberInt(totalStats.food) + ' (+' + formatNumberInt(totalStats.foodProd) + ') AVG: ' + formatNumber(totalStats.foodAvgRate) + '%')}
                     </div>
                     <div class="resource energy">
-                        ${resourceTemplate('energy', formatNumber(totalStats.energy) + ' (+' + formatNumber(totalStats.energyProd) + ') AVG: ' + formatNumber(totalStats.energyAvgRate) + '%')}
+                        ${resourceTemplate('energy', formatNumberInt(totalStats.energy) + ' (+' + formatNumberInt(totalStats.energyProd) + ') AVG: ' + formatNumber(totalStats.energyAvgRate) + '%')}
                     </div>
                 </div>
                 <div class="activity-container d-flex-grow">
                     <div class="d-flex d-flex-jce">
                         <div class="resource population">
-                            ${resourceTemplate('worker', formatNumber(totalStats.workers) + ' / AVG: ' + formatNumber(totalStats.workersAvg))}
+                            ${resourceTemplate('worker', formatNumberInt(totalStats.workers) + ' / AVG: ' + formatNumberInt(totalStats.workersAvg))}
                         </div>
                         <div class="resource solider">
-                            ${resourceTemplate('soldier', formatNumber(totalStats.soldiers))}
+                            ${resourceTemplate('soldier', formatNumberInt(totalStats.soldiers))}
                         </div>
                         <div class="resource ground">
-                            ${resourceTemplate('ground', formatNumber(totalStats.ground))}
+                            ${resourceTemplate('ground', formatNumberInt(totalStats.ground))}
                         </div>
                         <div class="resource orbit">
-                            ${resourceTemplate('orbit', formatNumber(totalStats.orbit))}
+                            ${resourceTemplate('orbit', formatNumberInt(totalStats.orbit))}
                         </div>
                     </div>
                     <div class="activity">
