@@ -1,13 +1,42 @@
-// @TODO use templates
+/**
+ * Will compile planets stats + activities summary with copy to cliboard feature,
+ * will also add small info box besides each planet with total output 
+ * + warning if stored resource are more then 24h outuput.
+ */
 
 const resourceTypePattern = /src="\/images\/units\/small\/([^\.]+)\./; // used to detect the resource type using the image url
 const resPattern = /([\d,]+)\s+\(([\+\d,]+)\)\s+([\d%]+)/; // will split resource data ex: '52,126 (+3,465) 70%'
 const popPattern = /([\d,]+)\s+\/\s+[\d,]+\s+\(([\+\d,]+)\s+available\)/; // will split population  data ex: '52,126 (47,126 available)'
 const othPattern = /([\d,]+)/; // simple value for other resources
 
-/**
+const buildPattern = /\/planet\/([\d]+)\/$/;
+const prodPattern = /\/planet\/([\d]+)\/production\/$/;
+const trainPattern = /\/planet\/([\d]+)\/training\/$/;
+const buildMsgPattern = /Building:\s(.*)\s\(([\d]+)/;
+const notBuildMsgPattern = /Building:\sNone/gi;
+const prodMsgPattern = /Ship\sYard:\s([\d,]+)x\s(.*)\s\(([\d]+)/;
+const trainMsgPattern = /Barracks:\s([\d,]+)x\s(.*)\s\(([\d]+)/;
+
+const allResources = Array.from(document.querySelectorAll('.planetHeadSection .resource'));
+const allActivities = Array.from(document.querySelectorAll('#planetList .planetHeadSection .left.resource a'));
+const allPlanets = Array.from(document.querySelectorAll('#planetList > #planetList'));
+const planetsData = [];
+const addPlanetStored = (index, res, value) => {
+    planetsData[index] || (planetsData[index] = { total: 0, totalProd: 0 });
+    planetsData[index][res] = value;
+    planetsData[index]['total'] += value;
+}
+const addPlanetProduction = (index, res, value) => {
+    planetsData[index] || (planetsData[index] = { total: 0, totalProd: 0 });
+    planetsData[index][res + 'Prod'] = value;
+    planetsData[index]['totalProd'] += value;
+}
+
+
+/*
  * Lets aggregate stats data
  */
+
 let totalStats = {
     planetsCount: 0,
     orbit: 0,
@@ -29,67 +58,89 @@ let totalStats = {
     energyProd: 0,
     energyAvgRate: 0,
 };
-document.querySelectorAll('.planetHeadSection .resource')
-    .forEach(element => {
-        const contentHtml = element.innerHTML;
-        const contentTxt = element.innerText;
-        let type = '';
-        if (resourceTypePattern.test(contentHtml)) {
-            [, type] = contentHtml.match(resourceTypePattern);
-        }
-        if (type == 'metal') {
-            let values = contentTxt.match(resPattern);
-            totalStats.metal += parseValue(values[1]);
-            totalStats.metalProd += parseValue(values[2]);
-            totalStats.metalAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
-            totalStats.planetsCount++; // each time we encounter a metal value we also increment the planets count
-        } else if (type == 'mineral') {
-            let values = contentTxt.match(resPattern);
-            totalStats.mineral += parseValue(values[1]);
-            totalStats.mineralProd += parseValue(values[2]);
-            totalStats.mineralAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
-        } else if (type == 'food') {
-            let values = contentTxt.match(resPattern);
-            totalStats.food += parseValue(values[1]);
-            totalStats.foodProd += parseValue(values[2]);
-            totalStats.foodAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
-        } else if (type == 'energy') {
-            let values = contentTxt.match(resPattern);
-            totalStats.energy += parseValue(values[1]);
-            totalStats.energyProd += parseValue(values[2]);
-            totalStats.energyAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
-        } else if (type == 'worker') {
-            let values = contentTxt.match(popPattern);
-            totalStats.workers += parseValue(values[1]);
-            totalStats.workersAvailable += parseValue(values[2]);
-        } else if (type == 'soldier') {
-            let values = contentTxt.match(othPattern);
-            totalStats.soldiers += parseValue(values[1]);
-        } else if (type == 'ground') {
-            let values = contentTxt.match(othPattern);
-            totalStats.ground += parseValue(values[1]);
-        } else if (type == 'orbit') {
-            let values = contentTxt.match(othPattern);
-            totalStats.orbit += parseValue(values[1]);
-        }
-    });
+
+allResources.forEach((element) => {
+    const contentHtml = element.innerHTML;
+    const contentTxt = element.innerText;
+    let type = '';
+    if (resourceTypePattern.test(contentHtml)) {
+        [, type] = contentHtml.match(resourceTypePattern);
+    }
+    if (type == 'metal') {
+        totalStats.planetsCount++; // each time we encounter a metal value we also increment the planets count
+
+        let values = contentTxt.match(resPattern);
+        addPlanetStored(totalStats.planetsCount - 1, 'metal', parseValue(values[1]));
+        addPlanetProduction(totalStats.planetsCount - 1, 'metal', parseValue(values[2]));
+        totalStats.metal += parseValue(values[1]);
+        totalStats.metalProd += parseValue(values[2]);
+        totalStats.metalAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+    } else if (type == 'mineral') {
+        let values = contentTxt.match(resPattern);
+        addPlanetStored(totalStats.planetsCount - 1, 'mineral', parseValue(values[1]));
+        addPlanetProduction(totalStats.planetsCount - 1, 'mineral', parseValue(values[2]));
+        totalStats.mineral += parseValue(values[1]);
+        totalStats.mineralProd += parseValue(values[2]);
+        totalStats.mineralAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+    } else if (type == 'food') {
+        let values = contentTxt.match(resPattern);
+        addPlanetStored(totalStats.planetsCount - 1, 'food', parseValue(values[1]));
+        addPlanetProduction(totalStats.planetsCount - 1, 'food', parseValue(values[2]));
+        totalStats.food += parseValue(values[1]);
+        totalStats.foodProd += parseValue(values[2]);
+        totalStats.foodAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+    } else if (type == 'energy') {
+        let values = contentTxt.match(resPattern);
+        addPlanetStored(totalStats.planetsCount - 1, 'energy', parseValue(values[1]));
+        addPlanetProduction(totalStats.planetsCount - 1, 'energy', parseValue(values[2]));
+        totalStats.energy += parseValue(values[1]);
+        totalStats.energyProd += parseValue(values[2]);
+        totalStats.energyAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+    } else if (type == 'worker') {
+        let values = contentTxt.match(popPattern);
+        totalStats.workers += parseValue(values[1]);
+        totalStats.workersAvailable += parseValue(values[2]);
+    } else if (type == 'soldier') {
+        let values = contentTxt.match(othPattern);
+        totalStats.soldiers += parseValue(values[1]);
+    } else if (type == 'ground') {
+        let values = contentTxt.match(othPattern);
+        totalStats.ground += parseValue(values[1]);
+    } else if (type == 'orbit') {
+        let values = contentTxt.match(othPattern);
+        totalStats.orbit += parseValue(values[1]);
+    }
+});
 totalStats.metalAvgRate = (totalStats.metalAvgRate / totalStats.planetsCount).toFixed(2);
 totalStats.mineralAvgRate = (totalStats.mineralAvgRate / totalStats.planetsCount).toFixed(2);
 totalStats.foodAvgRate = (totalStats.foodAvgRate / totalStats.planetsCount).toFixed(2);
 totalStats.energyAvgRate = (totalStats.energyAvgRate / totalStats.planetsCount).toFixed(2);
 totalStats.workersAvg = (totalStats.workers / totalStats.planetsCount).toFixed(2);
 
-/**
+
+/*
+ * Lets add info box
+ */
+
+allPlanets.forEach((el, index) => {
+    const extraCls = [];
+    if (planetsData[index]['totalProd'] * 24 < planetsData[index]['total']) {
+        extraCls.push('warning');
+    }
+    el.classList.add('planet-container');
+    el.insertAdjacentHTML('afterbegin', `
+        <div class="info-box ${extraCls.join(' ')}">
+            <div class="total">Total:<br/>${formatNumberInt(planetsData[index]['total'])}</div>
+            <div class="prod">&plus; ${formatNumberInt(planetsData[index]['totalProd'])}</div>
+        </div>
+    `);
+});
+
+
+/*
  * Lets build a summary of all activity
  */
-const activitySelector = '#planetList .planetHeadSection .left.resource a';
-const buildPattern = /\/planet\/([\d]+)\/$/;
-const prodPattern = /\/planet\/([\d]+)\/production\/$/;
-const trainPattern = /\/planet\/([\d]+)\/training\/$/;
-const buildMsgPattern = /Building:\s(.*)\s\(([\d]+)/;
-const notBuildMsgPattern = /Building:\sNone/gi;
-const prodMsgPattern = /Ship\sYard:\s([\d,]+)x\s(.*)\s\(([\d]+)/;
-const trainMsgPattern = /Barracks:\s([\d,]+)x\s(.*)\s\(([\d]+)/;
+
 let activity = {
     building: {},
     training: {},
@@ -101,7 +152,7 @@ let planets = {
     notTraining: []
 };
 
-Array.from(document.querySelectorAll(activitySelector)).forEach((el) => {
+allActivities.forEach((el) => {
     const msg = el.parentNode.innerText;
 
     // Training first
@@ -127,7 +178,8 @@ Array.from(document.querySelectorAll(activitySelector)).forEach((el) => {
     }
 });
 
-/**
+
+/*
  * Produce summary with html if cls is provided, otherwise simple text for copy paste
  */
 const activitySummary = (label, collection, cls) => {
@@ -152,9 +204,11 @@ const planetsList = (label, planets, cls) => {
     return '';
 };
 
-/**
+
+/*
  * add a nice top panel for the planet list
  */
+
 const resourceTemplate = (code, content) =>
     `
         <div class="left seperatorRight">
@@ -222,9 +276,10 @@ planetStats.querySelector('.actions').addEventListener('click', (event) => {
 })
 
 
-/**
+/*
  * copy/paste
  */
+
 const copy = document.querySelector('.planetStats .copy-hint');
 copy.style.cursor = 'pointer';
 copy.addEventListener('click', e => {
@@ -235,7 +290,7 @@ const txtBorder = '====================';
 const txtSpacer = '--------------------';
 const pe = (s, c) => String(s).padEnd(c, ' ');
 const ps = (s, c) => String(s).padStart(c, ' ');
-const textStats = function () {
+const textStats = () => {
     const pl = 11; // pad label 11 spaces at the end
     const pv = 7; // pad values with 7 spaces at the start
     var c = txtBorder + "\n";

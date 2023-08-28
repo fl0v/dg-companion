@@ -15,6 +15,15 @@
 .planetStats.collapsed .actions .collapse { display:none; }
 .planetStats.collapsed .actions .expand { display:inline-block; }
 
+#contentBox > * { overflow: visible; }
+.planet-container { position:relative; overflow:visible; }
+.planet-container .info-box { 
+    position:absolute; top:20px; left:-80px; width:70px; text-align:right; 
+    border: 1px solid #7a7a7a;
+    border-radius: 0 0 2px 2px;
+}
+.planet-container .info-box.warning .total { color:red; font-weight:bold; }
+
 .d-flex { display:flex; }
 .d-flex-grow { flex-grow:1; }
 .d-flex-wrap { flex-wrap:wrap; }

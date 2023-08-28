@@ -79,10 +79,10 @@
             ],
             "js": [
                 "scripts/common.js",
-                "scripts/planetsstats/content.js"
+                "scripts/planetspage/content.js"
             ],
             "css": [
-                "scripts/planetsstats/content.css"
+                "scripts/planetspage/content.css"
             ]
         },
         {
