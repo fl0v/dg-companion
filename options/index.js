@@ -1,9 +1,9 @@
 
 // default options
 let options = {
-  syncUrl: '',
-  syncToken: '',
-  themeUrl: '',
+  syncUrl: '', // to use for warfleet centrlisation, radar centralisation
+  syncToken: '', // usper individual token
+  themeUrl: '', // include external css to customise ui
   allianceColors: '[RoF] #ff0000 [SoL] #9f0000',
 };
 
@@ -27,8 +27,8 @@ const saveOptions = () => {
 const restoreOptions = () => {
   chrome.storage.sync.get(options, (items) => {
 
-    document.getElementById('idSyncUrl').checked = items.syncUrl;
-    document.getElementById('idSyncToken').checked = items.syncToken;
+    document.getElementById('idSyncUrl').value = items.syncUrl;
+    document.getElementById('idSyncToken').value = items.syncToken;
     document.getElementById('idThemeUrl').value = items.themeUrl;
     document.getElementById('idAllianceCollors').value = items.allianceColors;
   });

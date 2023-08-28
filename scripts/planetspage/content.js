@@ -1,7 +1,6 @@
 /**
- * Will compile planets stats + activities summary with copy to cliboard feature,
- * will also add small info box besides each planet with total output 
- * + warning if stored resource are more then 24h outuput.
+ * Planets stats + activities summary with copy to cliboard feature.
+ * Info box besides each planet with total output + warning if stored resources are more then 24h outuput.
  */
 
 const resourceTypePattern = /src="\/images\/units\/small\/([^\.]+)\./; // used to detect the resource type using the image url

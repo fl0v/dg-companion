@@ -1,3 +1,6 @@
+/**
+ * Total score
+ */
 
 const shipPattern = /([\d,]+)x\s(.*)/; // 6,123x Fighter
 const scoreTemplate = (unitScore, label) => `

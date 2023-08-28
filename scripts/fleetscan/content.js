@@ -1,5 +1,6 @@
 
-/*
+/**
+ * Total score by ETA/Alliance
  * @todo simulate combat action
  */
 

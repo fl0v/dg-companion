@@ -1,3 +1,6 @@
+/**
+ * Lost resources
+ */
 
 let lost = {
     owned: {

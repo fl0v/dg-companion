@@ -1,9 +1,13 @@
+/**
+ * Quick filters + quick search, systems shortcuts.
+ * Qarning of any incoming wf.
+ */
 
 const searchMinLength = 3; // search only if atleast 3 chars
 const allRadars = Array.from(document.querySelectorAll('#planetList .planetHeadSection'));
-const allFleets =  Array.from(document.querySelectorAll('#planetList .entry'));
+const allFleets = Array.from(document.querySelectorAll('#planetList .entry'));
 
- // will hide a radar if all entries are hidden
+// will hide a radar if all entries are hidden
 const checkFleets = () => allRadars.forEach((el) => {
     const hasFleets = Array.from(el.querySelectorAll('.entry'))
         .reduce((carry, entry) => carry || entry.style.display !== 'none', false);

@@ -6,7 +6,7 @@ dgRoundsMeta.forEach((round) => {
   if (round.hasStarted() && !round.hasEnded()) {
     elGameState.insertAdjacentHTML('beforeend', `
       <li>
-        ${round.name} turn ${round.getTurn()}
+        ${round.name} turn ${round.getTurn()} / to go: ${round.getTurnsToGo()}
       </li>
     `);
   } else if (!round.hasStarted() && !round.hasEnded()) {

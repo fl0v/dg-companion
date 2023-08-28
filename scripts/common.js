@@ -88,6 +88,15 @@ class dgRound {
         const now = new Date();
         return Math.floor((now - this.start) / ms);
     }
+
+    getTurnsTotal() {
+        const ms = 1000 * 60 * 60;
+        return Math.floor((this.end - this.start) / ms);
+    }
+
+    getTurnsToGo() {
+        return this.getTurnsTotal() - this.getTurn();
+    }
 }
 
 /**
