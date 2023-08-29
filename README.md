@@ -25,11 +25,13 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
   - Score
 - Battlereport page
   - resources lost
+- Surface scan:
+  - Required solder
+  - Important structures
   
 ### TODO  
 - Navigation link for any planet
 - Custom planet image set(Ex:  https://helloweenpt.com/darkgalaxy/images/planets/)
-- Surface scan: required soldiers
 - Fleet overview: copy/paste
 - Radar page: warning for any big score enemy wf flying even if not to own planet
 - Planets list: tags

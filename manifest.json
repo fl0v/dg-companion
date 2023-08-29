@@ -104,6 +104,19 @@
             "css": [
                 "scripts/fleetpage/content.css"
             ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/news/view/*/",
+                "https://*.darkgalaxy.com/planet/*/comms/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/surfacescan/content.js"
+            ],
+            "css": [
+                "scripts/surfacescan/content.css"
+            ]
         }
     ]
 }
