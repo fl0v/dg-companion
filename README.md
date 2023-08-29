@@ -27,7 +27,6 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
   - resources lost
   
 ### TODO  
-- turns left
 - Navigation link for any planet
 - Custom planet image set(Ex:  https://helloweenpt.com/darkgalaxy/images/planets/)
 - Surface scan: required soldiers
@@ -35,7 +34,7 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
 - Radar page: warning for any big score enemy wf flying even if not to own planet
 - Planets list: tags
 - Enable/disable feature using sync storage
-- Sidepanel: 3 sections: individual for current fleet and global, add wf + sols section
+- Sidepanel: 3 sections: individual for current fleet/planet, global, wf + sols section
   - Prepare wf report using sidepanel
   - Fleet notes using sidepanel
   - Planet notes using sidepanel

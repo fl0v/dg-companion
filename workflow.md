@@ -4,7 +4,7 @@ Git workflow for contributors
 ### 1. [Fork](http://help.github.com/fork-a-repo/) the repository on GitHub and clone your fork to your development environment
 
 ```
-git clone git@github.com:YOUR-GITHUB-USERNAME/dg.git
+git clone git@github.com:YOUR-GITHUB-USERNAME/dg-companion.git
 ```
 
 If you have trouble setting up Git with GitHub in Linux, or are getting errors like "Permission Denied (publickey)",
@@ -12,10 +12,10 @@ then you must [setup your Git installation to work with GitHub](http://help.gith
 
 ### 2. Add this repository as an additional git remote called "upstream"
 
-Change to the directory where you cloned your project, normally, "dg". Then enter the following command:
+Change to the directory where you cloned your project, normally "dg-companion". Then enter the following command:
 
 ```
-git remote add upstream git://github.com/fl0v/dg.git
+git remote add upstream git://github.com/fl0v/dg-companion.git
 ```
 
 Working on bugs and features
@@ -110,8 +110,8 @@ git push origin --delete name-of-your-branch-goes-here
 ### Command overview (for advanced contributors)
 
 ```
-git clone git@github.com:YOUR-GITHUB-USERNAME/dg.git
-git remote add upstream git://github.com/fl0v/dg.git
+git clone git@github.com:YOUR-GITHUB-USERNAME/dg-companion.git
+git remote add upstream git://github.com/fl0v/dg-companion.git
 ```
 
 ```

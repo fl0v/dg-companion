@@ -11,10 +11,6 @@
     "icons": {
         "32": "assets/icons/dg32x32.png"
     },
-    "permissions": [
-        "scripting",
-        "storage"
-    ],
     "content_scripts": [
         {
             "matches": [
