@@ -17,12 +17,13 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
 - Fleet list
   - quick filter + quick search
 - Planets list
-  - Stats + Summary
+  - Stats + Summary + copy to cliboard
   - total resource warning
 - Fleet scan
   - score total, group by ETA/Alliance
 - Fleet overview page
   - Score
+  - copy to cliboard
 - Battlereport page
   - resources lost
 - Surface scan:
@@ -32,7 +33,6 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
 ### TODO  
 - Navigation link for any planet
 - Custom planet image set(Ex:  https://helloweenpt.com/darkgalaxy/images/planets/)
-- Fleet overview: copy/paste
 - Radar page: warning for any big score enemy wf flying even if not to own planet
 - Planets list: tags
 - Enable/disable feature using sync storage

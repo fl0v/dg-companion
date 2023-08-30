@@ -1,4 +1,5 @@
 
+const cleanText = (s) => String(s).trim().replace(/[\n\t\s]+/g, ' ');
 const parseValue = (v) => parseInt(String(v).replace(/[,\+%]+/g, '')); // will normalize a value to be able to use it in Math operation '52,126' -> 52126; '+3,465' -> 3465; '70%' -> 70
 const formatNumber = (v) => String(parseFloat(v).toFixed(2)).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"); // same format as the rest of the values in ui
 const formatNumberInt = (v) => String(Math.round(v)).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'); // same format as the rest of the values in ui
@@ -17,6 +18,7 @@ const resetFilters = (filters, exclude) => {
         }
     });
 };
+const currentTurn = () => document.querySelector('#turnNumber').innerText;
 
 /**
  * @see https://manual.darkgalaxy.com/reference/list-of-colonists
@@ -58,43 +60,43 @@ const getMetaScoreByName = (name) => getMetaScoreById(getMetaId(name));
 const shipsOrder = ['Fighter', 'Bomber', 'Frigate', 'Destroyer', 'Cruiser', 'Battleship', 'Trader', 'Freighter', 'Invasion Ship'];
 
 const dgStructures = {
-    Outpost: { order:1 },
-    Colony: { order:2 },
-    Metropolis: { order:3 },
+    Outpost: { order: 1 },
+    Colony: { order: 2 },
+    Metropolis: { order: 3 },
 
-    Living_Quarters: { order:5 },    
-    Habitat: { order:6 },
-    Leisure_Centre: { order:7 },
-    Medical_Centre: { order:8},
-    Hospital: { order:9 },
+    Living_Quarters: { order: 5 },
+    Habitat: { order: 6 },
+    Leisure_Centre: { order: 7 },
+    Medical_Centre: { order: 8 },
+    Hospital: { order: 9 },
 
-    Launch_Site: { order:11 },
-    Comms_Satellite: { order:12 },
-    Space_Tether: { order:13 },
-    Hyperspace_Beacon: { order:14 },
-    Jump_Gate: { order:15 },
+    Launch_Site: { order: 11 },
+    Comms_Satellite: { order: 12 },
+    Space_Tether: { order: 13 },
+    Hyperspace_Beacon: { order: 14 },
+    Jump_Gate: { order: 15 },
 
-    Ship_Yard: { order:20 },
-    Space_Dock: { order:21 },
-    Light_Weapons_Factory: { order:22 },
-    Heavy_Weapons_Factory: { order:23 },
-    Holo_Generator: { order:24 },
-    Army_Barracks: { order:25 },
+    Ship_Yard: { order: 20 },
+    Space_Dock: { order: 21 },
+    Light_Weapons_Factory: { order: 22 },
+    Heavy_Weapons_Factory: { order: 23 },
+    Holo_Generator: { order: 24 },
+    Army_Barracks: { order: 25 },
 
-    Metal_Refinery: { order:30 },
-    Mineral_Processor: { order:31 },
-    Resource_Converter: { order:32 },    
+    Metal_Refinery: { order: 30 },
+    Mineral_Processor: { order: 31 },
+    Resource_Converter: { order: 32 },
 
-    Core_Metal_Mine: { order:35 },
-    Core_Mineral_Extractor: { order:36 },
-    Hydroponics_Lab: { order: 37},
-    Solar_Array: { order:38 },
+    Core_Metal_Mine: { order: 35 },
+    Core_Mineral_Extractor: { order: 36 },
+    Hydroponics_Lab: { order: 37 },
+    Solar_Array: { order: 38 },
 
-    Metal_Mine: { order:41 },
-    Mineral_Extractor: { order:42 },
-    Farm: { order:43 },
-    Solar_Generator: { order:44 },
-    
+    Metal_Mine: { order: 41 },
+    Mineral_Extractor: { order: 42 },
+    Farm: { order: 43 },
+    Solar_Generator: { order: 44 },
+
 }
 
 

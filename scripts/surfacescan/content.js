@@ -63,21 +63,20 @@ if (scanContainer && scanHeader) {
         return carry;
     }, []);
 
+
     /**
      * Add info only if we have parsed workers or soldiers, otherwise is anot a surface scan
      */
-    if (planetInfo.workersTotal > 0 || planetInfo.soldiers > 0) {
-        scanContainer.querySelector('.planetHeadSection:nth-child(3) .lightBorder .left').insertAdjacentHTML('beforebegin', `
+    scanContainer.querySelector('.planetHeadSection:nth-child(3) .lightBorder .left').insertAdjacentHTML('beforebegin', `
             <div class="right neutral">
                 <span class="required-soldier neutral">Soldiers required now: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersRequired)}</b></span>
                 <span class="housing neutral">(Max: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersMax)}</b>)</span>
             </div>
         `);
-        scanHeader.insertAdjacentHTML('beforeend', `
+    scanHeader.insertAdjacentHTML('beforeend', `
             <div class="right scan-summary">
                 Importat: ${planetInfo.summary.join(', ')}
             </div>
         `);
-    }
 }
 
