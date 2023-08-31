@@ -6,7 +6,7 @@ dgRoundsMeta.forEach((round) => {
   if (round.hasStarted() && !round.hasEnded()) {
     elGameState.insertAdjacentHTML('beforeend', `
       <li>
-        ${round.name} turn ${round.getTurn()} / to go: ${round.getTurnsToGo()}
+        <a href="${round.url}" target="_blank">${round.name}</a> turn ${round.getTurn()} / to go: ${round.getTurnsToGo()}
       </li>
     `);
   } else if (!round.hasStarted() && !round.hasEnded()) {
@@ -19,7 +19,7 @@ dgRoundsMeta.forEach((round) => {
     });
     elGameState.insertAdjacentHTML('beforeend', `
       <li>
-        ${round.name} will start on ${start}
+        <a href="${round.url}" target="_blank">${round.name}</a> will start on ${start}
       </li>
     `);
   }

@@ -19,6 +19,11 @@ const resetFilters = (filters, exclude) => {
     });
 };
 const currentTurn = () => document.querySelector('#turnNumber').innerText;
+const schemeType = /class=\"(neutral|hostile|friendly|allied)\"/
+const getSchemeType = (el) => {
+    const r = schemeType.exec(el.outerHTML);
+    return r[1] || 'unknown';
+};
 
 /**
  * @see https://manual.darkgalaxy.com/reference/list-of-colonists

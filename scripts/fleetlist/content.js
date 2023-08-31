@@ -20,19 +20,28 @@ const planets = {
     hostileSorted: [],
     friendly: {},
     friendlySorted: [],
+    allied: {},
+    alliedSorted: [],
+    sectors: {},
+    sectorsSorted: [],
+    systems: {},
+    systemsSorted: [],
 };
 
 const parsePlanet = (el) => {
     let id = el.innerText;
     let sys = el.innerText;
+    let sec = el.innerText;
     if (el.innerText.match(coordsPattern)) {
         const [, x, y, z, w, name] = coordsPattern.exec(el.innerText);
         id = ['p', x, y, z, w].join('-');
-        sys = ['s', x, y, z].join('-');
+        sys = [x, y, z].join('.');
+        sec = [x, y].join('.');
     }
     return {
         id: id,
         sys: sys,
+        sec: sec,
         name: el.innerText,
         type: '',
     }
@@ -40,12 +49,17 @@ const parsePlanet = (el) => {
 
 listPlanets.forEach((el) => {
     const pl = parsePlanet(el);
-    const [, type] = /class=\"(neutral|hostile|friendly)\"/.exec(el.innerHTML);
+    const type = getSchemeType(el);
     pl.type = type;
+    planets[type] || (planets[type] = {});
     planets[type][pl.id] = pl;
+    planets.sectors['sec-' + pl.sec] = pl.sec;
+    planets.systems['sys-' + pl.sys] = pl.sys;
     const row = el.closest('.entry');
     row.classList.add(pl.id);
     row.classList.add('t-' + type);
+    row.classList.add('sec-' + pl.sec);
+    row.classList.add('sys-' + pl.sys);
     if (row.innerText.match(/Moving\sfrom/)) {
         row.classList.add('t-moving');
     } else if (row.innerText.match(/Waiting\sat/)) {
@@ -55,9 +69,15 @@ listPlanets.forEach((el) => {
 Object.entries(planets.neutral).forEach((a) => planets.neutralSorted.push(a[1]));
 Object.entries(planets.hostile).forEach((a) => planets.hostileSorted.push(a[1]));
 Object.entries(planets.friendly).forEach((a) => planets.friendlySorted.push(a[1]));
+Object.entries(planets.allied).forEach((a) => planets.alliedSorted.push(a[1]));
+Object.entries(planets.sectors).forEach((a) => planets.sectorsSorted.push(a[1]));
+Object.entries(planets.systems).forEach((a) => planets.systemsSorted.push(a[1]));
 planets.neutralSorted.sort((a, b) => a.id.localeCompare(b.id));
 planets.hostileSorted.sort((a, b) => a.id.localeCompare(b.id));
 planets.friendlySorted.sort((a, b) => a.id.localeCompare(b.id));
+planets.alliedSorted.sort((a, b) => a.id.localeCompare(b.id));
+planets.sectorsSorted.sort();
+planets.systemsSorted.sort();
 
 
 /*
@@ -71,7 +91,7 @@ const radioOption = (label, value, selected) => {
             </label>`;
 };
 
-const buildItemsHtml = (planetsSorted) => {
+const buildPlanetOptionsHtml = (planetsSorted) => {
     let itemsHtml = '';
     planetsSorted.forEach((o) => {
         itemsHtml += `
@@ -81,23 +101,40 @@ const buildItemsHtml = (planetsSorted) => {
     return itemsHtml;
 }
 
+const buildOptionsHtml = (pre, items) => {
+    let itemsHtml = '';
+    items.forEach((label) => {
+        itemsHtml += `<option value="${pre}-${label}">${label}</options>`;
+    });
+    return itemsHtml;
+}
+
 if (header) {
     header.classList.add('d-flex');
     header.insertAdjacentHTML('beforeend', `
         <span id="quick-filter">
-            <label for="id-qf-planet">
-                <button id="id-qf-reset">Reset</button>
+            <button id="id-qf-reset">Reset</button>
+            <label for="id-qf-planet">                
                 <select id="id-qf-planet" class="filter" placeholder="Filter by planet">
                     <option selected>Filter by planet</option>
                     <optgroup label="Friendly">
-                        ${buildItemsHtml(planets.friendlySorted)}
+                        ${buildPlanetOptionsHtml(planets.friendlySorted)}
+                    </optgroup>
+                    <optgroup label="Allied">
+                        ${buildPlanetOptionsHtml(planets.alliedSorted)}
                     </optgroup>
                     <optgroup label="Hostile">
-                        ${buildItemsHtml(planets.hostileSorted)}
+                        ${buildPlanetOptionsHtml(planets.hostileSorted)}
                     </optgroup>
                     <optgroup label="Neutral">
-                        ${buildItemsHtml(planets.neutralSorted)}
+                        ${buildPlanetOptionsHtml(planets.neutralSorted)}
                     </optgroup>
+                </select>
+            </label>
+             <label for="id-qf-sect">                
+                <select id="id-qf-sect" class="filter" placeholder="by sector">
+                    <option selected>by sector</option>
+                    ${buildOptionsHtml('sec', planets.sectorsSorted)}
                 </select>
             </label>  
             ${radioOption('Fleets waiting', 't-waiting')}

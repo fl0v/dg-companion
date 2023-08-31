@@ -106,3 +106,5 @@ h2 { margin:0; padding:0; margin-bottom:10px; font-size:16px; line-height:18px; 
   position: relative;
   top: 2px;
 }
+
+.version { text-align:right; }
