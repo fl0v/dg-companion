@@ -1,4 +1,7 @@
 
+# Version 0.0.3 (wip)
+- ...
+
 # Version 0.0.2 (2023-08-31)
 - Fixed popup links
 - Fleet list quick filter by sector
