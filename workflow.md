@@ -1,5 +1,11 @@
-Git workflow for contributors
-=============================
+# Guideline
+- Use only vanila js
+- No external requirements
+- Try to document the logic as much as possible
+- Use meaningfull names for variables, functions, objects
+- Ask before adding new script/feature
+
+# Git workflow
 
 ### 1. [Fork](http://help.github.com/fork-a-repo/) the repository on GitHub and clone your fork to your development environment
 
