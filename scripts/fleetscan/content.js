@@ -77,17 +77,25 @@ const addFleet = (playerName, allianceId, allianceName, shName, flCount, allied,
  */
 Array.from(document.querySelectorAll('.opacBackground .left.lightBorder')).forEach((el) => {
     // each fleet
-    const playerName = el.querySelector('.playerName').innerText;
-    const alliance = el.querySelector('.allianceName');
-    const allianceName = alliance.getAttribute('alliancename');
-    const allianceId = alliance.getAttribute('allianceid');
-    const fleetEl = alliance.closest('.opacLightBackground').querySelector('div > div.left');
+    const playerEl = el.querySelector('.playerName');
+    const allianceEl = el.querySelector('.allianceName');
+    const fleetEl = playerEl.closest('.opacLightBackground').querySelector('div > div.left');
+    const owned = playerEl.parentNode.classList.contains('friendly');
+    const allied = owned || playerEl.parentNode.classList.contains('allied');
     const fleetName = fleetEl.innerText;
-    const owned = alliance.parentNode.classList.contains('friendly');
-    const allied = owned || alliance.parentNode.classList.contains('allied');
-    const etatext = alliance.parentNode.parentNode.innerText;
-    const m = etatext.match(etaPattern);
-    const eta = m ? m[1] : 0;
+    const playerName = playerEl.innerText;
+    let allianceId = 0;
+    let allianceName = 'Independent';
+    if (allianceEl) {
+        allianceId = allianceEl.getAttribute('allianceid');
+        allianceName = allianceEl.getAttribute('alliancename');
+    }
+    let eta = playerEl.parentNode.parentNode.innerText;
+    if (etaPattern.test(eta)) {
+        [, eta] = eta.match(etaPattern);
+    } else {
+        eta = 0;
+    }
     let score = 0;
     Array.from(el.querySelectorAll('table tr')).forEach((el) => {
         // each ship

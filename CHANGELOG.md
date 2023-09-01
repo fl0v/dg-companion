@@ -1,6 +1,6 @@
 
 # Version 0.0.3 (wip)
-- ...
+- Bugfix fleet scan with player without alliance
 
 # Version 0.0.2 (2023-08-31)
 - Fixed popup links
