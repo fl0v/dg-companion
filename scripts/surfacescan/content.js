@@ -1,7 +1,7 @@
 /**
- * Ads required soldiers + important buildings
- * @TODO add solderis from food on planet if has Army_Baraks
- * @TODO enforce structures solder
+ * Adds required soldiers + important buildings
+ * @TODO add solders from food on planet if has Army_Baraks
+ * @TODO enforce structures order
  */
 
 const popPattern = /([\d,]+)\s+\/\s+([\d,]+)\s+\(([\d,]+)\s+available\)/; // will split population  data ex: '52,126 / 100,000 (47,126 available)'
