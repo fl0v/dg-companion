@@ -11,6 +11,17 @@
     "icons": {
         "32": "assets/icons/dg32x32.png"
     },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "CHANGELOG.md",
+                "assets/*"
+            ],
+            "matches": [
+                "https://*.darkgalaxy.com/*"
+            ]
+        }
+    ],
     "content_scripts": [
         {
             "matches": [

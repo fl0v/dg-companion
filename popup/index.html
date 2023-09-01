@@ -15,7 +15,7 @@
 
 
         <!--
-                <div class="options-container">
+                <div class="options box-container">
             <h2>Enhancements:</h2>
 
             <label class="toggle">
@@ -44,12 +44,12 @@
              </div>
             -->
 
-        <div id="game-state">
+        <div id="game-state" class="box-container">
             <h2>Game status</h2>
             <ul></ul>
         </div>
 
-        <div class="links">
+        <div class="links box-container">
             <h2>Links</h2>
             <ul id="links">
                 <li><a href="https://manual.darkgalaxy.com/" class="official" target="_blank">Manual</a></li>
@@ -60,7 +60,12 @@
                 <li><a href="https://bo.n00b.org.uk" class="tools" target="_blank">BO builder</a></li>
             </ul>
         </div>
-        <div class="version"><small>v0.0.2 / 31 Aug'23</small></div>
+
+        <div class="box-container">
+            <div id="version"></div>
+            <div id="changelog"></div>
+        </div>
+
     </div>
 
     <script src="../scripts/settings.js"></script>

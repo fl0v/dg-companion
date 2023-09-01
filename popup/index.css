@@ -24,14 +24,15 @@ body {
 }
 */
 
-body { width:300px }
+body { width:300px; }
 a { color:#4e4e4e; text-decoration:none; }
 a:hover { text-decoration:underline; }
 h1 { font-size:18px; margin:0; padding:0; }
 h2 { margin:0; padding:0; margin-bottom:10px; font-size:16px; line-height:18px; padding:0; margin:0; }
 
 .main-container {  }
-.options-container { padding:10px 15px; }
+.box-container { padding:5px 5px 0; margin-bottom:10px; }
+.options { }
 .header {
     font-family: DarkGalaxy, sans-serif;
     font-size: 25px;
@@ -47,10 +48,19 @@ h2 { margin:0; padding:0; margin-bottom:10px; font-size:16px; line-height:18px; 
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
-.links { margin:5px; }
+#game-state { }
+#game-state ul { margin:0; padding-left:1.5em; }
+#game-state ul li { margin:5px 0; padding:0; }
+
+.links {  }
 .links h2 { }
 .links ul { margin:0; padding:0; list-style:none; }
 .links ul li { margin:5px 0; padding:0; }
+
+
+#version { }
+#changelog { margin-top:5px; }
+
 
 
 .toggle {
@@ -106,5 +116,3 @@ h2 { margin:0; padding:0; margin-bottom:10px; font-size:16px; line-height:18px; 
   position: relative;
   top: 2px;
 }
-
-.version { text-align:right; }
