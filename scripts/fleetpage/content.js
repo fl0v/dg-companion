@@ -73,8 +73,7 @@ document.querySelector('#contentBox .copy-hint')
 
 const textStats = () => `
 ${txtBorder}
-Fleet: "${fleetName.trim()}"
-Turn: ${currentTurn()}
+Turn: ${currentTurn()} / Fleet: "${fleetName.trim()}"
 ${fleetActivity} 
 ${fleetScore}
 ${txtSpacer}
