@@ -1,5 +1,6 @@
 
 # Version 0.0.3 (wip)
+- Research page cosmetics
 - Popup cosmetics
 - Bugfix fleet scan with player without alliance
 

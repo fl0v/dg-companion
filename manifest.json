@@ -128,6 +128,18 @@
             "css": [
                 "scripts/surfacescan/content.css"
             ]
+        },
+        {
+            "matches": [
+                "https://*.darkgalaxy.com/research/"
+            ],
+            "js": [
+                "scripts/common.js",
+                "scripts/research/content.js"
+            ],
+            "css": [
+                "scripts/research/content.css"
+            ]
         }
     ]
 }
