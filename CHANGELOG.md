@@ -1,13 +1,14 @@
 
 # Version 0.0.3 (wip)
+- Popup cosmetics
 - Bugfix fleet scan with player without alliance
 
-# Version 0.0.2 (2023-08-31)
+# Version 0.0.2 (31st Aug'23)
 - Fixed popup links
 - Fleet list quick filter by sector
 - Bugfix fleet list quick filter
 - Copy to cliboard in fleet page
 - Bugfix surface scan
 
-# Version 0.0.1 (2023-08-29)
+# Version 0.0.1 (29th Aug'23)
 - initial version

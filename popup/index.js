@@ -29,7 +29,7 @@ dgRoundsMeta.forEach((round) => {
 const changelog = document.querySelector('#changelog');
 const version = document.querySelector('#version');
 const manifestData = chrome.runtime.getManifest();
-version.innerHTML = `<small>version ${manifestData.version}</small>`;
+version.innerHTML = `<small>(${manifestData.version})</small>`;
 
 const url = chrome.runtime.getURL('CHANGELOG.md');
 fetch(url)

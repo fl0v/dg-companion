@@ -10,12 +10,18 @@
 <body>
 
     <div class="main-container">
-        <h1 class="header border">Dark Galaxy Companion</h1>
+        <h1 id="title" class="header border">
+            Dark Galaxy Companion
+            <span id="version"></span>
+        </h1>
 
-
+        <div id="game-state" class="box-container">
+            <h2>Game status</h2>
+            <ul></ul>
+        </div>
 
         <!--
-                <div class="options box-container">
+        <div id="options" class="box-container">
             <h2>Enhancements:</h2>
 
             <label class="toggle">
@@ -41,17 +47,12 @@
                 <div class="toggle-switch"></div>
                 <span class="toggle-label">Surface scan</span>
             </label>
-             </div>
-            -->
-
-        <div id="game-state" class="box-container">
-            <h2>Game status</h2>
-            <ul></ul>
         </div>
+        -->
 
-        <div class="links box-container">
+        <div id="links" class="box-container">
             <h2>Links</h2>
-            <ul id="links">
+            <ul>
                 <li><a href="https://manual.darkgalaxy.com/" class="official" target="_blank">Manual</a></li>
                 <li><a href="https://discord.gg/rmsMdPM" class="official" target="_blank">Discord</a></li>
                 <li><a href="https://helloweenpt.com/darkgalaxy/" class="tools" target="_blank">HelloweenPt.com
@@ -62,7 +63,6 @@
         </div>
 
         <div class="box-container">
-            <div id="version"></div>
             <div id="changelog"></div>
         </div>
 
