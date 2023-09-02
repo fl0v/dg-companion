@@ -11,7 +11,7 @@ const allFleets = Array.from(document.querySelectorAll('#planetList .entry'));
 const checkFleets = () => allRadars.forEach((el) => {
     const hasFleets = Array.from(el.querySelectorAll('.entry'))
         .reduce((carry, entry) => carry || entry.style.display !== 'none', false);
-    el.parentNode.classList.toggle('hide', !hasFleets);
+    toggleElement(el.parentNode, hasFleets);
 });
 
 const showAllFleets = () => {
@@ -30,8 +30,9 @@ allRadars.forEach((el) => {
         el.id = p.id;
         allPlanets.push(p);
         if (!allSystems.includes(p.coordsSystem)) {
+            el.setAttribute('data-system', p.coordsSystem);
             allSystems.push(p.coordsSystem);
-            systemsLinks.push(p.linkSystem());
+            systemsLinks.push(p.linkSystem("data-action=\"show\" data-system=\"" + p.coordsSystem + "\""));
         } else {
             el.parentNode.classList.add('collapsed');
         }
@@ -61,11 +62,27 @@ if (container) {
             <div class="lightBorder opacDarkBackground radar-companion">
                 <div class="links-container">
                     ${systemsLinks.join(' ')}
-                    <span class="top"><a href="#">Top</a></span>
+                    <span class="top"><a href="#" data-action="all">All</a></span>
                 </div>
             </div>
         </div>
     `);
+    container.querySelector('.radar-companion .links-container')
+        .addEventListener('click', (event) => {
+            inputSearch.value = '';
+            showAllFleets();
+            const action = event.target.getAttribute('data-action');
+            if (action === 'all') {
+                return;
+            }
+            const system = event.target.getAttribute('data-system');
+            allRadars.forEach((el) => {
+                const planetSystem = el.getAttribute('data-system');
+                const valid = system === planetSystem;
+                toggleElement(el.parentNode, valid);
+            });
+        })
+        ;
 }
 
 /**

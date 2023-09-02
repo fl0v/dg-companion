@@ -216,8 +216,8 @@ class Planet {
         }
     }
 
-    linkSystem() {
-        return `<a class="system" href="#${this.id}">${this.coordsSystem}</a>`;
+    linkSystem(attributes) {
+        return `<a class="system" href="#${this.id}" ${attributes}>${this.coordsSystem}</a>`;
     }
 
 }
