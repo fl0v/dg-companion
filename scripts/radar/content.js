@@ -1,6 +1,6 @@
 /**
  * Quick filters + quick search, systems shortcuts.
- * Qarning of any incoming wf.
+ * Warning of any incoming wf.
  */
 
 const searchMinLength = 3; // search only if atleast 3 chars
