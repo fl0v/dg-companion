@@ -28,6 +28,9 @@ const getSchemeType = (el) => {
 /**
  * @see https://manual.darkgalaxy.com/reference/list-of-colonists
  * @see https://manual.darkgalaxy.com/reference/list-of-ships
+ * @see https://manual.darkgalaxy.com/books/quick-reference/page/list-of-resources
+ * ships score is {metal} * {metalScore) * 3 + {mineral} * {mineralScore} * 3
+ * i assumed holo ships also use {energy} * {energyScore} * 3
  */
 const dgMeta = {
     Fighter: { name: "Fighter", metal: 2000, mineral: 0, score: 0.24, warfleet: true },
@@ -38,21 +41,24 @@ const dgMeta = {
     Battleship: { name: "Battleship", metal: 600000, mineral: 400000, score: 144, warfleet: true },
     Outpost_Ship: { name: "Outpost Ship", metal: 30000, mineral: 20000, score: 0, warfleet: false },
     Invasion_Ship: { name: "Invasion Ship", metal: 30000, mineral: 20000, score: 4.66, warfleet: false },
-    Freighter: { name: "Freighter", metal: 24000, mineral: 16000, score: 3.66, warfleet: false },
-    Trader: { name: "Trader", metal: 72000, mineral: 48000, score: 0, warfleet: false },
-    Holo_Projector: { name: "Holo Projector", metal: 400, mineral: 200, score: 0, warfleet: false },
-    Holo_Fighter: { name: "Holo Fighter", metal: 100, mineral: 0, score: 0, warfleet: false },
-    Holo_Bomber: { name: "Holo Bomber", metal: 0, mineral: 200, score: 0, warfleet: false },
-    Holo_Frigate: { name: "Holo Frigate", metal: 600, mineral: 400, score: 0, warfleet: false },
-    Holo_Destroyer: { name: "Holo Destroyer", metal: 2000, mineral: 2000, score: 0, warfleet: false },
-    Holo_Cruiser: { name: "Holo Cruiser", metal: 6000, mineral: 3000, score: 0, warfleet: false },
-    Holo_Battleship: { name: "Holo Battleship", metal: 30000, mineral: 20000, score: 0, warfleet: false },
+    Colonisation_Ship: { name: "Colonisation Ship", metal: 600000, mineral: 400000, score: 0, warfleet: false },
+    Freighter: { name: "Freighter", metal: 24000, mineral: 16000, score: 3.66, warfleet: false, capacity: 100000 },
+    Merchant: { name: "Merchant", metal: 48000, mineral: 32000, score: 7.22, warfleet: false, capacity: 250000 },
+    Trader: { name: "Trader", metal: 72000, mineral: 48000, score: 10.98, warfleet: false, capacity: 625000 },
+    Hulk: { name: "Hulk", metal: 120000, mineral: 80000, score: 28.8, warfleet: false, capacity: 1562500 },
+    Holo_Projector: { name: "Holo Projector", metal: 400, mineral: 200, score: 43.284, warfleet: false, energy: 120000 },
+    Holo_Fighter: { name: "Holo Fighter", metal: 100, mineral: 0, score: 0.1524, warfleet: false, energy: 390 },
+    Holo_Bomber: { name: "Holo Bomber", metal: 0, mineral: 200, score: 0.468, warfleet: false, energy: 1200 },
+    Holo_Frigate: { name: "Holo Frigate", metal: 600, mineral: 400, score: 1.872, warfleet: false, energy: 4800 },
+    Holo_Destroyer: { name: "Holo Destroyer", metal: 2000, mineral: 2000, score: 7.7928, warfleet: false, energy: 19980 },
+    Holo_Cruiser: { name: "Holo Cruiser", metal: 6000, mineral: 3000, score: 16.38, warfleet: false, energy: 42000 },
+    Holo_Battleship: { name: "Holo Battleship", metal: 30000, mineral: 20000, score: 93.6, warfleet: false, energy: 240000 },
     Worker: { name: "Worker", metal: 0, mineral: 0, score: 0.0001, warfleet: false },
-    Soldier: { name: "Soldier", metal: 30, mineral: 20, score: 0.003, warfleet: false },
-    Metal: { name: "Metal", metal: 1, mineral: 0, score: 0, warfleet: false },
-    Mineral: { name: "Mineral", metal: 0, mineral: 1, score: 0, warfleet: false },
-    Food: { name: "Food", metal: 0, mineral: 0, score: 0, warfleet: false },
-    Energy: { name: "Energy", metal: 0, mineral: 0, score: 0, warfleet: false },
+    Soldier: { name: "Soldier", metal: 12, mineral: 8, score: 0.003, warfleet: false, food: 20 },
+    Metal: { name: "Metal", metal: 1, mineral: 0, score: 0.00004, warfleet: false },
+    Mineral: { name: "Mineral", metal: 0, mineral: 1, score: 0.00006, warfleet: false },
+    Food: { name: "Food", metal: 0, mineral: 0, score: 0.00008, warfleet: false },
+    Energy: { name: "Energy", metal: 0, mineral: 0, score: 0.00012, warfleet: false },
 };
 
 

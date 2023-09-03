@@ -33,13 +33,13 @@ Checkout the [CHANGELOG](CHANGELOG.md) for change history.
   
 ### TODO  
 - Navigation link for any planet
-- Custom alliance colors (by tag) (using chrome sync)
+- Custom alliance colors (by tag)
 - Custom planet image set(Ex:  https://helloweenpt.com/darkgalaxy/images/planets/)
-- Planets list: tags
-- Enable/disable feature (using chrome sync)
-- Collect multiple wf totals (using chrome sync)
-- Fleet sticky notes (using chrome sync)
-- Planet sticky notes (using chrome sync)
+- Planets tags
+- Enable/disable feature
+- Collect wf total from multiple fleets
+- Fleet sticky notes
+- Planet sticky notes
 
 ## Want to help ?
 Checkout the [workflow tutorial](workflow.md)
