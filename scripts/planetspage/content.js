@@ -173,7 +173,7 @@ allActivities.forEach((el) => {
         const planet = el.closest('.locationWrapper');
         const coords = planet.querySelector('.coords').innerText;
         const name = planet.querySelector('.planetName').innerText;
-        planets.notBuilding.push({ coords: coords, name: name });
+        planets.notBuilding.push({ coords: coords, name: name, href: el.href });
     }
 });
 
@@ -194,7 +194,7 @@ const activitySummary = (label, collection, cls) => {
 
 const planetsList = (label, planets, cls) => {
     let msgs = planets.reduce((carry, a) => {
-        carry.push(cls ? '<span class="planet-item">(<b>' + a.coords + '</b>) ' + a.name + '</span>' : '(' + a.coords + ') ' + a.name);
+        carry.push(cls ? `<a class="planet-item" href="${a.href}">(<b>${a.coords}</b>) ${a.name}</a>` : `(${a.coords}) ${a.name})`);
         return carry;
     }, []);
     if (msgs.length) {
