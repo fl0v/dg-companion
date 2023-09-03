@@ -1,4 +1,7 @@
 
+# Version 0.0.4 (wip)
+- Fixed outpost and colonisation ship score
+
 # Version 0.0.3
 - Updated fleet scores formula (see fleet page)
 - Planets not building warning includes link to build page
