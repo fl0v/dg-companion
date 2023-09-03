@@ -1,6 +1,5 @@
 /**
- * Research summary
- * @TODO copy to cliboard
+ * Research summary + copy to cliboard
  */
 
 /*
@@ -98,14 +97,13 @@ researchTypesList.forEach((el) => {
         allResearchTypes.push(new ResearchType(type.innerText, currentBonus ? currentBonus.innerText : ''));
     }
 });
-console.log('allResearchTypes', allResearchTypes);
 
 
 /*
  * Add summary box
  */
 
-const summaryResearchDone = () => {
+const summaryResearchDone = (html) => {
     const items = allResearchTypes.reduce((carry, research) => {
         let summary = [];
         if (research.currentBonus) {
@@ -113,16 +111,18 @@ const summaryResearchDone = () => {
         }
         summary = summary.concat(research.buildSummary());
         if (summary.length) {
-            carry.push('<li><b>' + research.name + ':</b> ' + summary.join(', ') + '</li>');
+            carry.push(html ? `<li><b>${research.name}:</b> ${summary.join(', ')}</li>` : `${research.name}: ${summary.join(', ')}\r\n`);
         }
         return carry;
     }, []);
     return items.join('');
 };
 
-const summaryResearchQueue = () => {
+const summaryResearchQueue = (html) => {
+    let idx = 0;
     return inQueue.reduce((carry, item) => {
-        return carry + '<li>' + item.title + '</li>';
+        idx++;
+        return html ? `${carry} <li>${item.title}</li>` : `${carry}${idx}. ${item.title}\r\n`;
     }, '');
 };
 
@@ -131,11 +131,44 @@ topBox.insertAdjacentHTML('afterbegin', `
     <div class="right researchSummary">
         <div class="padding researched">
             <h4>Summary:</h4>
-            <ul>${summaryResearchDone()}</ul>
+            <ul>${summaryResearchDone(true)}</ul>
         </div>
         <div class="padding in-queue">
             <h4>In queue:</h4>
-            <ol>${summaryResearchQueue()}</ol>
+            <ol>${summaryResearchQueue(true)}</ol>
         </div>
     </div>
 `);
+
+
+/*
+ * copy/paste
+ */
+const txtBorder = '====================';
+const txtSpacer = '--------------------';
+const pe = (s, c) => String(s).padEnd(c, ' ');
+const ps = (s, c) => String(s).padStart(c, ' ');
+
+document.querySelector('#contentBox > .header')
+    .insertAdjacentHTML('afterbegin', `
+        <span class="right copy-hint">Click to copy to clipboard</span>
+    `);
+document.querySelector('#contentBox .copy-hint')
+    .addEventListener('click', e => {
+        e.preventDefault();
+        navigator.clipboard.writeText(researchSummary());
+    });
+
+const researchSummary = () => `
+${txtBorder}
+Turn: ${currentTurn()}
+${txtSpacer}
+${String(summaryResearchDone(false)).trim()}
+${txtSpacer}
+In queue:
+${String(summaryResearchQueue(false)).trim()}
+${txtBorder}
+`;
+
+
+console.log(researchSummary());
