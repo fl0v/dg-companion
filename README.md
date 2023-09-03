@@ -6,28 +6,29 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
 - Get the extension from chrome web store https://chrome.google.com/webstore/detail/dark-galaxy-companion/hmchkjafjphldnhmlgbfkaemplnldkao
 - Visit https://www.darkgalaxy.com and signup/login to a running game
 
-## Features (enable them in extension options):
+## Features:
 - Alliance ranking
   - average score + sorting
 - Global radar page
   - quick filters + quick search
-  - enemy atacking warning
+  - enemy attacking warning
   - systems shortcuts
 - Fleet list page
   - quick filter + quick search
 - Planets list
-  - stats + summary + copy to cliboard
+  - stats + summary + copy to clipboard
   - total resource warning
 - Fleet scan
   - score, group by eta/alliance
 - Fleet overview page
-  - score
-  - copy to cliboard
+  - score + copy to clipboard
 - Battle report page
   - score + resources lost
 - Surface scan:
   - required soldiers
   - important structures
+- Research page
+  - cosmetics + summary + copy to clipboard
 
 Checkout the [CHANGELOG](CHANGELOG.md) for change history.
   
