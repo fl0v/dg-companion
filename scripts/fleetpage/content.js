@@ -12,13 +12,13 @@ const [totalScore, wfScore] = Array.from(document.querySelectorAll('#contentBox 
     .reduce((carry, item) => {
         if (shipPattern.test(item.innerText)) {
             const [, cnt, name] = item.innerText.match(shipPattern);
-            const ss = parseValue(cnt) * getMetaScoreByName(name);
+            const ss = parseValue(cnt) * getItemScoreByName(name);
             fleetComposition.push({
                 cnt: cnt,
                 name: name,
             });
             carry[0] += ss;
-            if (getMetaByName(name).warfleet) {
+            if (getItemByName(name).warfleet) {
                 carry[1] += ss;
             }
             item.querySelector('div:last-child').insertAdjacentHTML('beforeend', `${scoreTemplate(ss, 'score')}`);

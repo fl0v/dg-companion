@@ -25,7 +25,7 @@ let allSystems = [];
 let systemsLinks = [];
 allRadars.forEach((el) => {
     const text = el.querySelector(':first-child').innerText;
-    const p = new Planet(text);
+    const p = new dgPlanet(text);
     if (p.isValid()) {
         el.id = p.id;
         allPlanets.push(p);

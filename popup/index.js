@@ -2,7 +2,7 @@
 
 const elGameState = document.querySelector('#game-state ul');
 
-dgRoundsMeta.forEach((round) => {
+dgGamesMeta.forEach((round) => {
   if (round.hasStarted() && !round.hasEnded()) {
     elGameState.insertAdjacentHTML('beforeend', `
       <li>

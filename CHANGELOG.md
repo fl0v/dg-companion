@@ -1,5 +1,6 @@
 
 # Version 0.0.4 (wip)
+- housekeeping dg meta js
 - Trying to fix ships score
 
 # Version 0.0.3

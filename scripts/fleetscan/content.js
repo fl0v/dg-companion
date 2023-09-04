@@ -103,7 +103,7 @@ Array.from(document.querySelectorAll('.opacBackground .left.lightBorder')).forEa
         const shName = cells[0].innerText;
         const shCount = parseValue(cells[1].innerText);
         addFleet(playerName, allianceId, allianceName, shName, shCount, allied, owned, eta);
-        score += getMetaScoreByName(shName) * shCount;
+        score += getItemScoreByName(shName) * shCount;
     });
     fleetEl.insertAdjacentHTML('beforeend', `
             <span class="score-container neutral">
@@ -167,7 +167,7 @@ const allianceTemplate = (status, name, fleet) => {
      */
     let score = 0;
     tplBody += Object.entries(fleet).reduce((carry, a) => {
-        score += getMetaScoreByName(a[0]) * a[1];
+        score += getItemScoreByName(a[0]) * a[1];
         return !shipsOrder.includes(a[0])
             ? carry + shipTemplate(a[0], a[1])
             : carry;
