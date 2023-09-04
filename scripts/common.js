@@ -50,9 +50,8 @@ class dgItem {
         this.id = getMetaId(name);
         mergeData(this, options);
         if (!this.score) {
-            this.score = this.warfleetScore();
-            // this.warfleet && (this.score = this.warfleetScore());
-            // this.civilian && (this.score = this.civilianScore());
+            this.warfleet && (this.score = this.warfleetScore());
+            this.civilian && (this.score = this.civilianScore());
         }
     }
 
@@ -91,14 +90,14 @@ const dgMeta = {
     Battleship: new dgItem("Battleship", { metal: 600000, mineral: 400000, warfleet: true }), // default score: 144
     // colonisation, invasion & transport
     Outpost_Ship: new dgItem("Outpost Ship", { metal: 30000, mineral: 20000, civilian: true }), // default score: 7.2
-    Colonisation_Ship: new dgItem("Colonisation Ship", { metal: 600000, mineral: 400000, civilian: true }), // default score: 144
-    Invasion_Ship: new dgItem("Invasion Ship", { metal: 30000, mineral: 20000, score: 4.66, capacity: 50000 }), // custom score: 4.66    
-    Freighter: new dgItem("Freighter", { metal: 24000, mineral: 16000, score: 3.66, civilian: true, capacity: 100000 }), // custom score: 3.66
-    Merchant: new dgItem("Merchant", { metal: 48000, mineral: 32000, score: 7.22, civilian: true, capacity: 250000 }), // custom score: 7.22
-    Trader: new dgItem("Trader", { metal: 72000, mineral: 48000, score: 11, civilian: true, capacity: 625000 }), // custom score: 11
-    Hulk: new dgItem("Hulk", { metal: 120000, mineral: 80000, score: 19, civilian: true, capacity: 1562500 }), // custom score:: 19
+    Colonisation_Ship: new dgItem("Colonisation Ship", { metal: 600000, mineral: 400000, civilian: true, score: 144 }), // wf score: 144
+    Invasion_Ship: new dgItem("Invasion Ship", { metal: 30000, mineral: 20000, civilian: true, capacity: 50000 }), // civilian score: 4.66    
+    Freighter: new dgItem("Freighter", { metal: 24000, mineral: 16000, civilian: true, capacity: 100000 }), // civilian score: 3.84
+    Merchant: new dgItem("Merchant", { metal: 48000, mineral: 32000, civilian: true, capacity: 250000 }), // civilian score: 7.68
+    Trader: new dgItem("Trader", { metal: 72000, mineral: 48000, civilian: true, capacity: 625000 }), // civilian score: 11.52
+    Hulk: new dgItem("Hulk", { metal: 120000, mineral: 80000, civilian: true, capacity: 1562500 }), // civilian score:: 19.2
     // Holo shit
-    Holo_Projector: new dgItem("Holo Projector", { metal: 60000, mineral: 40000, energy: 120000 }), // default score: 57.6
+    Holo_Projector: new dgItem("Holo Projector", { metal: 60000, mineral: 40000, energy: 120000, score: 57.6 }), // wf score: 57.6
     Holo_Fighter: new dgItem("Holo Fighter", { metal: 40, mineral: 0, energy: 390, score: 0.24 }), // copy fighter default score: 0.24
     Holo_Bomber: new dgItem("Holo Bomber", { metal: 0, mineral: 80, energy: 1200, score: 0.72 }), // copy bomber default score: 0.72
     Holo_Frigate: new dgItem("Holo Frigate", { metal: 240, mineral: 160, energy: 4800, score: 2.88 }), // copy frigate default score: 2.88
