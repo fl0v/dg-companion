@@ -43,4 +43,4 @@ Checkout the [CHANGELOG](CHANGELOG.md) for change history.
 - Planet sticky notes
 
 ## Want to help ?
-Checkout the [workflow tutorial](workflow.md)
+Checkout the [CONTRIBUTING](CONTRIBUTING.md) page.
