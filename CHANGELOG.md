@@ -1,6 +1,6 @@
 
 # Version 0.0.4 (wip)
-- Fixed outpost and colonisation ship score
+- Trying to fix ships score
 
 # Version 0.0.3
 - Updated fleet scores formula (see fleet page)

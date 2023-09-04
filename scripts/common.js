@@ -25,43 +25,6 @@ const getSchemeType = (el) => {
     return r[1] || 'unknown';
 };
 
-/**
- * @see https://manual.darkgalaxy.com/reference/list-of-colonists
- * @see https://manual.darkgalaxy.com/reference/list-of-ships
- * @see https://manual.darkgalaxy.com/books/quick-reference/page/list-of-resources
- * ships score is {metal} * {metalScore) * 3 + {mineral} * {mineralScore} * 3
- * i assumed holo ships also use {energy} * {energyScore} * 3
- */
-const dgMeta = {
-    Fighter: { name: "Fighter", metal: 2000, mineral: 0, score: 0.24, warfleet: true },
-    Bomber: { name: "Bomber", metal: 0, mineral: 4000, score: 0.72, warfleet: true },
-    Frigate: { name: "Frigate", metal: 12000, mineral: 8000, score: 2.88, warfleet: true },
-    Destroyer: { name: "Destroyer", metal: 40000, mineral: 40000, score: 12, warfleet: true },
-    Cruiser: { name: "Cruiser", metal: 120000, mineral: 60000, score: 25.2, warfleet: true },
-    Battleship: { name: "Battleship", metal: 600000, mineral: 400000, score: 144, warfleet: true },
-    Outpost_Ship: { name: "Outpost Ship", metal: 30000, mineral: 20000, score: 7.2, warfleet: false },
-    Invasion_Ship: { name: "Invasion Ship", metal: 30000, mineral: 20000, score: 4.66, warfleet: false },
-    Colonisation_Ship: { name: "Colonisation Ship", metal: 600000, mineral: 400000, score: 144, warfleet: false },
-    Freighter: { name: "Freighter", metal: 24000, mineral: 16000, score: 3.66, warfleet: false, capacity: 100000 },
-    Merchant: { name: "Merchant", metal: 48000, mineral: 32000, score: 7.22, warfleet: false, capacity: 250000 },
-    Trader: { name: "Trader", metal: 72000, mineral: 48000, score: 10.98, warfleet: false, capacity: 625000 },
-    Hulk: { name: "Hulk", metal: 120000, mineral: 80000, score: 28.8, warfleet: false, capacity: 1562500 },
-    Holo_Projector: { name: "Holo Projector", metal: 400, mineral: 200, score: 43.284, warfleet: false, energy: 120000 },
-    Holo_Fighter: { name: "Holo Fighter", metal: 100, mineral: 0, score: 0.1524, warfleet: false, energy: 390 },
-    Holo_Bomber: { name: "Holo Bomber", metal: 0, mineral: 200, score: 0.468, warfleet: false, energy: 1200 },
-    Holo_Frigate: { name: "Holo Frigate", metal: 600, mineral: 400, score: 1.872, warfleet: false, energy: 4800 },
-    Holo_Destroyer: { name: "Holo Destroyer", metal: 2000, mineral: 2000, score: 7.7928, warfleet: false, energy: 19980 },
-    Holo_Cruiser: { name: "Holo Cruiser", metal: 6000, mineral: 3000, score: 16.38, warfleet: false, energy: 42000 },
-    Holo_Battleship: { name: "Holo Battleship", metal: 30000, mineral: 20000, score: 93.6, warfleet: false, energy: 240000 },
-    Worker: { name: "Worker", metal: 0, mineral: 0, score: 0.0001, warfleet: false },
-    Soldier: { name: "Soldier", metal: 12, mineral: 8, score: 0.003, warfleet: false, food: 20 },
-    Metal: { name: "Metal", metal: 1, mineral: 0, score: 0.00004, warfleet: false },
-    Mineral: { name: "Mineral", metal: 0, mineral: 1, score: 0.00006, warfleet: false },
-    Food: { name: "Food", metal: 0, mineral: 0, score: 0.00008, warfleet: false },
-    Energy: { name: "Energy", metal: 0, mineral: 0, score: 0.00012, warfleet: false },
-};
-
-
 const getMetaId = (name) => String(name).replace(/\s/g, '_');
 const getMetaById = (id) => dgMeta[id] || {};
 const getMetaByName = (name) => getMetaById(getMetaId(name));
@@ -69,6 +32,90 @@ const getMetaScoreById = (id) => (dgMeta[id] || {}).score || 0;
 const getMetaScoreByName = (name) => getMetaScoreById(getMetaId(name));
 
 const shipsOrder = ['Fighter', 'Bomber', 'Frigate', 'Destroyer', 'Cruiser', 'Battleship', 'Trader', 'Freighter', 'Invasion Ship'];
+
+class dgItem {
+    id;
+    name;
+    metal = 0;
+    mineral = 0;
+    energy = 0;
+    food = 0;
+    score = 0;
+    warfleet = false;
+    civilian = false;
+    capacity = 0;
+
+    constructor(name, options) {
+        this.name = name;
+        this.id = getMetaId(name);
+        mergeData(this, options);
+        if (!this.score) {
+            this.score = this.warfleetScore();
+            // this.warfleet && (this.score = this.warfleetScore());
+            // this.civilian && (this.score = this.civilianScore());
+        }
+    }
+
+    // 3x resource score
+    warfleetScore() {
+        const METAL_SCORE = 0.00012;
+        const MINERAL_SCORE = 0.00018;
+        const ENERGY_SCORE = 0.00036;
+        const FOOD_SCORE = 0.00024;
+        return this.metal * METAL_SCORE + this.mineral * MINERAL_SCORE + this.energy * ENERGY_SCORE + this.food * FOOD_SCORE;
+    }
+
+    // 2x res score
+    civilianScore() {
+        const METAL_SCORE = 0.00008;
+        const MINERAL_SCORE = 0.00012;
+        const ENERGY_SCORE = 0.00024;
+        const FOOD_SCORE = 0.00016;
+        return this.metal * METAL_SCORE + this.mineral * MINERAL_SCORE + this.energy * ENERGY_SCORE + this.food * FOOD_SCORE;
+    }
+
+}
+
+/**
+ * @see https://manual.darkgalaxy.com/reference/list-of-colonists
+ * @see https://manual.darkgalaxy.com/reference/list-of-ships
+ * @see https://manual.darkgalaxy.com/books/quick-reference/page/list-of-resources
+ */
+const dgMeta = {
+    // wf
+    Fighter: new dgItem("Fighter", { metal: 2000, mineral: 0, warfleet: true }), // default score: 0.24
+    Bomber: new dgItem("Bomber", { metal: 0, mineral: 4000, warfleet: true }), // default score: 0.72
+    Frigate: new dgItem("Frigate", { metal: 12000, mineral: 8000, warfleet: true }), // default score: 2.88
+    Destroyer: new dgItem("Destroyer", { metal: 40000, mineral: 40000, warfleet: true }), // default score: 12
+    Cruiser: new dgItem("Cruiser", { metal: 120000, mineral: 60000, warfleet: true }), // default score: 25.2
+    Battleship: new dgItem("Battleship", { metal: 600000, mineral: 400000, warfleet: true }), // default score: 144
+    // colonisation, invasion & transport
+    Outpost_Ship: new dgItem("Outpost Ship", { metal: 30000, mineral: 20000, civilian: true }), // default score: 7.2
+    Colonisation_Ship: new dgItem("Colonisation Ship", { metal: 600000, mineral: 400000, civilian: true }), // default score: 144
+    Invasion_Ship: new dgItem("Invasion Ship", { metal: 30000, mineral: 20000, score: 4.66, capacity: 50000 }), // custom score: 4.66    
+    Freighter: new dgItem("Freighter", { metal: 24000, mineral: 16000, score: 3.66, civilian: true, capacity: 100000 }), // custom score: 3.66
+    Merchant: new dgItem("Merchant", { metal: 48000, mineral: 32000, score: 7.22, civilian: true, capacity: 250000 }), // custom score: 7.22
+    Trader: new dgItem("Trader", { metal: 72000, mineral: 48000, score: 11, civilian: true, capacity: 625000 }), // custom score: 11
+    Hulk: new dgItem("Hulk", { metal: 120000, mineral: 80000, score: 19, civilian: true, capacity: 1562500 }), // custom score:: 19
+    // Holo shit
+    Holo_Projector: new dgItem("Holo Projector", { metal: 60000, mineral: 40000, energy: 120000 }), // default score: 57.6
+    Holo_Fighter: new dgItem("Holo Fighter", { metal: 40, mineral: 0, energy: 390, score: 0.24 }), // copy fighter default score: 0.24
+    Holo_Bomber: new dgItem("Holo Bomber", { metal: 0, mineral: 80, energy: 1200, score: 0.72 }), // copy bomber default score: 0.72
+    Holo_Frigate: new dgItem("Holo Frigate", { metal: 240, mineral: 160, energy: 4800, score: 2.88 }), // copy frigate default score: 2.88
+    Holo_Destroyer: new dgItem("Holo Destroyer", { metal: 800, mineral: 800, energy: 19980, score: 12 }), // copy destroyer default score: 12
+    Holo_Cruiser: new dgItem("Holo Cruiser", { metal: 2400, mineral: 1200, energy: 42000, score: 25.2 }), // copy cruiser default score: 25.2
+    Holo_Battleship: new dgItem("Holo Battleship", { metal: 12000, mineral: 8000, energy: 240000, score: 144 }), // copy battelship default score: 144
+    // colonists
+    Worker: new dgItem("Worker", { score: 0.0001 }),
+    Soldier: new dgItem("Soldier", { metal: 12, mineral: 8, food: 20, score: 0.003 }),
+    // base
+    Metal: new dgItem("Metal", { metal: 1, score: 0.00004 }),
+    Mineral: new dgItem("Mineral", { mineral: 1, score: 0.00006 }),
+    Food: new dgItem("Food", { food: 1, score: 0.00008 }),
+    Energy: new dgItem("Energy", { energy: 1, score: 0.00012 }),
+};
+
+
 
 const dgStructures = {
     Outpost: { order: 1 },
