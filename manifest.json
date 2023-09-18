@@ -133,6 +133,18 @@
                 "scripts/surfacescan/content.css"
             ]
         },
+         {
+            "matches": [
+                "https://*.darkgalaxy.com/navigation/*"
+            ],
+            "js": [
+                "scripts/_common/common.js",
+                "scripts/navigation/content.js"
+            ],
+            "css": [
+                "scripts/navigation/content.css"
+            ]
+        },
         {
             "matches": [
                 "https://*.darkgalaxy.com/research/"
