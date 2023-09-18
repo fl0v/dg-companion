@@ -22,6 +22,9 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
   - score, group by eta/alliance
 - Fleet overview page
   - score + copy to clipboard
+  - paste planet coords in target input
+- Navigation page
+  - copy planet coords on click
 - Battle report page
   - score + resources lost
 - Surface scan:
