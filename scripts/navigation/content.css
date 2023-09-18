@@ -1,0 +1,5 @@
+.navigation .coords .left img { cursor:pointer; }
+.navigation .coords.copied { 
+    text-shadow: -1px -1px 0 #2DD785, 1px -1px 0 #2DD785, -1px 1px 0 #2DD785, 1px 1px 0 #2DD785;
+    transition: all .4s ease-in-out;
+}
