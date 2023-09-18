@@ -8,6 +8,7 @@ navigation && navigation.addEventListener('click', (event) => {
     if (el) {
         navigator.clipboard.writeText(el.innerText);
         el.classList.toggle('copied');
+        globalMessage('Coordinates copied to cliboard!');
         setTimeout(() => el.classList.toggle('copied'), 500);
     }
 });

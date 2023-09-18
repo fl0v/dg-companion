@@ -28,4 +28,24 @@ const getSchemeType = (el) => {
 };
 
 
+const globalMessage = (message, cssClass, timeout) => {
+    timeout || (timeout = 1000);
+    cssClass || (cssClass = '');
+    const header = document.querySelector('#playerBox');
+    if (!header) {
+        console.log('missing header');
+        return;
+    }
+    let globalMessage = document.querySelector('#globalMessage');
+    if (!globalMessage) {
+        header.insertAdjacentHTML('beforebegin', `<div id="globalMessage"></div>`);
+        globalMessage = document.querySelector('#globalMessage');
+    }
+    globalMessage.insertAdjacentHTML('beforeend', `<div class="green ${cssClass}">${message}</div>`);
+    setTimeout(() => {
+        const msg = document.querySelector('#globalMessage > div:last-child');
+        msg && msg.remove();
+    }, timeout);
+};
+
 
