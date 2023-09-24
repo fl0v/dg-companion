@@ -30,3 +30,8 @@
 .d-flex-jce { justify-content: flex-end; }
 .d-flex-jcsb { justify-content: space-between; }
 .d-flex-column { flex-direction: column; }
+
+.copied { 
+    text-shadow: -1px -1px 0 #2DD785, 1px -1px 0 #2DD785, -1px 1px 0 #2DD785, 1px 1px 0 #2DD785;
+    transition: all .4s ease-in-out;
+}

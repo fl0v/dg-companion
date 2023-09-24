@@ -284,6 +284,9 @@ copy.style.cursor = 'pointer';
 copy.addEventListener('click', e => {
     e.preventDefault();
     navigator.clipboard.writeText(textStats());
+    e.target.classList.toggle('copied');
+    setTimeout(() => e.target.classList.toggle('copied'), 500);
+    globalMessage('Stats copied to cliboard!');
 });
 const txtBorder = '====================';
 const txtSpacer = '--------------------';
