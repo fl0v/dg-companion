@@ -44,6 +44,10 @@ Checkout the [CHANGELOG](CHANGELOG.md) for change history.
 - Collect wf total from multiple fleets
 - Fleet sticky notes
 - Planet sticky notes
+- Copy/paste scan results
+- Copy/paste battlereport stats
+- Export planets csv
+- Export radar csv
 
 ## Want to help ?
 Checkout the [CONTRIBUTING](CONTRIBUTING.md) page.
