@@ -1,6 +1,6 @@
 
 # Version 0.0.4 (wip)
-- Copy on click on planet coords in navigation + paste support on coords input in fleet page
+- Copy on click on planet coords in navigation + paste on coords input in fleet/scan page
 - housekeeping dg meta js
 - Trying to fix ships score
 
