@@ -4,11 +4,13 @@
 
 const navigation = document.querySelector('div.navigation');
 navigation && navigation.addEventListener('click', (event) => {
-    const el = event.target.closest('.coords');
-    if (el) {
-        navigator.clipboard.writeText(el.innerText);
-        el.classList.toggle('copied');
-        globalMessage('Coordinates copied to cliboard!');
-        setTimeout(() => el.classList.toggle('copied'), 500);
+    if (event.target.tagName !== 'A') {
+        const el = event.target.closest('.coords');
+        if (el) {
+            navigator.clipboard.writeText(el.innerText);
+            el.classList.toggle('copied');
+            setTimeout(() => el.classList.toggle('copied'), 500);
+            globalMessage('Coordinates copied to cliboard!');
+        }
     }
 });

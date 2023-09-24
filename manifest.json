@@ -51,9 +51,12 @@
             "js": [
                 "scripts/_common/common.js",
                 "scripts/_common/dg-item.js",
-                "scripts/fleetscan/content.js"
+                "scripts/_common/dg-structure.js",
+                "scripts/fleetscan/content.js",
+                "scripts/surfacescan/content.js"
             ],
             "css": [
+                "scripts/surfacescan/content.css",
                 "scripts/fleetscan/content.css"
             ]
         },
@@ -120,20 +123,6 @@
             ]
         },
         {
-            "matches": [
-                "https://*.darkgalaxy.com/news/view/*/",
-                "https://*.darkgalaxy.com/planet/*/comms/"
-            ],
-            "js": [
-                "scripts/_common/common.js",
-                "scripts/_common/dg-structure.js",
-                "scripts/surfacescan/content.js"
-            ],
-            "css": [
-                "scripts/surfacescan/content.css"
-            ]
-        },
-         {
             "matches": [
                 "https://*.darkgalaxy.com/navigation/*"
             ],
