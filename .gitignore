@@ -1,0 +1,10 @@
+/build
+/runtime
+logs
+
+.wip
+.env
+.codesandbox
+.vscode
+
+*.log
