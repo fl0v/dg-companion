@@ -31,6 +31,7 @@ const version = document.querySelector('#version');
 const manifestData = chrome.runtime.getManifest();
 version.innerHTML = `<small>(${manifestData.version})</small>`;
 
+/*
 const url = chrome.runtime.getURL('CHANGELOG.md');
 fetch(url)
   .then((response) => response.text())
@@ -38,7 +39,7 @@ fetch(url)
     console.log(text);
     changelog.innerHTML = `Change history: <pre>${text}</pre>`;
   });
-
+*/
 
 /*
  * WIP
