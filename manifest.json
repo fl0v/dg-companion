@@ -64,12 +64,13 @@
                 "scripts/_common/common.js",
                 "scripts/_common/dg-item.js",
                 "scripts/_common/dg-structure.js",
+                "scripts/_common/dg-planet.js",
                 "scripts/fleetscan/content.js",
-                "scripts/surfacescan/content.js"
+                "scripts/scanpage/content.js"
             ],
             "css": [
-                "scripts/surfacescan/content.css",
-                "scripts/fleetscan/content.css"
+                "scripts/fleetscan/content.css",
+                "scripts/scanpage/content.css"
             ]
         },
         {
