@@ -6,5 +6,6 @@ logs
 .env
 .codesandbox
 .vscode
+.idea
 
 *.log
