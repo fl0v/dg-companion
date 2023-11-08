@@ -56,21 +56,24 @@ class dgPlanet {
 
 
 class dgPlanetRating {
-    groundSpace;
-    orbitSpace;
-    metalRate;
-    mineralRate;
-    foodRate;
-    energyRate;
+    ground;
+    orbit;
+    metal;
+    mineral;
+    food;
+    energy;
 
     rating = {
-        energy: 0,
-        food: 0,
         metal: 0,
         mineral: 0,
+        food: 0,
+        energy: 0,
         average: 0,
     };
 
+    /**
+     * Optimal planet
+     */
     reference = {
         ground: 80,
         orbit: 60,
@@ -87,14 +90,21 @@ class dgPlanetRating {
         energy: 0.8,
     };
 
+    constructor(data) {
+        data && mergeData(this, data);
+    }
+
     initRating() {
-        const baseEnergyScore = this.energyRate * this.orbitSpace;
+        const baseEnergyScore = this.energy * this.orbit;
         const energyReference = this.reference.energy * this.reference.orbit;
         const energyIndex = baseEnergyScore / energyReference;
+        
+        const baseFoodScore = this.food * this.orbit * energyIndex;
+        const foodReference = this.reference.food * this.reference.orbit;
+        const foodIndex = baseFoodScore / foodReference;
 
-        const baseFoodScore = this.foodRate * this.orbitSpace * energyIndex;
-        const baseMetalScore = this.metalRate * this.groundSpace * energyIndex;
-        const baseMineralScore = this.mineralRate * this.groundSpace * energyIndex;
+        const baseMetalScore = this.metal * this.ground * energyIndex * foodIndex;
+        const baseMineralScore = this.mineral * this.ground * energyIndex * foodIndex;
         /*
          * normalized values: 100 = reference value
          */
