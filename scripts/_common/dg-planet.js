@@ -53,3 +53,64 @@ class dgPlanet {
     }
 
 }
+
+
+class dgPlanetRating {
+    groundSpace;
+    orbitSpace;
+    metalRate;
+    mineralRate;
+    foodRate;
+    energyRate;
+
+    rating = {
+        energy: 0,
+        food: 0,
+        metal: 0,
+        mineral: 0,
+        average: 0,
+    };
+
+    reference = {
+        ground: 80,
+        orbit: 60,
+        metal: 100,
+        mineral: 100,
+        food: 100,
+        energy: 100,
+    };
+
+    weight = {
+        metal: 1.0,
+        mineral: 1.0,
+        food: 1.2,
+        energy: 0.8,
+    };
+
+    initRating() {
+        const baseEnergyScore = this.energyRate * this.orbitSpace;
+        const energyReference = this.reference.energy * this.reference.orbit;
+        const energyIndex = baseEnergyScore / energyReference;
+
+        const baseFoodScore = this.foodRate * this.orbitSpace * energyIndex;
+        const baseMetalScore = this.metalRate * this.groundSpace * energyIndex;
+        const baseMineralScore = this.mineralRate * this.groundSpace * energyIndex;
+        /*
+         * normalized values: 100 = reference value
+         */
+        this.rating.energy = baseEnergyScore / this.reference.orbit;
+        this.rating.food = baseFoodScore / this.reference.orbit;
+        this.rating.metal = baseMetalScore / this.reference.ground;
+        this.rating.mineral = baseMineralScore / this.reference.ground;
+        /*
+         * weighted average
+         */
+        this.rating.average = 0;
+        this.rating.average += this.rating.metal * this.weight.metal;
+        this.rating.average += this.rating.mineral * this.weight.mineral;
+        this.rating.average += this.rating.food * this.weight.food;
+        this.rating.average += this.rating.energy * this.weight.energy;
+        this.rating.average = this.rating.average / 4;
+    }
+
+}
