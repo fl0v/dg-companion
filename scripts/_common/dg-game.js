@@ -45,13 +45,13 @@ class dgGame {
 
 
 const dgGamesMeta = [
-    new dgGame('Andromeda 1', {
-        url: 'https://andromeda.darkgalaxy.com',
-        signups: null,
-        start: new Date('30 Jul 2023 18:00:00'),
-        end: new Date(' 10 Sept 2023 18:00:00'),
-        turnLength: 3600,
-    }),
+    // new dgGame('Andromeda 1', {
+    //     url: 'https://andromeda.darkgalaxy.com',
+    //     signups: null,
+    //     start: new Date('30 Jul 2023 18:00:00'),
+    //     end: new Date(' 10 Sept 2023 18:00:00'),
+    //     turnLength: 3600,
+    // }),
     new dgGame('Andromeda 2', {
         url: 'https://andromeda.darkgalaxy.com',
         signups: new Date('1 Oct 2023 12:00:00'),
