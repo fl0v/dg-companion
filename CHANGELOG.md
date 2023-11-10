@@ -1,7 +1,8 @@
 
 # Version 0.0.5 (wip)
-- planet rank in scan page
-- clean info box in planet list
+- Resource scan: copy to cliboard planet stats to paste them in xls
+- Resource scn: planet rank
+- Planets page: total resource output for each planet
 
 # Version 0.0.4
 - Copy on click on planet coords in navigation + paste on coords input in fleet/scan page

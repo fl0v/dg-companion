@@ -11,6 +11,7 @@
     const resPattern = /([\d]+)%/; // will parse percentage ex: '70%'
     const requiredSoldiers = (workers, soldiers) => Math.ceil((workers / 15) + (soldiers * 1.5) + 1);
     const formatPercent = (v) => String(parseFloat(v).toFixed(2)) + '%';
+    const xlsRow = (planetInfo) => `${planetInfo.coords}\t\t${planetInfo.metal}\t${planetInfo.mineral}\t${planetInfo.food}\t${planetInfo.energy}\t${planetInfo.ground}\t${planetInfo.orbit}\t${formatNumber(planetInfo.rankAverage)}`;
 
     const important = [
         /Space_Tether/,
@@ -35,15 +36,21 @@
         soldiersMax: 0,
         housing: 0,
 
+        coords: '',
+        structures: [],
         summary: [], // ['JG', 'HB', '2xAB', 'COMMS']
+
+        rankAverage: false,
+        exportXls: false,
     };
 
+    /*
+     * Extract general data about scanned planet: workers, solders, ground, orbit, resources
+     */
     // last #planetHeader in page (works on scan page and news page)
     const scanContainer = Array.from(document.querySelectorAll('#planetHeader')).pop();
     if (scanContainer) {
-        /*
-         * Extract general data about scanned planet: workers, solders, ground, orbit, resources
-         */
+        planetInfo.coords = scanContainer.querySelector('.coords').innerText;
         scanContainer.querySelectorAll('.resource img').forEach((el) => {
             const resText = el.closest('.resource').innerText;
             const resType = el.getAttribute('title');
@@ -81,29 +88,6 @@
             }
         });
 
-
-        /*
-         * Add info in page
-         */
-        if (planetInfo.metal > 0) {
-            const rank = new dgPlanetRank(planetInfo);
-            rank.initRank();
-            scanContainer.querySelector('.planetHeadSection:nth-child(3) .lightBorder .left').insertAdjacentHTML('beforebegin', `
-                <div class="right neutral">
-                    <span class="required-soldier neutral">Soldiers required now: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersRequired)}</b></span>
-                    <span class="housing neutral">(Max: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersMax)}</b>)</span>
-                </div>
-            `);
-
-            const imgContainer = scanContainer.querySelector('#planetImage');
-            if (imgContainer) {
-                imgContainer.insertAdjacentHTML('beforeend', `
-                    <span class="planet-rank">
-                        <b class="custom-accent">${formatPercent(rank.rank.average)}</b>
-                    </span>    
-                `);
-            }
-        }
     }
 
 
@@ -114,6 +98,7 @@
     if (scanHeader) {
         planetInfo.summary = Array.from(scanContainer.parentNode.querySelectorAll('.entry')).reduce((carry, el) => {
             const txt = el.innerText;
+            planetInfo.structures.push(txt);
             const matched = important.reduce((matched, pattern) => {
                 if (!matched && pattern.test(txt)) {
                     matched = true;
@@ -126,15 +111,71 @@
             return carry;
         }, []);
 
-
-
-        scanHeader.insertAdjacentHTML('beforeend', `
-            <div class="right scan-summary">
-                Importat: ${planetInfo.summary.join(', ')}
-            </div>
-        `);
     }
 
+    /*
+     * Add info in page
+     */
+    if (scanContainer) {
+        /*
+         * Planet rank
+         */
+        if (planetInfo.metal > 0 && planetInfo.structures.length === 0) {
+            const rank = new dgPlanetRank(planetInfo);
+            rank.initRank();
+            planetInfo.rankAverage = rank.rank.average;
+            planetInfo.exportXls = true;
+            const imgContainer = scanContainer.querySelector('#planetImage');
+            imgContainer && imgContainer.insertAdjacentHTML('beforeend', `
+                <span class="planet-rank">
+                    <b class="custom-accent">${formatPercent(rank.rank.average)}</b>
+                </span>    
+            `);
+        }
+        /*
+         * Req soldiers
+         */
+        if (planetInfo.workers > 0) {
+            scanContainer.querySelector('.planetHeadSection:nth-child(3) .lightBorder .left').insertAdjacentHTML('beforebegin', `
+                <div class="right neutral">
+                    <span class="required-soldier neutral">Soldiers required now: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersRequired)}</b></span>
+                    <span class="housing neutral">(Max: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersMax)}</b>)</span>
+                </div>
+            `);
+        }
+    }
 
+    if (scanHeader) {
+        /*
+         * Important structures
+         */
+        if (planetInfo.summary.length > 0) {
+            scanHeader.insertAdjacentHTML('beforeend', `
+                <div class="right scan-summary">
+                    Importat: ${planetInfo.summary.join(', ')}
+                </div>
+            `);
+        }
+    }
+
+    /*
+     * Copy paste
+     */
+    if (scanContainer) {
+        const planetName = scanContainer.querySelector('.planetName');
+        if (planetName && planetInfo.exportXls) {
+            planetName.insertAdjacentHTML('afterend', `
+                <span class="left copyPaste">
+                    <span class="xls"><i class="icon"></i> xls</span>
+                    <!-- <span class="chat"><i class="icon"></i> chat</span> -->
+                </span>
+            `);
+            planetName.parentNode.querySelector('.copyPaste').addEventListener('click', e => {
+                e.preventDefault();
+                navigator.clipboard.writeText(xlsRow(planetInfo));
+                globalMessage('Stats copied to cliboard!');
+            });
+        }
+    }
 })();
 
