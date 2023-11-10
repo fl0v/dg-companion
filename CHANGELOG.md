@@ -1,6 +1,7 @@
 
 # Version 0.0.5 (wip)
 - planet rank in scan page
+- clean info box in planet list
 
 # Version 0.0.4
 - Copy on click on planet coords in navigation + paste on coords input in fleet/scan page

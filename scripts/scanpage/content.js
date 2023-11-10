@@ -55,9 +55,9 @@
                 const [, soldiers] = resText.match(solPattern);
                 planetInfo.soldiers = parseValue(soldiers);
             } else if (resType.match(/Orbit/)) {
-                planetInfo.orbit = parseInt(resText, 10);
+                planetInfo.orbit = parseInt(resText, 10); // @TODO add structures ocupied space
             } else if (resType.match(/Ground/)) {
-                planetInfo.ground = parseInt(resText, 10);
+                planetInfo.ground = parseInt(resText, 10); // @TODO add structures ocupied space
             }
         });
         planetInfo.soldiersRequired = requiredSoldiers(planetInfo.workers, planetInfo.soldiers);
@@ -81,26 +81,28 @@
             }
         });
 
-        const rank = new dgPlanetRank(planetInfo);
-        rank.initRank();
 
         /*
          * Add info in page
          */
-        scanContainer.querySelector('.planetHeadSection:nth-child(3) .lightBorder .left').insertAdjacentHTML('beforebegin', `
-            <div class="right neutral">
-                <span class="required-soldier neutral">Soldiers required now: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersRequired)}</b></span>
-                <span class="housing neutral">(Max: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersMax)}</b>)</span>
-            </div>
-        `);
+        if (planetInfo.metal > 0) {
+            const rank = new dgPlanetRank(planetInfo);
+            rank.initRank();
+            scanContainer.querySelector('.planetHeadSection:nth-child(3) .lightBorder .left').insertAdjacentHTML('beforebegin', `
+                <div class="right neutral">
+                    <span class="required-soldier neutral">Soldiers required now: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersRequired)}</b></span>
+                    <span class="housing neutral">(Max: <b class="custom-accent">${formatNumberInt(planetInfo.soldiersMax)}</b>)</span>
+                </div>
+            `);
 
-        const imgContainer = scanContainer.querySelector('#planetImage');
-        if (imgContainer) {
-            imgContainer.insertAdjacentHTML('beforeend', `
-            <span class="planet-rank">
-                <b class="custom-accent">${formatPercent(rank.rank.average)}</b>
-            </span>    
-        `);
+            const imgContainer = scanContainer.querySelector('#planetImage');
+            if (imgContainer) {
+                imgContainer.insertAdjacentHTML('beforeend', `
+                    <span class="planet-rank">
+                        <b class="custom-accent">${formatPercent(rank.rank.average)}</b>
+                    </span>    
+                `);
+            }
         }
     }
 
