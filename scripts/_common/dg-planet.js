@@ -53,3 +53,75 @@ class dgPlanet {
     }
 
 }
+
+
+class dgPlanetRank {
+    ground;
+    orbit;
+    metal;
+    mineral;
+    food;
+    energy;
+
+    rank = {
+        metal: 0,
+        mineral: 0,
+        food: 0,
+        energy: 0,
+        average: 0,
+    };
+
+    /**
+     * Optimal planet
+     */
+    reference = {
+        ground: 80,
+        orbit: 60,
+        metal: 100,
+        mineral: 100,
+        food: 100,
+        energy: 100,
+    };
+
+    weight = {
+        metal: 1.0,
+        mineral: 1.0,
+        food: 1.2,
+        energy: 0.8,
+    };
+
+    constructor(data) {
+        data && mergeData(this, data);
+    }
+
+    initRank(indexed) {
+        const baseEnergyScore = this.energy * this.orbit;
+        const energyReference = this.reference.energy * this.reference.orbit;
+        const energyIndex = baseEnergyScore / energyReference;
+
+        const baseFoodScore = this.food * this.orbit;
+        const foodReference = this.reference.food * this.reference.orbit;
+        const foodIndex = baseFoodScore / foodReference;
+
+        const baseMetalScore = this.metal * this.ground;
+        const baseMineralScore = this.mineral * this.ground;
+
+        /*
+         * normalized values: 100 = reference value
+         */
+        this.rank.energy = baseEnergyScore / this.reference.orbit;
+        this.rank.food = baseFoodScore / this.reference.orbit * (indexed ? energyIndex : 1);
+        this.rank.metal = baseMetalScore / this.reference.ground * (indexed ? energyIndex : 1);
+        this.rank.mineral = baseMineralScore / this.reference.ground * (indexed ? energyIndex : 1);
+        /*
+         * weighted average
+         */
+        this.rank.average = 0;
+        this.rank.average += this.rank.metal * this.weight.metal;
+        this.rank.average += this.rank.mineral * this.weight.mineral;
+        this.rank.average += this.rank.food * this.weight.food;
+        this.rank.average += this.rank.energy * this.weight.energy;
+        this.rank.average = this.rank.average / 4;
+    }
+
+}

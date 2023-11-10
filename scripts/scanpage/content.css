@@ -1,0 +1,6 @@
+
+.scan-summary { font-family: Tahoma, sans-serif; font-size:12px; text-shadow:none; text-align:right; padding-right:5px; }
+.custom-accent { color:#fff; }
+
+#planetImage { position: relative; }
+#planetImage .planet-rank { position: absolute; bottom:0.2rem; left:0; }
