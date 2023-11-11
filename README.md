@@ -30,6 +30,8 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
 - Surface scan:
   - required soldiers
   - important structures
+- Resource scan:
+  - planet rating based on ground + output %
 - Research page
   - cosmetics + summary + copy to clipboard
 

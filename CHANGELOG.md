@@ -1,3 +1,5 @@
+# Version 0.0.6 (wip)
+- ...
 
 # Version 0.0.5
 - Resource/Surface scan: copy to cliboard planet stats to paste them in a sheet or chat
