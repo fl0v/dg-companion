@@ -19,6 +19,24 @@ const resetFilters = (filters, exclude) => {
     });
 };
 
+// dose not work because chrome blocks injecting js unless document changes the content policy
+// const injectScript = (source) => {
+//     const j = document.createElement('script'),
+//         f = document.getElementsByTagName('script')[0];
+//     j.textContent = source;
+//     f.parentNode.insertBefore(j, f);
+//     f.parentNode.removeChild(j);
+// };
+
+// const getJsonPageData = () => {
+//     function getJSvar(myvar) {
+//         document.body.setAttribute('data-' + myvar, JSON.stringify(myvar));
+//     }
+//     injectScript('(' + getJSvar.toString() + ')("jsonPageData")');
+//     return document.body.getAttribute('data-jsonPageData');
+// };
+
+
 const currentTurn = () => document.querySelector('#turnNumber').innerText;
 
 const schemeType = /class=\"(neutral|hostile|friendly|allied)\"/

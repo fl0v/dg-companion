@@ -1,7 +1,7 @@
 
 # Version 0.0.5 (wip)
-- Resource scan: copy to cliboard planet stats to paste them in xls
-- Resource scn: planet rank
+- Resource scan: copy to cliboard planet stats to paste them in a sheet or chat
+- Resource scan: planet rating
 - Planets page: total resource output for each planet
 
 # Version 0.0.4
