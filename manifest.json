@@ -3,7 +3,7 @@
     "name": "Dark Galaxy Companion",
     "description": "Adds QoL features to Dark Galaxy interface (https:://www.darkgalaxy.com)",
     "author": "Biggy",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "action": {
         "default_popup": "popup/index.html",
         "default_title": "Dark Galaxy Companion"
@@ -65,6 +65,7 @@
                 "scripts/_common/dg-item.js",
                 "scripts/_common/dg-structure.js",
                 "scripts/_common/dg-planet.js",
+                "scripts/scanpage/scan-processor.js",
                 "scripts/fleetscan/content.js",
                 "scripts/scanpage/content.js"
             ],

@@ -1,5 +1,5 @@
 # Version 0.0.6 (wip)
-- ...
+- Refactored scan page logic to use jsonPageData (+ small fixes on exports)
 
 # Version 0.0.5
 - Resource/Surface scan: copy to cliboard planet stats to paste them in a sheet or chat

@@ -3,7 +3,7 @@
 .custom-accent { color:#fff; }
 
 #planetImage { position: relative; }
-#planetImage .planet-rank { position: absolute; bottom:0.2rem; left:0; }
+#planetImage .planet-rating { position: absolute; bottom:0.2rem; left:0; }
 
 .copyPaste { display:inline-block; margin-left:5px; cursor:pointer; }
 .copyPaste > span { margin-left:5px; }
