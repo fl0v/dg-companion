@@ -1,6 +1,8 @@
 /**
  * Planets stats + activities summary with copy to cliboard feature.
  * Info box besides each planet with total output + warning if stored resources are more then 24h outuput.
+ * 
+ * @TODO warning when planet has low food production, low gousing under certain trehshold (500k)
  */
 (function () {
 

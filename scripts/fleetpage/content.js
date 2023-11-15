@@ -1,5 +1,11 @@
 /**
  * Total score
+ * 
+ * @TODO wait time wizard
+ * @TODO icon to ad 99999 in input box for resources/ships
+ * @TODO LoadAll button for resources to queueu 99999 for al including workers, soldiers
+ * @TODO transfer all in fleet transfer page
+ * @TODO 9999 link in fleet transfer page
  */
 
 const shipPattern = /([\d,]+)x\s(.*)/; // 6,123x Fighter
@@ -34,7 +40,7 @@ document.querySelector('#contentBox .right.fleetRight')
                 Score
             </div> 
             <div class="entry opacBackground" style="line-height: 24px; padding: 4px"> 
-                <span class="left">Warfleeet only</span>                 
+                <span class="left">WarFleet only</span>                 
                 <span class="right">${scoreTemplate(wfScore, 'score')}</span> 
             </div> 
             <div class="entry opacLightBackground" style="line-height: 24px; padding: 4px"> 
