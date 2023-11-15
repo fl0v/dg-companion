@@ -1,5 +1,7 @@
 /**
  * Quick filters + quick search
+ * 
+ * @TODO enable group by prefix (remember option in storage)
  */
 
 const coordsPattern = /(\d+)\.(\d+)\.(\d+).(\d+)[\s](.*)/;

@@ -38,6 +38,7 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
 Checkout the [CHANGELOG](CHANGELOG.md) for change history.
   
 ### TODO  
+- Planet\ShipYard\Baraks: icon after ship name/soldier to add 999999 in queue input
 - Navigation link for any planet
 - Custom alliance colors (by tag)
 - Custom planet image set(Ex:  https://helloweenpt.com/darkgalaxy/images/planets/)

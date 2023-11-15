@@ -1,5 +1,7 @@
 /*
  * Just copy to cliboard on click on navigation icon near planet coords
+
+ @TODO extract occupancy from border style
  */
 
 const navigation = document.querySelector('div.navigation');

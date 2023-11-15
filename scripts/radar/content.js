@@ -1,6 +1,9 @@
 /**
  * Quick filters + quick search, systems shortcuts.
  * Warning of any incoming wf.
+ * 
+ * @TODO add interception warnings
+ * @TODO filter by system to fill in coordinates in search box (same logic as fleet page filter)
  */
 
 const searchMinLength = 3; // search only if atleast 3 chars

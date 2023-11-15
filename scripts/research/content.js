@@ -1,5 +1,7 @@
 /**
  * Research summary + copy to cliboard
+ * 
+ * @TODO add title with turns to completed searches or queued ones
  */
 
 /*
