@@ -1,5 +1,6 @@
-# Version 0.0.6 (wip)
+# Version 0.0.6
 - Refactored scan page logic to use jsonPageData (+ small fixes on exports)
+- fixed fleetscan bug for independent players
 
 # Version 0.0.5
 - Resource/Surface scan: copy to cliboard planet stats to paste them in a sheet or chat

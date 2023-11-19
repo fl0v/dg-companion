@@ -87,10 +87,13 @@ Array.from(document.querySelectorAll('.opacBackground .left.lightBorder')).forEa
     const fleetName = fleetEl.innerText;
     const playerName = playerEl.innerText;
     let allianceId = 0;
-    let allianceName = 'Independent';
+    let allianceName = '';
     if (allianceEl) {
         allianceId = allianceEl.getAttribute('allianceid');
         allianceName = allianceEl.getAttribute('alliancename');
+    } else {
+        allianceId = 'pl' + playerEl.getAttribute('playerId');
+        allianceName = playerName;
     }
     let eta = playerEl.parentNode.parentNode.innerText;
     if (etaPattern.test(eta)) {
@@ -130,6 +133,7 @@ Object.entries(fleets.alliances).forEach((a) => {
 });
 // to lazy to think of an cleaner way to build this order... there must be one...
 
+console.log('fleets', fleets);
 /**
  * Show the fireworks
  */

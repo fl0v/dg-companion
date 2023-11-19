@@ -13,7 +13,6 @@
     const jsonPageData = getJsonPageData();
     const processor = ScanProcessorFactory.factory(jsonPageData.scanType, jsonPageData.turnNumber);
     processor.parse(jsonPageData.scanResult);
-    console.log('processor', processor);
 
     // last #planetHeader in page (works on scan page and news page)
     const scanContainer = Array.from(document.querySelectorAll('#planetHeader')).pop();
@@ -21,6 +20,21 @@
     const planetName = scanContainer ? scanContainer.querySelector('.planetName') : null;
     const imgContainer = scanContainer ? scanContainer.querySelector('#planetImage') : null;
     const ownerContainer = scanContainer ? scanContainer.querySelector('.planetHeadSection:nth-child(3)') : null;
+
+    /*
+     * Workers capacity
+     */
+    if (processor.type === ScanProcessor.TYPE_SURFACE_SCAN && scanContainer) {
+        const popPattern = /([\d,]+)\s+\/\s+([\d,]+)\s+\(([\d,]+)\s+available\)/; // will split population  data ex: '52,126 / 100,000 (47,126 available)' 
+        scanContainer.querySelectorAll('.resource img').forEach((el) => {
+            const resText = el.closest('.resource').innerText;
+            const resType = el.getAttribute('title');
+            if (resType.match(/Workers/) && popPattern.test(resText)) {
+                const [, total, housing, available] = resText.match(popPattern);
+                processor.setHouseingCapacity(parseValue(housing));
+            }
+        });
+    }
 
     /*
      * Rating info under planet image
@@ -41,7 +55,7 @@
             .insertAdjacentHTML('beforebegin', `
             <div class="right neutral">
                 <span class="required-soldier neutral">Soldiers required: <b class="custom-accent">${formatNumberInt(processor.requiredSoldiers)}</b></span>
-                <!-- <span class="housing neutral">(Max: <b class="custom-accent">${formatNumberInt(processor.requiredSoldiersMax)}</b>)</span> -->
+                <span class="housing neutral">(Max: <b class="custom-accent">${formatNumberInt(processor.requiredSoldiersMax)}</b>)</span>
             </div>
         `);
     }
@@ -77,7 +91,7 @@
             navigator.clipboard.writeText(processor.exportText());
             globalMessage('Data copied to cliboard!');
         });
-        console.log(processor.exportText());
+        console.log(processor.type, processor.exportText());
     }
 
 

@@ -9,6 +9,12 @@ const lcfirst = (str) => String(str).charAt(0).toLowerCase() + String(str).slice
 
 const pe = (v, c, s) => String(v).padEnd(c, s || ' ');
 const ps = (v, c, s) => String(v).padStart(c, s || ' ');
+const pc = (v, c, s) => {
+    const str = String(v);
+    const pre = Math.floor((c - str.length) / 2);
+    const suf = c - str.length - pre;
+    return String(s || '').repeat(pre) + str + String(s || '').repeat(suf);
+};
 
 const mergeData = (model, data, onlyExisting) => Object.keys(data || {}).forEach((key) => {
     if (typeof model[key] === 'object' && model[key] !== null) {
