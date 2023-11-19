@@ -1,3 +1,6 @@
+# Version 0.0.7 (wip)
+- ...
+
 # Version 0.0.6
 - Refactored scan page logic to use jsonPageData (+ small fixes on exports)
 - fixed fleetscan bug for independent players
