@@ -2,8 +2,6 @@
  * Total score
  * 
  * @TODO wait time wizard
- * @TODO icon to ad 99999 in input box for resources/ships
- * @TODO LoadAll button for resources to queueu 99999 for al including workers, soldiers
  * @TODO transfer all in fleet transfer page
  * @TODO 9999 link in fleet transfer page
  */
@@ -49,6 +47,30 @@ document.querySelector('#contentBox .right.fleetRight')
             </div> 
        </div>
     `);
+
+/*
+ * 999999
+ */
+Array.from(document.querySelectorAll('.fleetLeft .transferRow')).forEach((row) => {
+    row.insertAdjacentHTML('beforeend', `<div class="left"><span class="add-max-icon" title="Click to fill max value"></span></div>`);
+    row.addEventListener('click', e => {
+        if (e.target.classList.contains('add-max-icon')) {
+            const input = row.querySelector('input').value = MAX_INPUT_VALUE;
+        }
+    });
+});
+Array.from(document.querySelectorAll('.fleetLeft .tableHeader')).forEach((row) => {
+    if (/Amount/.test(row.innerText)) {
+        row.querySelector(':last-child').insertAdjacentHTML('beforeend', `<span class="add-max-icon" title="Click to fill max value for all rows"></span>`);
+        row.addEventListener('click', e => {
+            if (e.target.classList.contains('add-max-icon')) {
+                Array.from(row.parentNode.querySelectorAll('.transferRow input')).forEach((item) => {
+                    item.value = MAX_INPUT_VALUE;
+                });
+            }
+        });
+    }
+});
 
 
 /*

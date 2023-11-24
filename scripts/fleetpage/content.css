@@ -1,3 +1,17 @@
 .copy-hint { padding:5px 10px; line-height:20px; font-family: Tahoma, sans-serif; font-size:0.5em; color:#fff; text-shadow:0; cursor:pointer; }
 .score { font-family: Tahoma, sans-serif; font-size:12px; }
 .score em { color:#fff; }
+
+.add-max-icon {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align:middle;
+    width:15px; height:15px; 
+    margin-left:5px;
+    background:transparent;
+    background-size: 15px 15px;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KCjxzdmcgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMjEgMjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+Cgo8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHN0cm9rZT0iIzAwMDAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyIDIpIj4KCjxwYXRoIGQ9Im0xMi41IDE0LjV2LThjMC0xLjEwNDU2OTUtLjg5NTQzMDUtMi0yLTJoLThjLTEuMTA0NTY5NSAwLTIgLjg5NTQzMDUtMiAydjhjMCAxLjEwNDU2OTUuODk1NDMwNSAyIDIgMmg4YzEuMTA0NTY5NSAwIDItLjg5NTQzMDUgMi0yeiIvPgoKPHBhdGggZD0ibTEyLjUgMTIuNWgyYzEuMTA0NTY5NSAwIDItLjg5NTQzMDUgMi0ydi03Ljk5NjU0MTczYzAtMS4xMDQ1Njk1LS44OTU0MzA1LTItMi0yLS4wMDExNTE4IDAtLjAwMjMwMzUgMC0uMDAzNDU1MyAwbC03Ljk5OTk5OTk4LjAxMzgyNDE1Yy0xLjEwMzIxODczLjAwMTkwNTk3LTEuOTk2NTQ0NzIuODk2Nzc2NjQtMS45OTY1NDQ3MiAxLjk5OTk5NzAxdjEuOTgyNzIwNTciLz4KCjxwYXRoIGQ9Im02LjUgNy41djYiLz4KCjxwYXRoIGQ9Im02LjUgNy41djYiIHRyYW5zZm9ybT0ibWF0cml4KDAgMSAtMSAwIDE3IDQpIi8+Cgo8L2c+Cgo8L3N2Zz4=");
+    filter: invert(100%);
+}
