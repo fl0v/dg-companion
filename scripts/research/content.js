@@ -146,11 +146,6 @@ topBox.insertAdjacentHTML('afterbegin', `
 /*
  * copy/paste
  */
-const txtBorder = '====================';
-const txtSpacer = '--------------------';
-const pe = (s, c) => String(s).padEnd(c, ' ');
-const ps = (s, c) => String(s).padStart(c, ' ');
-
 document.querySelector('#contentBox > .header')
     .insertAdjacentHTML('afterbegin', `
         <span class="right copy-hint">Click to copy to clipboard</span>
@@ -160,16 +155,15 @@ document.querySelector('#contentBox .copy-hint')
         e.preventDefault();
         navigator.clipboard.writeText(researchSummary());
     });
-
 const researchSummary = () => `
-${txtBorder}
+${ps('', 20, '=')}
 Turn: ${currentTurn()}
-${txtSpacer}
+${ps('', 20, '-')}
 ${String(summaryResearchDone(false)).trim()}
-${txtSpacer}
+${ps('', 20, '-')}
 In queue:
 ${String(summaryResearchQueue(false)).trim()}
-${txtBorder}
+${ps('', 20, '=')}
 `;
 
 

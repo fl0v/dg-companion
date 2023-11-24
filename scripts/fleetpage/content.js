@@ -54,11 +54,6 @@ document.querySelector('#contentBox .right.fleetRight')
 /*
  * copy/paste
  */
-const txtBorder = '====================';
-const txtSpacer = '--------------------';
-const pe = (s, c) => String(s).padEnd(c, ' ');
-const ps = (s, c) => String(s).padStart(c, ' ');
-
 const fleetHeader = String(document.querySelector('#contentBox > .header').innerText);
 const [, fleetName] = /Fleet List -[\s«]+(.*)[»]?/i.exec(fleetHeader);
 const fleetActivity = cleanText(document.querySelector('#contentBox .fleetRight > .fleetRight .entry').innerText);
@@ -76,7 +71,8 @@ document.querySelector('#contentBox .copy-hint')
         e.preventDefault();
         navigator.clipboard.writeText(textStats());
     });
-
+const txtBorder = '====================';
+const txtSpacer = '--------------------';
 const textStats = () => `
 ${txtBorder}
 Turn: ${currentTurn()} / Fleet: "${fleetName.trim()}"

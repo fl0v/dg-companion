@@ -294,11 +294,9 @@
         setTimeout(() => e.target.classList.toggle('copied'), 500);
         globalMessage('Stats copied to cliboard!');
     });
-    const txtBorder = '====================';
-    const txtSpacer = '--------------------';
-    const pe = (s, c) => String(s).padEnd(c, ' ');
-    const ps = (s, c) => String(s).padStart(c, ' ');
     const textStats = () => {
+        const txtBorder = '====================';
+        const txtSpacer = '--------------------';
         const pl = 11; // pad label 11 spaces at the end
         const pv = 7; // pad values with 7 spaces at the start
         var c = txtBorder + "\n";
