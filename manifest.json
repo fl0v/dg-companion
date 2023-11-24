@@ -27,8 +27,12 @@
             "matches": [
                 "https://*.darkgalaxy.com/*"
             ],
+            "js": [
+                "scripts/_common/common.js",
+                "scripts/coords/content.js"
+            ],
             "css": [
-                "scripts/ui20/content.css"
+                "scripts/coords/content.css"               
             ]
         },
         {
@@ -134,18 +138,6 @@
             ],
             "css": [
                 "scripts/fleetpage/content.css"
-            ]
-        },
-        {
-            "matches": [
-                "https://*.darkgalaxy.com/navigation/*"
-            ],
-            "js": [
-                "scripts/_common/common.js",
-                "scripts/navigation/content.js"
-            ],
-            "css": [
-                "scripts/navigation/content.css"
             ]
         },
         {

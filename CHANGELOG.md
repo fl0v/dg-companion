@@ -1,5 +1,6 @@
 # Version 0.0.7 (wip)
 - load max icon in fleet overview page
+- copy to cliboard coordinates of any planet
 
 # Version 0.0.6
 - Refactored scan page logic to use jsonPageData (+ small fixes on exports)
