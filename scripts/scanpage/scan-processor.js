@@ -182,7 +182,7 @@ class SurfaceScanProcessor extends ResourceScanProcessor {
         this.totals.worker += this.totals.occupiedWorker; // 'Worker' is in fact available workers
         this.requiredSoldiers = this.getRequiredSoldiers(this.totals.worker, this.totals.soldier);
         // @TODO add space ocupied by structures to total space (ground and orbit)
-        //this.planetRating = new dgPlanetRating(this.stats); // with updated ground and orbit
+        this.planetRating = null; //new dgPlanetRating(this.stats); // with updated ground and orbit
 
     }
 

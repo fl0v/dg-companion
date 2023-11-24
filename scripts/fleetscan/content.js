@@ -2,7 +2,6 @@
 /**
  * Total score by ETA/Alliance
  * 
- * @TODO fix independent flletscan
  * @todo simulate combat action
  */
 

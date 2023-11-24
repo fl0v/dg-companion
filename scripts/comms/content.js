@@ -1,5 +1,5 @@
 /*
- * copy paste planet coords
+ * paste planet coords
  */
 const inputs = Array.from(document.querySelectorAll('.coordsInput input[type="number"]'));
 const submit = document.querySelector('.coordsInput input[type="Submit"]');
