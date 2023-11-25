@@ -11,9 +11,17 @@
         item.querySelector('span').classList.add('coords-inner');
     });
     /*
-     * Planets list & radar page
+     * Planets list & global radar page
      */
     Array.from(document.querySelectorAll('#planetList .planetHeadSection .coords')).forEach((item) => {
+        item.classList.add('coords-container');
+        item.querySelector('img').classList.add('coords-copy');
+        item.querySelector('span').classList.add('coords-inner');
+    });
+    /*
+    * Planet radar page
+    */
+    Array.from(document.querySelectorAll('#radarList .entry .coords')).forEach((item) => {
         item.classList.add('coords-container');
         item.querySelector('img').classList.add('coords-copy');
         item.querySelector('span').classList.add('coords-inner');
