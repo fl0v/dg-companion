@@ -225,7 +225,7 @@
     document.querySelector('#planetList').insertAdjacentHTML('afterbegin',
         `
         <div class="opacDarkBackground lightBorder ofHidden seperator planetStats expanded">
-            <span class="right copy-hint content-copy-handler">Click to copy to clipboard</span>
+            <span class="right copy-hint cursor-pointer">Click to copy to clipboard</span>
             <div class="header border">
                 Total resources (planets: ${totalStats.planetsCount})
                 <span class="actions">

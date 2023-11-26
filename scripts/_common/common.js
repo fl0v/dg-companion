@@ -6,6 +6,8 @@ const formatNumberInt = (v) => String(Math.round(v)).replace(/(\d)(?=(\d{3})+(?!
 const toggleElement = (el, toggle) => { el.style = toggle ? 'display:block;' : 'display:none;'; };
 const ucfirst = (str) => String(str).charAt(0).toUpperCase() + String(str).slice(1);
 const lcfirst = (str) => String(str).charAt(0).toLowerCase() + String(str).slice(1);
+const escapeRegExp = (str) => String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+
 const MAX_INPUT_VALUE = '99999999';
 
 const pe = (v, c, s) => String(v).padEnd(c, s || ' ');

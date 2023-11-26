@@ -148,7 +148,7 @@ topBox.insertAdjacentHTML('afterbegin', `
  */
 document.querySelector('#contentBox > .header')
     .insertAdjacentHTML('afterbegin', `
-        <span class="right copy-hint content-copy-handler">Click to copy to clipboard</span>
+        <span class="right copy-hint cursor-pointer">Click to copy to clipboard</span>
     `);
 document.querySelector('#contentBox .copy-hint')
     .addEventListener('click', e => {

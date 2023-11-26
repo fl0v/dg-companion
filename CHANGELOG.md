@@ -1,5 +1,5 @@
 # Version 0.0.8 (wip)
-- global radar page cosmetics
+- global radar page search/filter improvements + cosmetics
 - copy to clipboard message cosmetics
   
 # Version 0.0.7

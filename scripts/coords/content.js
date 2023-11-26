@@ -8,7 +8,7 @@
     Array.from(document.querySelectorAll('div.navigation .planets .coords')).forEach((item) => {
         item.classList.add('coords-container');
         item.querySelector('img').classList.add('coords-copy');
-        item.querySelector('img').classList.add('content-copy-handler');
+        item.querySelector('img').classList.add('cursor-pointer');
         item.querySelector('span').classList.add('coords-inner');
     });
     /*
@@ -17,7 +17,7 @@
     Array.from(document.querySelectorAll('#planetList .planetHeadSection .coords')).forEach((item) => {
         item.classList.add('coords-container');
         item.querySelector('img').classList.add('coords-copy');
-        item.querySelector('img').classList.add('content-copy-handler');
+        item.querySelector('img').classList.add('cursor-pointer');
         item.querySelector('span').classList.add('coords-inner');
     });
     /*
@@ -26,7 +26,7 @@
     Array.from(document.querySelectorAll('#radarList .entry .coords')).forEach((item) => {
         item.classList.add('coords-container');
         item.querySelector('img').classList.add('coords-copy');
-        item.querySelector('img').classList.add('content-copy-handler');
+        item.querySelector('img').classList.add('cursor-pointer');
         item.querySelector('span').classList.add('coords-inner');
     });
     /*
@@ -35,7 +35,7 @@
     Array.from(document.querySelectorAll('#planetHeader .planetHeadSection .coords')).forEach((item) => {
         item.parentNode.classList.add('coords-container');
         item.querySelector('img').classList.add('coords-copy');
-        item.querySelector('img').classList.add('content-copy-handler');
+        item.querySelector('img').classList.add('cursor-pointer');
         item.classList.add('coords-inner');
     });
     /*
@@ -44,7 +44,7 @@
     Array.from(document.querySelectorAll('#contentBox .entry .activity .coords')).forEach((item) => {
         item.classList.add('coords-container');
         item.querySelector('img').classList.add('coords-copy');
-        item.querySelector('img').classList.add('content-copy-handler');
+        item.querySelector('img').classList.add('cursor-pointer');
         item.querySelector('span').classList.add('coords-inner');
     });
     /*
@@ -53,7 +53,7 @@
     Array.from(document.querySelectorAll('#contentBox .fleetRight .entry .coords')).forEach((item) => {
         item.classList.add('coords-container');
         item.querySelector('img').classList.add('coords-copy');
-        item.querySelector('img').classList.add('content-copy-handler');
+        item.querySelector('img').classList.add('cursor-pointer');
         item.querySelector('span').classList.add('coords-inner');
     });
 

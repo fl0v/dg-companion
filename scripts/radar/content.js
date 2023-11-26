@@ -44,18 +44,18 @@
         checkFleets();
     };
 
-    const filterFleets = (search) => {
+    const filterBySearch = (search) => {
         console.log('filter by search', search);
         showAllFleets();
         searchInput(search); // dont trigger search        
         allFleets.forEach((el) => {
-            const searchPattern = new RegExp(search, 'gi');
+            const searchPattern = new RegExp(escapeRegExp(search), 'gi');
             toggleElement(el, el.innerText.match(searchPattern));
         });
         checkFleets();
     };
 
-    const filterSystem = (system) => {
+    const filterBySystem = (system) => {
         console.log('filter by system', system);
         showAllFleets();
         searchInput(); // reset
@@ -71,7 +71,7 @@
         const elOwner = entry.querySelector('.owner');
         const elOwnerType = entry.querySelector('.owner > *');
         const elDestinationType = entry.querySelector('.destination .friendly, .destination .allied, .destination .hostile, .destination .neutral');
-        const elDestination = entry.querySelector('.destination');
+        const elDestination = entry.querySelector('.destination .coords');
         const elScore = entry.querySelector('.score');
         const elTurns = entry.querySelector('.turns');
         const elParent = entry.closest('.planetHeadSection');
@@ -98,8 +98,8 @@
 
 
     /*
-    * Index radar list
-    */
+     * Index radar list
+     */
 
     allRadars.forEach((el) => {
         const text = el.querySelector(':first-child').innerText;
@@ -119,7 +119,7 @@
             el.querySelector('.planetName')
                 .insertAdjacentHTML('afterend', `
                     <div class="actions">
-                        [${p.linkCoords(`data-search="${p.fullName()}" title="Filter by ${p.fullName()}"`)}]
+                        <!-- [${p.linkCoords(`data-search="${p.fullName()}" title="Filter by ${p.fullName()}"`)}] -->
                         [${p.linkSystem(`data-system="${p.coordsSystem}" title="Filter by system ${p.coordsSystem}"`)}]
                     </div>
                 `);
@@ -128,13 +128,13 @@
                     const system = event.target.getAttribute('data-system');
                     if (system) {
                         event.preventDefault();
-                        filterSystem(event.target.getAttribute('data-system'));
+                        filterBySystem(event.target.getAttribute('data-system'));
                         return false;
                     }
                     const search = event.target.getAttribute('data-search');
                     if (search) {
                         event.preventDefault();
-                        filterFleets(search);
+                        filterBySearch(search);
                         return false;
                     }
                 });
@@ -143,8 +143,30 @@
 
 
     /*
-    * Systems summary with links
-    */
+     * Add filter by for each planet/player
+     * @TODO optimise this with one event on main container
+     */
+    if (container) {
+        Array.from(container.querySelectorAll('#planetList .entry .coords')).forEach((el) => {
+            el.insertAdjacentHTML('afterend', `<span class="filter-by-planet search-icon cursor-pointer"></span>`);
+            el.parentNode.querySelector('.filter-by-planet')
+                .addEventListener('click', (event) => {
+                    filterBySearch(el.innerText);
+                });
+        });
+        Array.from(container.querySelectorAll('#planetList .entry .owner')).forEach((el) => {
+            el.insertAdjacentHTML('beforeend', `<span class="filter-by-owner search-icon cursor-pointer"></span>`);
+            el.parentNode.querySelector('.filter-by-owner')
+                .addEventListener('click', (event) => {
+                    filterBySearch(el.innerText);
+                });
+        });
+    }
+
+
+    /*
+     * Systems summary with links
+     */
 
     if (container) {
         container.classList.add("relative-container");
@@ -163,7 +185,7 @@
                 const system = event.target.getAttribute('data-system');
                 if (system) {
                     event.preventDefault();
-                    filterSystem(event.target.getAttribute('data-system'));
+                    filterBySystem(event.target.getAttribute('data-system'));
                     return false;
                 }
             });
@@ -217,7 +239,7 @@
         inputSearch.addEventListener('input', (event) => {
             const search = event.target.value;
             if (String(search).length >= searchMinLength) {
-                filterFleets(search);
+                filterBySearch(search);
             }
         });
     }
