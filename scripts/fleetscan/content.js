@@ -132,7 +132,6 @@ Object.entries(fleets.alliances).forEach((a) => {
 });
 // to lazy to think of an cleaner way to build this order... there must be one...
 
-console.log('fleets', fleets);
 /**
  * Show the fireworks
  */
@@ -214,6 +213,7 @@ const scanRowTemplate = (title, rowFleets) => {
 };
 
 if (fleets.have) {
+    console.log('fleets', fleets);
     /*
      * do i nead to sort etas first ? dont think so.
      * i think all fleets are always in cronological order in fleetscan

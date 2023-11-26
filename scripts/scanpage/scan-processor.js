@@ -60,7 +60,7 @@ class ScanProcessor {
     }
 
     parse(scanResult) {
-        console.log('scanResult', scanResult);
+        console.log('scan', this.type, 'result', scanResult);
         this.planet = new dgPlanet(scanResult.coordinates.join('.') + ' ' + scanResult.name);
         mergeData(this.playerInfo, scanResult.playerInfo, true);
     }

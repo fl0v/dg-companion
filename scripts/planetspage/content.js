@@ -286,8 +286,7 @@
      */
 
     const copy = document.querySelector('.planetStats .copy-hint');
-    copy.style.cursor = 'pointer';
-    copy.addEventListener('click', e => {
+    copy && copy.addEventListener('click', e => {
         e.preventDefault();
         copyToClipboard(textStats(), 'Planets stats copied to cliboard!', e.target);
         return false;
