@@ -11,19 +11,6 @@
 }
 
 
-
-
-/*
-body {
-    width:20rem;
-    padding:0; margin:0;
-    font-size:1rem;
-    background-image: url(/assets/res/scape.jpg);
-    background-color: #000;
-    color: #fff;
-}
-*/
-
 body { width:300px; }
 a { color:#4e4e4e; text-decoration:none; }
 a:hover { text-decoration:underline; }
@@ -63,49 +50,4 @@ h2 { margin:0; padding:0; margin-bottom:10px; font-size:16px; line-height:18px; 
 #changelog { margin-top:5px; text-align: right; text-decoration: underline;}
 
 
-/*
- * Cool checkbox
- */
-.toggle { cursor: pointer; display: block; margin-bottom:5px; }
-.toggle-label {
-  margin-left: 5px;
-  position: relative;
-  top: 2px;
-}
-.toggle-switch {
-  display: inline-block;
-  background: #ccc;
-  border-radius: 10px;
-  width: 37px;
-  height: 20px;
-  position: relative;
-  vertical-align: middle;
-  transition: background 0.25s;
-}
-.toggle-switch:before, .toggle-switch:after { content: ""; }
-.toggle-switch:before {
-  display: block;
-  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
-  width: 12px;
-  height: 12px;
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  transition: left 0.25s;
-}
-.toggle:hover .toggle-switch:before {
-  background: linear-gradient(to bottom, #fff 0%, #fff 100%);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
-}
-.toggle-checkbox:checked + .toggle-switch {
-  background: #56c080;
-}
-.toggle-checkbox:checked + .toggle-switch:before {
-  left: 20px;
-}
-.toggle-checkbox {
-  position: absolute;
-  visibility: hidden;
-}
+
