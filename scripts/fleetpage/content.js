@@ -74,7 +74,7 @@ Array.from(document.querySelectorAll('.fleetLeft .tableHeader')).forEach((row) =
 
 
 /*
- * copy/paste
+ * copy/paste summary
  */
 const fleetHeader = String(document.querySelector('#contentBox > .header').innerText);
 const [, fleetName] = /Fleet List -[\s«]+(.*)[»]?/i.exec(fleetHeader);
@@ -109,23 +109,4 @@ ${fleetQueueStr.trim()}
 ${txtBorder}
 `;
 
-
 console.log(textStats());
-
-/*
- * paste planet coords
- */
-const inputs = Array.from(document.querySelectorAll('.coordsInput input[type="number"]'));
-const move = document.querySelector('.coordsInput input[type="Submit"]');
-inputs[0] && inputs[0].addEventListener('paste', (event) => {
-    const values = (event.clipboardData || window.clipboardData).getData("text").split('.');
-    if (values.length === 4) {
-        values.forEach((v, idx) => {
-            inputs[idx].value = v;
-        });
-        move && move.focus();
-    }
-    event.preventDefault();
-    event.stopPropagation();
-    return false;
-});

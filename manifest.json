@@ -49,18 +49,6 @@
         },
         {
             "matches": [
-                "https://*.darkgalaxy.com/planet/*/comms/"
-            ],
-            "js": [
-                "scripts/_common/common.js",
-                "scripts/comms/content.js"
-            ],
-            "css": [
-                "scripts/comms/content.css"
-            ]
-        },
-        {
-            "matches": [
                 "https://*.darkgalaxy.com/news/view/*/",
                 "https://*.darkgalaxy.com/planet/*/comms/"
             ],

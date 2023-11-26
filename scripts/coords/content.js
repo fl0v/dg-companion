@@ -1,5 +1,8 @@
 /**
- * Will copy to cliboard any planet coordinates
+ * Will copy to cliboard any planet coordinates.
+ * Paste logic will apply:
+ * - in planet scan page /.../comms/
+ * - fleet overview page /fleet/.../
  */
 (function () {
     /*
@@ -63,6 +66,26 @@
             const p = event.target.closest('.coords-container');
             const c = p.querySelector('.coords-inner');
             c && copyToClipboard(c.innerText, 'Coordinates copied to cliboard!', c);
+        });
+    });
+
+    /*
+     * Paste coords in split inputs
+     */
+    Array.from(document.querySelectorAll('.coordsInput')).forEach((container) => {
+        const submit = container.querySelector('input[type="Submit"]');
+        const inputs = Array.from(container.querySelectorAll('input[type="number"]'));
+        inputs[0] && inputs[0].addEventListener('paste', (event) => {
+            const values = (event.clipboardData || window.clipboardData).getData("text").split('.');
+            if (values.length === 4) {
+                values.forEach((v, idx) => {
+                    inputs[idx].value = v;
+                });
+                submit && submit.focus();
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
         });
     });
 

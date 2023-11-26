@@ -1,6 +1,7 @@
 # Version 0.0.8 (wip)
 - global radar page search/filter improvements + cosmetics
 - copy to clipboard message cosmetics
+- copy/paste coordinates cleanup
   
 # Version 0.0.7
 - load max icon in fleet overview page
