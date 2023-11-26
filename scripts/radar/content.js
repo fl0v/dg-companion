@@ -3,211 +3,279 @@
  * Warning of any incoming wf.
  * 
  * @TODO add interception warnings
- * @TODO filter by system to fill in coordinates in search box (same logic as fleet page filter)
  */
+(function () {
 
-const searchMinLength = 3; // search only if atleast 3 chars
-const allRadars = Array.from(document.querySelectorAll('#planetList .planetHeadSection'));
-const allFleets = Array.from(document.querySelectorAll('#planetList .entry'));
-
-// will hide a radar if all entries are hidden
-const checkFleets = () => allRadars.forEach((el) => {
-    const hasFleets = Array.from(el.querySelectorAll('.entry'))
-        .reduce((carry, entry) => carry || entry.style.display !== 'none', false);
-    toggleElement(el.parentNode, hasFleets);
-});
-
-const showAllFleets = () => {
-    allFleets.forEach((el) => toggleElement(el, true));
-    checkFleets();
-};
+    const searchMinLength = 3; // search only if atleast 3 chars
+    const planetsList = [];
+    const systemsList = [];
+    const systemsLinks = [];
+    const allRadars = Array.from(document.querySelectorAll('#planetList .planetHeadSection'));
+    const allFleets = Array.from(document.querySelectorAll('#planetList .entry'));
+    const container = document.querySelector('#contentBox');
+    const header = document.querySelector('#contentBox > .header');
 
 
-let allPlanets = [];
-let allSystems = [];
-let systemsLinks = [];
-allRadars.forEach((el) => {
-    const text = el.querySelector(':first-child').innerText;
-    const p = new dgPlanet(text);
-    if (p.isValid()) {
-        el.id = p.id;
-        allPlanets.push(p);
-        if (!allSystems.includes(p.coordsSystem)) {
-            el.setAttribute('data-system', p.coordsSystem);
-            allSystems.push(p.coordsSystem);
-            systemsLinks.push(p.linkSystem("data-action=\"show\" data-system=\"" + p.coordsSystem + "\""));
-        } else {
-            el.parentNode.classList.add('collapsed');
+    /*
+    * Helpers
+    */
+
+    // will hide a radar if all entries are hidden
+    const checkFleets = () => allRadars.forEach((el) => {
+        const hasFleets = Array.from(el.querySelectorAll('.entry'))
+            .reduce((carry, entry) => carry || entry.style.display !== 'none', false);
+        toggleElement(el.parentNode, hasFleets);
+    });
+
+    const searchInput = (value, trigger) => {
+        value || (value = '');
+        trigger || (trigger = false);
+        const inputSearch = document.querySelector('#input-quick-search');
+        console.log('search by ', value, 'trigger', trigger);
+        inputSearch && (inputSearch.value = value);
+        inputSearch && trigger && (inputSearch.dispatchEvent(new Event('input')));
+    };
+
+    const showAllFleets = () => {
+        console.log('show all');
+        const inputFilterAll = document.querySelector('#id-qf-any-any');
+        inputFilterAll && (inputFilterAll.checked = true);
+        allFleets.forEach((el) => toggleElement(el, true));
+        checkFleets();
+    };
+
+    const filterFleets = (search) => {
+        console.log('filter by search', search);
+        showAllFleets();
+        searchInput(search); // dont trigger search        
+        allFleets.forEach((el) => {
+            const searchPattern = new RegExp(search, 'gi');
+            toggleElement(el, el.innerText.match(searchPattern));
+        });
+        checkFleets();
+    };
+
+    const filterSystem = (system) => {
+        console.log('filter by system', system);
+        showAllFleets();
+        searchInput(); // reset
+        system || (system = 'all');
+        if (system === 'all' || system === '') {
+            return;
         }
+        allRadars.forEach((el) => toggleElement(el.parentNode, el.getAttribute('data-system') === system));
+    };
 
-        el.querySelector('.planetName')
-            .insertAdjacentHTML('afterend', `
-                <div class="actions right">
-                    <span class="collapse">[&minus;]</span>
-                    <span class="expand">[&plus;]</span>
-                </div>
-            `);
-        el.querySelector('.actions')
-            .addEventListener('click', (event) => {
-                el.parentNode.classList.toggle('collapsed', !event.target.classList.contains('expand'));
-            });
-    }
-});
+    const parseEntry = (entry) => {
+        const elName = entry.querySelector('.name');
+        const elOwner = entry.querySelector('.owner');
+        const elOwnerType = entry.querySelector('.owner > *');
+        const elDestinationType = entry.querySelector('.destination .friendly, .destination .allied, .destination .hostile, .destination .neutral');
+        const elDestination = entry.querySelector('.destination');
+        const elScore = entry.querySelector('.score');
+        const elTurns = entry.querySelector('.turns');
+        const elParent = entry.closest('.planetHeadSection');
+        return {
+            owner: elOwner ? elOwner.innerText.trim() : '',
+            ownerType: elOwnerType ? elOwnerType.className : '',
+            destinationType: elDestinationType ? elDestinationType.className : '',
+            destination: elDestination ? elDestination.innerText.trim() : '',
+            name: elName ? elName.innerText.trim() : '',
+            score: elScore ? elScore.innerText.trim() : '',
+            turns: elTurns ? elTurns.innerText.trim() : '',
+            parent: elParent ? elParent.id : '',
+        };
+    };
 
-/*
- * Lets build a companion box with shortcuts to each radar
- */
-const container = document.querySelector('#contentBox');
-if (container) {
-    container.classList.add("relative-container");
-    container.insertAdjacentHTML('afterbegin', `
-        <div class="radar-companion-container">
-            <div class="lightBorder opacDarkBackground radar-companion">
-                <div class="links-container">
-                    ${systemsLinks.join(' ')}
-                    <span class="top"><a href="#" data-action="all">All</a></span>
-                </div>
-            </div>
-        </div>
-    `);
-    container.querySelector('.radar-companion .links-container')
-        .addEventListener('click', (event) => {
-            inputSearch.value = '';
-            showAllFleets();
-            const action = event.target.getAttribute('data-action');
-            if (action === 'all') {
-                return;
-            }
-            const system = event.target.getAttribute('data-system');
-            allRadars.forEach((el) => {
-                const planetSystem = el.getAttribute('data-system');
-                const valid = system === planetSystem;
-                toggleElement(el.parentNode, valid);
-            });
-        })
-        ;
-}
-
-/**
- * Add a quick filter/search box
- */
-const buildFilterOption = (label, value) => {
-    return `
+    const buildFilterOption = (label, value) => {
+        return `
             <label for="id-qf-${value}">
                 <input type="radio" name="quickFilter" id="id-qf-${value}" value="${value}" />
                 <span class="label">${label}</span>
             </label>
         `;
-};
-const header = document.querySelector('#contentBox > .header');
-if (header) {
-    header.classList.add('d-flex');
-    header.insertAdjacentHTML('beforeend', `
-        <span id="quick-filter">
-            ${buildFilterOption('All fleets', 'any-any')}
-            ${buildFilterOption('Only owned', 'friendly-any')}
-            ${buildFilterOption('Alliance', 'friendly_allied-any')}
-            ${buildFilterOption('Alliance attacking', 'friendly_allied-hostile')}
-            ${buildFilterOption('Hostile', 'hostile-any')}
-            ${buildFilterOption('Hostile attacking', 'hostile-friendly_allied')}
-        </span>
-        <span id="quick-search">
-            <input id="input-quick-search" type="text" name="quickSearch" value="" placeholder="Quick search..." />
-        </span>
-        `);
-}
-const inputSearch = document.querySelector('#input-quick-search');
-const inputFilterAll = document.querySelector('#id-qf-any-any');
-const parseEntry = (entry) => {
-    const elName = entry.querySelector('.name');
-    const elOwner = entry.querySelector('.owner');
-    const elOwnerType = entry.querySelector('.owner > *');
-    const elDestinationType = entry.querySelector('.destination .friendly, .destination .allied, .destination .hostile, .destination .neutral');
-    const elDestination = entry.querySelector('.destination');
-    const elScore = entry.querySelector('.score');
-    const elTurns = entry.querySelector('.turns');
-    const elParent = entry.closest('.planetHeadSection');
-    return {
-        owner: elOwner ? elOwner.innerText.trim() : '',
-        ownerType: elOwnerType ? elOwnerType.className : '',
-        destinationType: elDestinationType ? elDestinationType.className : '',
-        destination: elDestination ? elDestination.innerText.trim() : '',
-        name: elName ? elName.innerText.trim() : '',
-        score: elScore ? elScore.innerText.trim() : '',
-        turns: elTurns ? elTurns.innerText.trim() : '',
-        parent: elParent ? elParent.id : '',
-        //el: entry.cloneNode(true),
     };
-};
 
-// quick filter fleets
-document.querySelector('#quick-filter')
-    .addEventListener('input', (event) => {
-        inputSearch.value = '';
-        const [owner, destination] = event.target.value.split('-');
-        allFleets.forEach((el) => {
-            const info = parseEntry(el);
-            let valid = true;
-            valid = valid && (owner == 'any' || owner.includes(info.ownerType));
-            valid = valid && (destination == 'any' || destination.includes(info.destinationType));
-            toggleElement(el, valid);
-        });
-        checkFleets();
-    })
-    ;
 
-// quick search action
-const filterFleets = (search) => {
-    showAllFleets();
-    allFleets.forEach((el) => {
-        const searchPattern = new RegExp(search, 'gi');
-        toggleElement(el, el.innerText.match(searchPattern));
-    });
-    checkFleets();
-};
-inputSearch.addEventListener('keydown', (event) => {
-    if (event.keyCode == 27) {
-        event.target.value = '';
-        showAllFleets();
-    }
-});
-inputSearch.addEventListener('input', (event) => {
-    const search = event.target.value;
-    if (String(search).length >= searchMinLength) {
-        inputFilterAll.checked = true;
-        filterFleets(search);
-    }
-});
+    /*
+    * Index radar list
+    */
 
-/**
- * Incoming warning
- */
-let incoming = {};
-allFleets.forEach((entry) => {
-    const info = parseEntry(entry);
-    if (info.ownerType == 'hostile' && ['friendly', 'allied'].includes(info.destinationType)) {
-        if (!incoming[info.destination]) {
-            incoming[info.destination] = info;
+    allRadars.forEach((el) => {
+        const text = el.querySelector(':first-child').innerText;
+        const p = new dgPlanet(text);
+        if (p.isValid()) {
+            el.id = p.id;
+            planetsList.push(p);
+            if (!systemsList.includes(p.coordsSystem)) {
+                el.setAttribute('data-system', p.coordsSystem); // used by filterSystem()
+                systemsList.push(p.coordsSystem);
+                systemsLinks.push(p.linkSystem("data-system=\"" + p.coordsSystem + "\""));
+            }
+
+            /*
+            * Filter by links on each radar header
+            */
+            el.querySelector('.planetName')
+                .insertAdjacentHTML('afterend', `
+                    <div class="actions">
+                        [${p.linkCoords(`data-search="${p.fullName()}" title="Filter by ${p.fullName()}"`)}]
+                        [${p.linkSystem(`data-system="${p.coordsSystem}" title="Filter by system ${p.coordsSystem}"`)}]
+                    </div>
+                `);
+            el.querySelector('.actions')
+                .addEventListener('click', (event) => {
+                    const system = event.target.getAttribute('data-system');
+                    if (system) {
+                        event.preventDefault();
+                        filterSystem(event.target.getAttribute('data-system'));
+                        return false;
+                    }
+                    const search = event.target.getAttribute('data-search');
+                    if (search) {
+                        event.preventDefault();
+                        filterFleets(search);
+                        return false;
+                    }
+                });
         }
-        entry.insertAdjacentHTML('beforeend', '<span class="incoming-warning blinking">!</span>');
-    }
-});
-const incomingMessages = Object.entries(incoming)
-    .reduce((carry, fleet) => {
-        carry.push('<a class="incoming-destination" href="#' + fleet[1].parent + '">' + fleet[1].destination + '</a>');
-        return carry;
-    }, [])
-    ;
-if (header && incomingMessages.length) {
-    header.insertAdjacentHTML('afterend', `
-            <div id="incoming" class="opacBackground padding">
-            Incoming on: ${incomingMessages.join(', ')} <span class="incoming-warning blinking">!</span>
+    });
+
+
+    /*
+    * Systems summary with links
+    */
+
+    if (container) {
+        container.classList.add("relative-container");
+        container.insertAdjacentHTML('afterbegin', `
+            <div class="radar-companion-container">
+                <div class="lightBorder opacDarkBackground radar-companion">
+                    <div class="links-container">
+                        ${systemsLinks.join(' ')}
+                        <span class="top"><a href="#" data-system="all">All</a></span>
+                    </div>
+                </div>
             </div>
         `);
-    document.querySelector('#incoming').addEventListener('click', (event) => {
-        event.preventDefault();
-        inputSearch.value = event.target.innerText;
-        inputSearch.dispatchEvent(new Event('input'));
-        return false;
-    });
-}
+        container.querySelector('.radar-companion .links-container')
+            .addEventListener('click', (event) => {
+                const system = event.target.getAttribute('data-system');
+                if (system) {
+                    event.preventDefault();
+                    filterSystem(event.target.getAttribute('data-system'));
+                    return false;
+                }
+            });
+    }
+
+
+    /*
+    * Quick filter/search box
+    */
+
+    if (header) {
+        header.classList.add('d-flex');
+        header.insertAdjacentHTML('beforeend', `
+            <span id="quick-filter">
+                ${buildFilterOption('All fleets', 'any-any')}
+                ${buildFilterOption('Only owned', 'friendly-any')}
+                ${buildFilterOption('Alliance', 'friendly_allied-any')}
+                ${buildFilterOption('Alliance attacking', 'friendly_allied-hostile')}
+                ${buildFilterOption('Hostile', 'hostile-any')}
+                ${buildFilterOption('Hostile attacking', 'hostile-friendly_allied')}
+            </span>
+            <span id="quick-search">
+                <input id="input-quick-search" type="text" name="quickSearch" value="" placeholder="Quick search..." />
+            </span>
+        `);
+
+        // quick filter fleets
+        header.querySelector('#quick-filter')
+            .addEventListener('input', (event) => {
+                const [owner, destination] = event.target.value.split('-');
+                console.log('filter by', owner, '-', destination);
+                searchInput(); // reset
+                allFleets.forEach((el) => {
+                    const info = parseEntry(el);
+                    let valid = true;
+                    valid = valid && (owner == 'any' || owner.includes(info.ownerType));
+                    valid = valid && (destination == 'any' || destination.includes(info.destinationType));
+                    toggleElement(el, valid);
+                });
+                checkFleets();
+            });
+
+        // quick search
+        const inputSearch = header.querySelector('#input-quick-search');
+        inputSearch.addEventListener('keydown', (event) => {
+            if (event.keyCode == 27) {
+                event.target.value = '';
+                showAllFleets();
+            }
+        });
+        inputSearch.addEventListener('input', (event) => {
+            const search = event.target.value;
+            if (String(search).length >= searchMinLength) {
+                filterFleets(search);
+            }
+        });
+    }
+
+    /**
+     * Incoming warning
+     */
+    if (header) {
+        const incoming = {
+            friendly: {},
+            allied: {},
+        };
+        allFleets.forEach((entry) => {
+            const info = parseEntry(entry);
+            if (info.ownerType == 'hostile' && ['friendly', 'allied'].includes(info.destinationType)) {
+                incoming[info.destinationType][info.destination] || (incoming[info.destinationType][info.destination] = info);
+                entry.insertAdjacentHTML('beforeend', `<span class="incoming-warning incoming-warning-${info.destinationType} blinking">!</span>`);
+            }
+        });
+        const incomingMessages = (destinations) => Object.entries(destinations)
+            .reduce((carry, fleet) => {
+                carry.push(`<a class="incoming-destination coords" data-search="${fleet[1].destination}" href="#${fleet[1].parent}"><span>${fleet[1].destination}</span></a>`);
+                return carry;
+            }, []);
+        const incomingFriendlyMessages = incomingMessages(incoming.friendly);
+        const incomingAlliedMessages = incomingMessages(incoming.allied);
+        const banner = [];
+        incomingFriendlyMessages.length && banner.push(`
+            <div class="incoming-owned opacBackground lightBorder padding flex-row-wrap">
+                <span class="incoming-label">Incoming to <b class="friendly">owned</b> planets:</span> ${incomingFriendlyMessages.join('')} <span class="incoming-label"><b class="incoming-warning blinking">!</b></span>
+            </div>
+        `);
+        incomingAlliedMessages.length && banner.push(`
+            <div class="incoming-allied opacBackground lightBorder padding flex-row-wrap">
+                <span class="incoming-label">Incoming to <b class="allied">allied</b> planets:</span> ${incomingAlliedMessages.join('')} <span class="incoming-label"><b class="incoming-warning blinking">!</b></span>
+            </div>
+        `);
+        if (banner.length) {
+            header.insertAdjacentHTML('afterend', `
+                <div class="opacBackground ofHidden padding">                
+                    <div class="opacDarkBackground lightBorder" id="incoming">
+                        ${banner.join("\n")}                        
+                    </div>                
+                </div>
+            `);
+            document.querySelector('#incoming').addEventListener('click', (event) => {
+                let link = event.target;
+                if (!link.classList.contains('incoming-destination')) {
+                    link = link.closest('.incoming-destination');
+                }
+                const search = link.getAttribute('data-search');
+                if (search) {
+                    event.preventDefault();
+                    searchInput(search, true); // search by text
+                    return false;
+                }
+            });
+        }
+    }
+
+})();

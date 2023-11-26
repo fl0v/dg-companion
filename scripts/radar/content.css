@@ -1,20 +1,9 @@
+/*
+ * general styling
+ */
 .d-flex { display:flex; }
-.radar-companion-container { position:fixed; top:190px; width:900px; left:50%; transform: translateX(-50%); }
-.radar-companion { width:50px; padding:5px; position:absolute; top:0; right:-100px; z-index:9999; overflow:hidden; }
-.radar-companion .links-container { display:flex;flex-direction:column;  }
-.radar-companion .planet { display:block; margin:2px; font-size:14px; white-space: nowrap; }
-.radar-companion .top { display:block; margin:15px 2px 5px 2px; font-size:12px; text-align:left;}
 .relative-container { position:relative; }
-#quick-search { display:inline-block; margin-right:15px; }
-#quick-filter { font-family: Tahoma, sans-serif; font-size:12px; text-shadow:none; text-align:center; flex-grow:1; }
-#incoming { text-align:center; }
-#planetList .hide { display:none; }
-#planetList .actions { padding:4px; }
-#planetList .actions .collapse { display:block; cursor:pointer; }
-#planetList .actions .expand { display:none; cursor:pointer; }
-#planetList .collapsed #radarList { display:none; }
-#planetList .collapsed .actions .collapse { display:none; }
-#planetList .collapsed .actions .expand { display:block; }
+.flex-row-wrap { display:flex;  flex-direction:row; flex-wrap:wrap; }
 .incoming-warning {
     display:inline-block; border-radius:50%; padding:0 5px;
     font-weight:bold; font-size:14px; line-height:14px; background-color:#fff; color:red;
@@ -23,3 +12,51 @@
 @keyframes blinker {
     50% { opacity: 0; }
 }
+
+/*
+ * systems summary
+ */
+.radar-companion-container { position:fixed; top:190px; width:900px; left:50%; transform: translateX(-50%); }
+.radar-companion { width:50px; padding:5px; position:absolute; top:0; right:-100px; z-index:9999; overflow:hidden; }
+.radar-companion .links-container { display:flex;flex-direction:column;  }
+.radar-companion .planet { display:block; margin:2px; font-size:14px; white-space: nowrap; }
+.radar-companion .top { display:block; margin:15px 2px 5px 2px; font-size:12px; text-align:left;}
+
+/*
+ * quick filters/search
+ */
+#quick-search { display:inline-block; margin-right:15px; }
+#quick-filter { font-family: Tahoma, sans-serif; font-size:12px; text-shadow:none; text-align:center; flex-grow:1; }
+
+/*
+ * incoming warnings
+ */
+#incoming .incoming-owned { margin:3px; padding: 3px;  }
+#incoming .incoming-allied { margin:3px; padding: 3px; }
+#incoming .incoming-label { font-weight: bold; padding:3px; margin-right:5px; }
+#incoming .incoming-destination { 
+    margin:0 3px 5px; display:inline-block; 
+    padding:2px 3px 2px 21px; 
+    vertical-align:middle;
+    background: transparent;
+    background-size: 17px 17px;
+    background-position: 2px 2px;
+    background-repeat: no-repeat;
+    background-image: url("data:image/gif;base64,R0lGODlhEQARAPcAAAAAAACEAADGAEL/Qv///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ywAAAAAEQARAAAITQABCBxIsODAAAgTKlwoMABBhw0fRjxIsSLEiQAuZsS4kSPEhSAVeqw4UeNFkyMzCjjZMKSAASsTpgyw0qLEmTc7lsyJMmPIkAaDFgwIADs=");
+}
+
+/*
+ * Radar specific actions
+ */
+#planetList .hide { display:none; }
+#planetList .actions { padding:4px; }
+#planetList .actions { padding:4px; font-weight:bold; color:#FFF; flex-grow:1; align-self: flex-end; text-align:right; }
+/* 
+    old expand logic, deprecated
+#planetList .actions .collapse { display:block; cursor:pointer; }
+#planetList .actions .expand { display:none; cursor:pointer; }
+#planetList .collapsed #radarList { display:none; }
+#planetList .collapsed .actions .collapse { display:none; }
+#planetList .collapsed .actions .expand { display:block; } 
+*/
+

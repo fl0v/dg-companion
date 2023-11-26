@@ -49,7 +49,15 @@ class dgPlanet {
     }
 
     linkSystem(attributes) {
-        return `<a class="system" href="#${this.id}" ${attributes}>${this.coordsSystem}</a>`;
+        return `<a class="planet-system" href="#${this.id}" ${attributes}>${this.coordsSystem}</a>`;
+    }
+
+    linkCoords(attributes) {
+        return `<a class="planet-coords" href="#${this.id}" ${attributes}>${this.coords}</a>`;
+    }
+
+    fullName() {
+        return `${this.coords} ${this.name}`;
     }
 
 }

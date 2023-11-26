@@ -1,5 +1,5 @@
 # Version 0.0.8 (wip)
-- ...
+- global radar page cosmetics
   
 # Version 0.0.7
 - load max icon in fleet overview page
