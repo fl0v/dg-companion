@@ -1,0 +1,5 @@
+.content-copy-handler { cursor:pointer; }
+.content-copied { 
+    text-shadow: -1px -1px 0 #2DD785, 1px -1px 0 #2DD785, -1px 1px 0 #2DD785, 1px 1px 0 #2DD785 !important;
+    transition: all .4s ease-in-out;
+}

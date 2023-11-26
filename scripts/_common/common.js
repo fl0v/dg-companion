@@ -17,6 +17,16 @@ const pc = (v, c, s) => {
     return String(s || '').repeat(pre) + str + String(s || '').repeat(suf);
 };
 
+const copyToClipboard = (text, message, element) => {
+    navigator.clipboard.writeText(text);
+    message || (message = 'Data copied to cliboard!');
+    globalMessage(message);
+    if (element) {
+        element.classList.toggle('content-copied');
+        setTimeout(() => element.classList.toggle('content-copied'), 500);
+    }
+}
+
 const mergeData = (model, data, onlyExisting) => Object.keys(data || {}).forEach((key) => {
     if (typeof model[key] === 'object' && model[key] !== null) {
         if (typeof data[key] === 'object') {

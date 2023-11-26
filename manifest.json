@@ -32,7 +32,7 @@
                 "scripts/coords/content.js"
             ],
             "css": [
-                "scripts/coords/content.css"
+                "scripts/_common/common.css"
             ]
         },
         {

@@ -1,5 +1,5 @@
 
-.planetStats .copy-hint { padding:5px; line-height:20px;}
+.planetStats .copy-hint { padding:5px; line-height:20px; cursor:pointer; }
 .planetStats .resource-container {  }
 .planetStats .activity-container { max-width:600px; }
 .planetStats .resource { height:auto; width:auto; }

@@ -86,12 +86,13 @@ const fleetQueueStr = fleetQueue.reduce((carry, el) => carry + cleanText(el.inne
 
 document.querySelector('#contentBox > .header')
     .insertAdjacentHTML('afterbegin', `
-        <span class="right copy-hint">Click to copy to clipboard</span>
+        <span class="right copy-hint content-copy-handler">Click to copy to clipboard</span>
     `);
 document.querySelector('#contentBox .copy-hint')
     .addEventListener('click', e => {
         e.preventDefault();
-        navigator.clipboard.writeText(textStats());
+        copyToClipboard(textStats(), 'Fleet summary copied to clipboard!', e.target);
+        return false;
     });
 const txtBorder = '====================';
 const txtSpacer = '--------------------';
@@ -112,7 +113,7 @@ ${txtBorder}
 console.log(textStats());
 
 /*
- * copy paste planet coords
+ * paste planet coords
  */
 const inputs = Array.from(document.querySelectorAll('.coordsInput input[type="number"]'));
 const move = document.querySelector('.coordsInput input[type="Submit"]');

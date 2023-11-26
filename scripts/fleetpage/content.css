@@ -1,4 +1,4 @@
-.copy-hint { padding:5px 10px; line-height:20px; font-family: Tahoma, sans-serif; font-size:0.5em; color:#fff; text-shadow:0; cursor:pointer; }
+.copy-hint { padding:5px 10px; line-height:20px; font-family: Tahoma, sans-serif; font-size:0.5em; color:#fff; text-shadow:none; cursor:pointer; }
 .score { font-family: Tahoma, sans-serif; font-size:12px; }
 .score em { color:#fff; }
 

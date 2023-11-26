@@ -148,12 +148,13 @@ topBox.insertAdjacentHTML('afterbegin', `
  */
 document.querySelector('#contentBox > .header')
     .insertAdjacentHTML('afterbegin', `
-        <span class="right copy-hint">Click to copy to clipboard</span>
+        <span class="right copy-hint content-copy-handler">Click to copy to clipboard</span>
     `);
 document.querySelector('#contentBox .copy-hint')
     .addEventListener('click', e => {
         e.preventDefault();
-        navigator.clipboard.writeText(researchSummary());
+        copyToClipboard(researchSummary(), 'Research summary copied to cliboard!', e.target);
+        return false;
     });
 const researchSummary = () => `
 ${ps('', 20, '=')}

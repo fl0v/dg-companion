@@ -83,13 +83,13 @@
         `);
         planetName.parentNode.querySelector('.copyPaste .xls').addEventListener('click', e => {
             e.preventDefault();
-            navigator.clipboard.writeText(processor.exportXls());
-            globalMessage('Data copied to cliboard!');
+            copyToClipboard(processor.exportXls(), 'Scan sheet data copied to cliboard!', e.target);
+            return false;
         });
         planetName.parentNode.querySelector('.copyPaste .chat').addEventListener('click', e => {
             e.preventDefault();
-            navigator.clipboard.writeText(processor.exportText());
-            globalMessage('Data copied to cliboard!');
+            copyToClipboard(processor.exportText(), 'Scan data copied to cliboard!', e.target);
+            return false;
         });
         console.log(processor.type, processor.exportText());
     }

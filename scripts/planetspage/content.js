@@ -225,7 +225,7 @@
     document.querySelector('#planetList').insertAdjacentHTML('afterbegin',
         `
         <div class="opacDarkBackground lightBorder ofHidden seperator planetStats expanded">
-            <span class="right copy-hint">Click to copy to clipboard</span>
+            <span class="right copy-hint content-copy-handler">Click to copy to clipboard</span>
             <div class="header border">
                 Total resources (planets: ${totalStats.planetsCount})
                 <span class="actions">
@@ -289,10 +289,8 @@
     copy.style.cursor = 'pointer';
     copy.addEventListener('click', e => {
         e.preventDefault();
-        navigator.clipboard.writeText(textStats());
-        e.target.classList.toggle('copied');
-        setTimeout(() => e.target.classList.toggle('copied'), 500);
-        globalMessage('Stats copied to cliboard!');
+        copyToClipboard(textStats(), 'Planets stats copied to cliboard!', e.target);
+        return false;
     });
     const textStats = () => {
         const txtBorder = '====================';

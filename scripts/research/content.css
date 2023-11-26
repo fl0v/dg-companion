@@ -34,5 +34,5 @@
 .researchSummary ul { list-style:none; padding:0; margin:0;}
 .researchSummary ol { padding:0; margin:0; padding-left:15px; }
 
-.copy-hint { padding:5px 10px; line-height:20px; font-family: Tahoma, sans-serif; font-size:0.5em; color:#fff; text-shadow:0; cursor:pointer; }
+.copy-hint { padding:5px 10px; line-height:20px; font-family: Tahoma, sans-serif; font-size:0.5em; color:#fff; text-shadow:none; cursor:pointer; }
 
