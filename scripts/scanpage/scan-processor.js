@@ -208,6 +208,7 @@ class SurfaceScanProcessor extends ResourceScanProcessor {
             this.requiredSoldiersMax,
             this.turn,
             '(' + this.totals.occupiedWorker + ' occupied workers) ' + this.summary.join(', '),
+            this.houseingCapacity,
         ];
         return data.join("\t"); // tabs will go to next cell
     }
@@ -231,6 +232,8 @@ class SurfaceScanProcessor extends ResourceScanProcessor {
             pe('Occupied:', 14) + ps(formatNumberInt(this.totals.occupiedWorker), 9),
             pe('Soldiers:', 14) + ps(formatNumberInt(this.totals.soldier), 9),
             pe('Required:', 14) + ps(formatNumberInt(this.requiredSoldiers), 9),
+            ps('', 23, '-'),
+            pe('Workers max:', 14) + ps(formatNumberInt(this.houseingCapacity), 9),
             pe('Required max:', 14) + ps(formatNumberInt(this.requiredSoldiersMax), 9),
             ps('', 23, '-'),
             `Summary: ${this.summary.join(', ')}`,
