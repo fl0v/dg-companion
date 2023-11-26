@@ -3,7 +3,7 @@
     "name": "Dark Galaxy Companion",
     "description": "Adds QoL features to Dark Galaxy interface (https:://www.darkgalaxy.com)",
     "author": "Biggy",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "action": {
         "default_popup": "popup/index.html",
         "default_title": "Dark Galaxy Companion"
