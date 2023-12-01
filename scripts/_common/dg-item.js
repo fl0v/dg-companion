@@ -88,6 +88,3 @@ const dgItemsMeta = {
     Food: new dgItem("Food", { food: 1, score: 0.00008 }),
     Energy: new dgItem("Energy", { energy: 1, score: 0.00012 }),
 };
-
-
-const shipsOrder = ['Fighter', 'Bomber', 'Frigate', 'Destroyer', 'Cruiser', 'Battleship', 'Hulk', 'Trader', 'Merchant', 'Freighter', 'Invasion Ship'];

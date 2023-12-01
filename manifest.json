@@ -57,13 +57,19 @@
                 "scripts/_common/dg-item.js",
                 "scripts/_common/dg-structure.js",
                 "scripts/_common/dg-planet.js",
-                "scripts/scanpage/scan-processor.js",
-                "scripts/fleetscan/content.js",
-                "scripts/scanpage/content.js"
+                "scripts/_common/dg-fleet.js",
+                "scripts/newspage/news-parser.js",
+                "scripts/newspage/news-resource-scan.js",
+                "scripts/newspage/news-surface-scan.js",
+                "scripts/newspage/news-fleet-scan.js",
+                "scripts/newspage/news-invade-planet.js",
+                "scripts/newspage/content.js",
+                "scripts/fleetscan/templates.js",
+                "scripts/fleetscan/content.js"
             ],
             "css": [
                 "scripts/fleetscan/content.css",
-                "scripts/scanpage/content.css"
+                "scripts/newspage/content.css"
             ]
         },
         {

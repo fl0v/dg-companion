@@ -71,6 +71,21 @@ const getJsonPageData = () => {
     return jsonPageData;
 }
 
+const getJsonPlayerData = () => {
+    let jsonPlayerData = {};
+    const jsPattern = /jsonPlayerData[\s]?=[\s]?(\{.*\});$/;
+    Array.from(document.querySelectorAll('script')).every((script) => {
+        if (jsPattern.test(script.innerHTML)) {
+            const [, jsonStr] = script.innerHTML.match(jsPattern);
+            jsonPlayerData = JSON.parse(jsonStr);
+            return false;
+        }
+        return true;
+    });
+    console.log('jsonPlayerData', jsonPlayerData);
+    return jsonPlayerData;
+}
+
 const getTurnStatus = () => {
     let turnStatus = {};
     const jsPattern = /turnStatus[\s]?=[\s]?(\{.*\});/;

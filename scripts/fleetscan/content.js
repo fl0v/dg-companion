@@ -1,231 +1,147 @@
-
 /**
  * Total score by ETA/Alliance
  * 
  * @todo simulate combat action
  */
-
-const etaPattern = /Arriving\sin\s([\d]+)\sturn/;
-
-let shipsInScan = []; // ships not added in here will not show up at all
-let forceOwned = false; // if this fleetscan includes owned fleets then we force owned column on each eta row
-
-let fleets = {
-    have: false,
-    // globals
-    owned: {
-        name: '',
-        fleet: {},
-        cnt: 0
-    },
-    alliances: {
-        // allianceid: { name:'',allied:1,fleet:{....},cnt:0}
-    },
-    // each eta has its own separate record
-    eta: {
-        /*
-        0: {
-            owned: {
-                name: '',
-                fleet: {},
-                cnt: 0
-            },
-            alliances: {
-                allianceid: { name:'',allied:1,fleet:{....},cnt:0}
-            },
-         },
-        */
-    }
-}
-
-const addFleet = (playerName, allianceId, allianceName, shName, flCount, allied, owned, eta) => {
-    fleets.have = true;
-    if (owned) {
-        // GLOBAL OWNED
-        fleets.owned.name = playerName;
-        fleets.owned.fleet[shName] = fleets.owned.fleet[shName] || 0; // init ruller
-        fleets.owned.fleet[shName] += flCount;
-        fleets.owned.cnt += flCount;
-        forceOwned = true;
+(function () {
+    const jsonPageData = getJsonPageData();
+    const supported = [
+        NewsParser.TYPE_FLEET_SCAN,
+    ];
+    if (!supported.includes(jsonPageData.scanType)) {
+        return;
     }
 
-    // GLOBAL ALLIANCE
-    fleets.alliances[allianceId] = fleets.alliances[allianceId] || { name: allianceName, allied: allied, fleet: {}, cnt: 0 }; // init alliance
-    fleets.alliances[allianceId].fleet[shName] = fleets.alliances[allianceId].fleet[shName] || 0; // init ship type
-    fleets.alliances[allianceId].fleet[shName] += flCount;
-    fleets.alliances[allianceId].cnt += flCount;
+    const processor = NewsParserFactory.factory(jsonPageData.scanType, jsonPageData.turnNumber);
+    processor.parse(jsonPageData.scanResult || jsonPageData);
+    console.log('parsed', processor);
 
-    // FOR EACH ETA
-    fleets.eta[eta] = fleets.eta[eta] || { owned: { name: '', cnt: 0, fleet: {} }, alliances: {} }; // init eta
-    if (owned) {
-        fleets.eta[eta].owned.name = playerName;
-        fleets.eta[eta].owned.fleet[shName] = fleets.eta[eta].owned.fleet[shName] || 0; // init ruller
-        fleets.eta[eta].owned.fleet[shName] += flCount;
-        fleets.eta[eta].owned.cnt += flCount;
+    const fleetHeader = Array.from(document.querySelectorAll('#contentBox .header')).find((el) => el.innerText === 'Fleet List');
+    if (!fleetHeader) {
+        return;
     }
-    fleets.eta[eta].alliances[allianceId] = fleets.eta[eta].alliances[allianceId] || { name: allianceName, allied: allied, fleet: {}, cnt: 0 }; // init eta alliance
-    fleets.eta[eta].alliances[allianceId].fleet[shName] = fleets.eta[eta].alliances[allianceId].fleet[shName] || 0; // init ship type
-    fleets.eta[eta].alliances[allianceId].fleet[shName] += flCount;
-    fleets.eta[eta].alliances[allianceId].cnt += flCount;
-
-    if (!shipsInScan.includes(shName)) {
-        shipsInScan.push(shName);
-    }
-}
-
-/**
- * Count those bombers
- */
-Array.from(document.querySelectorAll('.opacBackground .left.lightBorder')).forEach((el) => {
-    // each fleet
-    const playerEl = el.querySelector('.playerName');
-    const allianceEl = el.querySelector('.allianceName');
-    const fleetEl = playerEl.closest('.opacLightBackground').querySelector('div > div.left');
-    const owned = playerEl.parentNode.classList.contains('friendly');
-    const allied = owned || playerEl.parentNode.classList.contains('allied');
-    const fleetName = fleetEl.innerText;
-    const playerName = playerEl.innerText;
-    let allianceId = 0;
-    let allianceName = '';
-    if (allianceEl) {
-        allianceId = allianceEl.getAttribute('allianceid');
-        allianceName = allianceEl.getAttribute('alliancename');
-    } else {
-        allianceId = 'pl' + playerEl.getAttribute('playerId');
-        allianceName = playerName;
-    }
-    let eta = playerEl.parentNode.parentNode.innerText;
-    if (etaPattern.test(eta)) {
-        [, eta] = eta.match(etaPattern);
-    } else {
-        eta = 0;
-    }
-    let score = 0;
-    Array.from(el.querySelectorAll('table tr')).forEach((el) => {
-        // each ship
-        const cells = el.querySelectorAll('td');
-        const shName = cells[0].innerText;
-        const shCount = parseValue(cells[1].innerText);
-        addFleet(playerName, allianceId, allianceName, shName, shCount, allied, owned, eta);
-        score += getItemScoreByName(shName) * shCount;
-    });
-    fleetEl.insertAdjacentHTML('beforeend', `
-            <span class="score-container neutral">
-                (score <b>${score.toFixed(2)}</b>)
-            </span>
-        `);
-});
-
-/**
- * Build alliance order from the totals row so we reuse the same order for each eta (each alliance will keep its column)
- */
-let allianceOrder = [];
-Object.entries(fleets.alliances).forEach((a) => {
-    if (a[1].allied && !allianceOrder.includes(a[0])) {
-        allianceOrder.push(a[0]);
-    }
-});
-Object.entries(fleets.alliances).forEach((a) => {
-    if (!a[1].allied && !allianceOrder.includes(a[0])) {
-        allianceOrder.push(a[0]);
-    }
-});
-// to lazy to think of an cleaner way to build this order... there must be one...
-
-/**
- * Show the fireworks
- */
-const shipTemplate = (name, count) => `
-        <tr class="opacBackground lightBorderBottom">
-            <td class="padding">${name}</td>
-            <td class="padding" style="width:70px;text-align:right;">${count}</td>
-        </tr>
-    `;
-
-/**
- * Column block for one alliance or for owned fleets
- */
-const allianceTemplate = (status, name, fleet) => {
-    const tplHeader = `
-            <div class="opacLightBackground ofHidden padding">
-                <div class="${status}">
-                    <div class="allianceName">${name}</div>
-                </div>
-            </div>
-        `;
 
 
-    // include ships that are in my predefined order and exists in the global fleet scan (shipsInScan)
-    tplBody = shipsOrder.reduce((carry, name) => {
-        if (shipsInScan.includes(name)) {
-            return carry + shipTemplate(name, fleet[name] || '');
-        } else {
-            return carry;
+    /*
+     * extract fleet composition because is not available yet in jsonPageData
+     */
+    const allShipsInScan = []; // Keep a global list of all ships in scan so we present a normalised sorted list
+    const allFleets = Array.from(fleetHeader.parentNode.querySelectorAll(':scope > .left'));
+    allFleets.forEach((el) => {
+        const fleetShipsEl = Array.from(el.querySelectorAll('table tr'));
+        const fleetEl = el.querySelector(':scope > div .left b');
+        const playerEl = el.querySelector('.playerName');
+        if (!fleetEl || !fleetShipsEl.length) {
+            return;
         }
-    }, '');
 
+        const playerName = playerEl.innerText.trim();
+        const fleetName = fleetEl.innerText.trim();
+        const fleetComp = [];
+        fleetShipsEl.forEach((el) => {
+            // each ship
+            const cells = el.querySelectorAll('td');
+            const ship = {
+                name: cells[0].innerText.trim(),
+                count: parseValue(cells[1].innerText),
+            };
+            processor.addFleetShips(playerName, fleetName, ship.name, ship.count);
+            allShipsInScan.includes(ship.name) || allShipsInScan.push(ship.name);
+        });
 
-    /*
-     * show other ships that i didn't include in my predefined shipsOrder but are included in this alliance fleetscan
-     * also add the scores
-     */
-    let score = 0;
-    tplBody += Object.entries(fleet).reduce((carry, a) => {
-        score += getItemScoreByName(a[0]) * a[1];
-        return !shipsOrder.includes(a[0])
-            ? carry + shipTemplate(a[0], a[1])
-            : carry;
-    }, '');
-    return `
-            <div class="lightBorder column">
-                ${tplHeader}
-                <table><tbody>
-                    ${tplBody}
-                </tbody></table>
-                <div class="score-container neutral opacLightBackground">(score <b>${score.toFixed(2)}</b>)</div>
-            </div>
-        `;
-}
-
-/**
- * A big row for all fleets arriving at the same time or for totals
- */
-const scanRowTemplate = (title, rowFleets) => {
-    let tplRow = '';
-    if (rowFleets.owned.cnt > 0) {
-        tplRow += allianceTemplate('friendly', rowFleets.owned.name, rowFleets.owned.fleet);
-    } else if (forceOwned) {
-        tplRow += '<div class="column"></div>'; // just spacer to keep the column for owned fleets
-    }
-    allianceOrder.forEach((id) => {
-        let a = rowFleets.alliances[id];
-        tplRow += a
-            ? allianceTemplate(a.allied ? 'allied' : 'hostile', a.name, a.fleet)
-            : '<div class="column"></div>' // if an alliance dose not have fleets at current eta then we put in a spacer
-            ;
+        const fleetModel = processor.findFleet(playerName, fleetName);
+        if (fleetModel) {
+            fleetEl.insertAdjacentHTML('beforeend', `
+                <span class="score-container neutral">
+                    (score <b title="actual warfleet">${fleetModel.compositionWfScore.toFixed(2)}</b> / <b title="on radar">${fleetModel.score.toFixed(2)}</b>)
+                </span>
+            `);
+        }
     });
-    return `
-            <div class="header border">${title}</div>
-            <div class="d-flex">
-                ${tplRow}
-            </div>
-        `;
-};
 
-if (fleets.have) {
-    console.log('fleets', fleets);
+    const addMissingShips = (fleet) => {
+        allShipsInScan.forEach((ship) => fleet.addComposition(ship, 0, 0));
+    }
+
     /*
-     * do i nead to sort etas first ? dont think so.
-     * i think all fleets are always in cronological order in fleetscan
+     * Prepare totals to be used in templates
      */
-    const tplEta = Object.entries(fleets.eta).reduce((carry, a) => {
-        const title = a[0] == 0 ? 'Fleets on orbit' : 'ETA ' + a[0];
-        return carry += scanRowTemplate(title, a[1]);
-    }, '');
-    document.querySelector('#planetHeader').insertAdjacentHTML('afterend', `
+
+    const groupFleetsByAlliance = (fleets) => {
+        const totalsByAlliance = [];
+        if (processor.showFriendly) {
+            const friendlyFleet = new dgFleet(processor.accountPlayer.name, { type: dgFleet.TYPE_FRIENDLY });
+            fleets.filter((f) => f.isFriendly())
+                .forEach((f) => friendlyFleet.addFleet(f));
+            addMissingShips(friendlyFleet);
+            totalsByAlliance.push(friendlyFleet);
+        }
+        if (processor.showAllied) {
+            const alliedFleet = new dgFleet(processor.accountPlayer.alliance.name, { type: dgFleet.TYPE_ALLIED });
+            fleets.filter((f) => f.isAllied())
+                .forEach((f) => alliedFleet.addFleet(f));
+            addMissingShips(alliedFleet);
+            totalsByAlliance.push(alliedFleet);
+        }
+        if (processor.showHostile) {
+            // add hostile alliances
+            Object.values(processor.alliances)
+                .filter((a) => a.name !== processor.accountPlayer.alliance.name) // for some reason current player is missing alliance id :(
+                .forEach((a) => {
+                    const allianceFleet = new dgFleet(a.name, { type: dgFleet.TYPE_HOSTILE });
+                    fleets.filter((f) => f.isHostile() && f.player.alliance.name === a.name)
+                        .forEach((f) => allianceFleet.addFleet(f));
+                    addMissingShips(allianceFleet);
+                    totalsByAlliance.push(allianceFleet);
+                });
+            // add non-aligned players
+            processor.players
+                .filter((p) => p.alliance.name.length === 0) // without alliance                            
+                .forEach((p) => {
+                    if (processor.accountPlayer.alliance.name.length === 0 && processor.accountPlayer.id !== p.id) {
+                        return; // if current player has no alliance then make sure is skipped in hostiles iteration
+                    }
+                    const playerFleet = new dgFleet(p.name, { type: dgFleet.TYPE_HOSTILE });
+                    fleets.filter((f) => f.isHostile() && f.player.id === p.id)
+                        .forEach((f) => playerFleet.addFleet(f));
+                    addMissingShips(playerFleet);
+                    totalsByAlliance.push(playerFleet);
+                });
+        }
+        return totalsByAlliance;
+    };
+
+    const totalsByEta = [
+        {
+            name: 'Total',
+            grouped: groupFleetsByAlliance(processor.fleets),
+        }
+    ];
+    processor.fleetsByEta.forEach((fleets, eta) => {
+        totalsByEta.push({
+            name: 'ETA ' + eta,
+            grouped: groupFleetsByAlliance(fleets)
+        });
+    });
+
+    fleetHeader.parentNode.insertAdjacentHTML('beforebegin', `
+        <div class="seperator"></div>
+        <div id="fleetScanSummary" class="lightBorder ofHidden opacDarBackground">
+            <div class="header border pageTitle">
+                Fleet Summary
+            </div>
+        </div>
+    `);
+    const summaryContainer = document.querySelector('#fleetScanSummary');
+
+    totalsByEta.forEach((t) => {
+        summaryContainer.insertAdjacentHTML('beforeend', `
             <div class="lightBorder ofHidden opacDarkBackground fleetscanTotals">
-                ${scanRowTemplate('Fleet Scan Total', fleets)}
-                ${tplEta}
+                ${fleetScanPageRowTemplate(t.name, t.grouped)}
             </div>
         `);
-}
+    });
+
+})();
+
+

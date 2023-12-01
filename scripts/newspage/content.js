@@ -11,8 +11,16 @@
 (function () {
 
     const jsonPageData = getJsonPageData();
-    const processor = ScanProcessorFactory.factory(jsonPageData.scanType, jsonPageData.turnNumber);
-    processor.parse(jsonPageData.scanResult);
+    const supported = [
+        NewsParser.TYPE_RESOURCE_SCAN,
+        NewsParser.TYPE_SURFACE_SCAN,
+    ];
+    if (!supported.includes(jsonPageData.scanType)) {
+        return;
+    }
+
+    const processor = NewsParserFactory.factory(jsonPageData.scanType, jsonPageData.turnNumber);
+    processor.parse(jsonPageData.scanResult || jsonPageData);
 
     // last #planetHeader in page (works on scan page and news page)
     const scanContainer = Array.from(document.querySelectorAll('#planetHeader')).pop();
@@ -24,7 +32,7 @@
     /*
      * Workers capacity
      */
-    if (processor.type === ScanProcessor.TYPE_SURFACE_SCAN && scanContainer) {
+    if (processor.type === NewsParser.TYPE_SURFACE_SCAN && scanContainer) {
         const popPattern = /([\d,]+)\s+\/\s+([\d,]+)\s+\(([\d,]+)\s+available\)/; // will split population  data ex: '52,126 / 100,000 (47,126 available)' 
         scanContainer.querySelectorAll('.resource img').forEach((el) => {
             const resText = el.closest('.resource').innerText;

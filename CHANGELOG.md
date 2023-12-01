@@ -1,5 +1,5 @@
 # Version 0.0.9 (wip)
-- ...
+- Refactored fleet scan to use partial data from jsonPageData and added fleet abstraction
 
 # Version 0.0.8
 - global radar page search/filter improvements + cosmetics
