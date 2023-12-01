@@ -1,5 +1,7 @@
 # Version 0.0.9 (wip)
 - Refactored fleet scan to use partial data from jsonPageData and added fleet abstraction
+- Fixed some news reports parse conflicts
+- Fixed fleet transfer 9999 function
 
 # Version 0.0.8
 - global radar page search/filter improvements + cosmetics
