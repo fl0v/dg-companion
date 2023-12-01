@@ -6,7 +6,6 @@
  * @TODO enforce structures order
  * @TODO add scan results to storage + export csv of all stored scans
  * @TODO calculate initial ground, orbit space
- * @TODO import feetscan script into this one
  */
 (function () {
 

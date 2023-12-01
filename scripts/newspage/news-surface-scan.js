@@ -1,4 +1,7 @@
 
+/**
+ * @TODO check 'CreatingSoldier' from jsonPageData, it exposes training activity on enemy planet
+ */
 class NewsSurfaceScan extends NewsResourceScan {
 
     totals = {

@@ -3,8 +3,12 @@
  * Info box besides each planet with total output + warning if stored resources are more then 24h outuput.
  * 
  * @TODO warning when planet has low food production, low housing under certain trehshold (500k)
+ * @TODO leverage jsonPageData
+ * @TODO add ships in SY from jsonPageData
  */
 (function () {
+
+    const jsonPageData = getJsonPageData();
 
     const resourceTypePattern = /src="\/images\/units\/small\/([^\.]+)\./; // used to detect the resource type using the image url
     const resPattern = /([\d,]+)\s+\(([\+\d,]+)\)\s+([\d%]+)/; // will split resource data ex: '52,126 (+3,465) 70%'
