@@ -16,9 +16,8 @@ class dgPlanet {
     fullNamePattern = /(\d+)\.(\d+)\.(\d+).(\d+)[\s]([A-Za-z\d\s]+)/;
 
     constructor(text, options) {
-        const data = this.parsePlanet(text);
-        data && mergeData(this, data);
-        options && mergeData(this, options);
+        mergeData(this, this.parsePlanet(text));
+        mergeData(this, options);
         if (this.isValid()) {
             this.id = [this.galaxy, this.sector, this.system, this.number].join('-');
             this.coords = [this.galaxy, this.sector, this.system, this.number].join('.');
@@ -28,7 +27,7 @@ class dgPlanet {
     }
 
     validPlanet(text) {
-        return String(text).match(this.coordsPattern);
+        return String(text).length > 0 && String(text).match(this.coordsPattern);
     }
 
     isValid() {
@@ -57,7 +56,7 @@ class dgPlanet {
     }
 
     fullName() {
-        return `${this.coords} ${this.name}`;
+        return this.coords ? `${this.coords} ${this.name}` : '[invalid planet]';
     }
 
 }

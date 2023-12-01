@@ -27,7 +27,7 @@ const fleetScanFleetGroupTemplate = (fleet) => {
             <table><tbody>
                 ${tplBody}
             </tbody></table>
-            <div class="score-container neutral opacLightBackground">(score <b>${fleet.compositionWfScore.toFixed(2)}</b>)</div>
+            <div class="score-container text-center neutral opacLightBackground">(score <b>${fleet.compositionWfScore.toFixed(2)}</b>)</div>
         </div>
     `;
 }

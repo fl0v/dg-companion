@@ -51,11 +51,13 @@
 
         const fleetModel = processor.findFleet(playerName, fleetName);
         if (fleetModel) {
-            fleetEl.insertAdjacentHTML('beforeend', `
-                <span class="score-container neutral">
-                    (score <b title="actual warfleet">${fleetModel.compositionWfScore.toFixed(2)}</b> / <b title="on radar">${fleetModel.score.toFixed(2)}</b>)
-                </span>
-            `);
+            const footer = [
+                `<div class="score-container neutral left">
+                    score <b title="actual warfleet">${fleetModel.compositionWfScore.toFixed(2)}</b> / <b title="on radar">${fleetModel.score.toFixed(2)}</b>
+                </div>`,
+                fleetModel.moveTurns > 0 && fleetModel.origin.isValid() ? `<div class="score-container neutral right">coming from <b>${fleetModel.origin.fullName()}</b></div>` : '',
+            ];
+            el.insertAdjacentHTML('beforeend', footer.join(''));
         }
     });
 

@@ -10,6 +10,18 @@ const escapeRegExp = (str) => String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 const MAX_INPUT_VALUE = '99999999';
 
+class CacheCall {
+    static CACHE = {};
+
+    static call(name, callback) {
+        if (CacheCall.CACHE[name]) {
+            return CacheCall.CACHE[name];
+        }
+        CacheCall.CACHE[name] = callback();
+        return CacheCall.CACHE[name];
+    }
+}
+
 const pe = (v, c, s) => String(v).padEnd(c, s || ' ');
 const ps = (v, c, s) => String(v).padStart(c, s || ' ');
 const pc = (v, c, s) => {
@@ -57,48 +69,54 @@ const resetFilters = (filters, exclude) => {
 };
 
 const getJsonPageData = () => {
-    let jsonPageData = {};
-    const jsPattern = /jsonPageData[\s]?=[\s]?(\{.*\});$/;
-    Array.from(document.querySelectorAll('script')).every((script) => {
-        if (jsPattern.test(script.innerHTML)) {
-            const [, jsonStr] = script.innerHTML.match(jsPattern);
-            jsonPageData = JSON.parse(jsonStr);
-            return false;
-        }
-        return true;
+    return CacheCall.call('jsonPageData', () => {
+        let jsonPageData = {};
+        const jsPattern = /jsonPageData[\s]?=[\s]?(\{.*\});$/;
+        Array.from(document.querySelectorAll('script')).every((script) => {
+            if (jsPattern.test(script.innerHTML)) {
+                const [, jsonStr] = script.innerHTML.match(jsPattern);
+                jsonPageData = JSON.parse(jsonStr);
+                return false;
+            }
+            return true;
+        });
+        console.log('jsonPageData', jsonPageData);
+        return jsonPageData;
     });
-    console.log('jsonPageData', jsonPageData);
-    return jsonPageData;
 }
 
 const getJsonPlayerData = () => {
-    let jsonPlayerData = {};
-    const jsPattern = /jsonPlayerData[\s]?=[\s]?(\{.*\});$/;
-    Array.from(document.querySelectorAll('script')).every((script) => {
-        if (jsPattern.test(script.innerHTML)) {
-            const [, jsonStr] = script.innerHTML.match(jsPattern);
-            jsonPlayerData = JSON.parse(jsonStr);
-            return false;
-        }
-        return true;
+    return CacheCall.call('jsonPlayerData', () => {
+        let jsonPlayerData = {};
+        const jsPattern = /jsonPlayerData[\s]?=[\s]?(\{.*\});$/;
+        Array.from(document.querySelectorAll('script')).every((script) => {
+            if (jsPattern.test(script.innerHTML)) {
+                const [, jsonStr] = script.innerHTML.match(jsPattern);
+                jsonPlayerData = JSON.parse(jsonStr);
+                return false;
+            }
+            return true;
+        });
+        console.log('jsonPlayerData', jsonPlayerData);
+        return jsonPlayerData;
     });
-    console.log('jsonPlayerData', jsonPlayerData);
-    return jsonPlayerData;
 }
 
 const getTurnStatus = () => {
-    let turnStatus = {};
-    const jsPattern = /turnStatus[\s]?=[\s]?(\{.*\});/;
-    Array.from(document.querySelectorAll('script')).every((script) => {
-        if (jsPattern.test(script.innerHTML)) {
-            const [, jsonStr] = script.innerHTML.match(jsPattern);
-            turnStatus = JSON.parse(jsonStr);
-            return false;
-        }
-        return true;
+    return CacheCall.call('turnStatus', () => {
+        let turnStatus = {};
+        const jsPattern = /turnStatus[\s]?=[\s]?(\{.*\});/;
+        Array.from(document.querySelectorAll('script')).every((script) => {
+            if (jsPattern.test(script.innerHTML)) {
+                const [, jsonStr] = script.innerHTML.match(jsPattern);
+                turnStatus = JSON.parse(jsonStr);
+                return false;
+            }
+            return true;
+        });
+        console.log('turnStatus', turnStatus);
+        return turnStatus;
     });
-    console.log('turnStatus', turnStatus);
-    return turnStatus;
 }
 
 //const currentTurn = () => document.querySelector('#turnNumber').innerText;

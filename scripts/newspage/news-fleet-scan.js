@@ -31,6 +31,7 @@ class NewsFleetScan extends NewsParser {
             this.showFriendly = this.showFriendly || fl.type === dgFleet.TYPE_FRIENDLY;
             this.showAllied = this.showAllied || fl.type === dgFleet.TYPE_ALLIED;
             this.showHostile = this.showHostile || fl.type === dgFleet.TYPE_HOSTILE;
+            console.log('Fleet', fl.name, 'from', fl.origin.fullName(), 'to', fl.destination.fullName(), 'eta', fl.moveTurns, 'score', fl.score);
 
             // index all fleets
             this.fleets.push(fl);
@@ -64,7 +65,6 @@ class NewsFleetScan extends NewsParser {
     }
 
     addFleetShips(playerName, fleetName, shipName, count) {
-        console.log('ships', playerName, fleetName, shipName, count);
         const fleet = this.findFleet(playerName, fleetName);
         if (fleet) {
             fleet.addComposition(shipName, count);
