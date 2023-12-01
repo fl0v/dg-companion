@@ -59,6 +59,13 @@
         item.querySelector('img').classList.add('cursor-pointer');
         item.querySelector('span').classList.add('coords-inner');
     });
+    Array.from(document.querySelectorAll('#fleetQueue .entry .coords')).forEach((item) => {
+        item.classList.add('coords-container');
+        item.querySelector('img').classList.add('coords-copy');
+        item.querySelector('img').classList.add('cursor-pointer');
+        item.querySelector('span').classList.add('coords-inner');
+    });
+
 
 
     Array.from(document.querySelectorAll('.coords-container .coords-copy')).forEach((el) => {
