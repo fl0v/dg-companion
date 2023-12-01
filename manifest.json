@@ -111,6 +111,19 @@
         },
         {
             "matches": [
+                "https://*.darkgalaxy.com/planet/*/production/",
+                "https://*.darkgalaxy.com/planet/*/training/"
+            ],
+            "js": [
+                "scripts/_common/common.js",
+                "scripts/planetproduction/content.js"
+            ],
+            "css": [
+                "scripts/planetproduction/content.css"
+            ]
+        },
+        {
+            "matches": [
                 "https://*.darkgalaxy.com/fleets/"
             ],
             "js": [

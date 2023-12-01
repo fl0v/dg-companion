@@ -2,6 +2,7 @@
 - Refactored fleet scan to use partial data from jsonPageData and added fleet abstraction
 - Fixed some news reports parse conflicts
 - Fixed fleet transfer 9999 function
+- Added 9999 to production/training queue
 
 # Version 0.0.8
 - global radar page search/filter improvements + cosmetics

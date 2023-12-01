@@ -1,0 +1,8 @@
+/**
+ * Content script template
+ */
+(function () {
+
+    // ...
+
+})();
