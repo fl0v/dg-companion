@@ -1,4 +1,7 @@
-# Version 0.0.9 (wip)
+# Version 0.0.10 (wip)
+- ...
+
+# Version 0.0.9
 - Refactored fleet scan to use partial data from jsonPageData and added fleet abstraction
 - Fixed some news reports parse conflicts
 - Fixed fleet transfer 9999 function
