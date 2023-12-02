@@ -4,6 +4,7 @@
 
 (function () {
 
+    const jsonPageData = getJsonPageData();
     const container = document.querySelector(".invasionReport .report");
     const title = document.querySelector("#contentBox .pageTitle");
     if (!title || title.innerText.trim() !== 'Combat Report') {
