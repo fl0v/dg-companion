@@ -105,8 +105,8 @@ class dgFleet {
     static sortShips(composition) {
         const index = Object.fromEntries(Object.entries(dgFleet.SHIPS_ORDER).map(a => a.reverse()))
         composition.sort((a, b) => {
-            const aOrder = index[a.name] || 9999;
-            const bOrder = index[b.name] || 9999;
+            const aOrder = parseInt(index[a.name] || 9999, 10);
+            const bOrder = parseInt(index[b.name] || 9999, 10);
             return (aOrder > bOrder) - (aOrder < bOrder);
         });
     }
