@@ -1,6 +1,10 @@
+
     .fleetscanTotals .column { margin:3px; flex-grow:1; max-width:200px; }
     .fleetscanTotals table { border-collapse: collapse; width: 100%; }
     .fleetscanTotals .allianceName { display:block; text-align:center; }
+
+    .fleet-list table td:last-child { text-align:right; padding-right:10px; }
+
     .d-flex { display:flex; white-space: nowrap; flex-wrap:wrap; }
     .score-container { font-size:10px; padding:5px; }
     .score-container b { color:#fff; }

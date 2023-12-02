@@ -20,12 +20,13 @@
     if (!fleetHeader) {
         return;
     }
+    fleetHeader.parentNode.classList.add('fleet-list'); // to enable some style fixes
 
 
     /*
      * extract fleet composition because is not available yet in jsonPageData
      */
-    const allShipsInScan = []; // Keep a global list of all ships in scan so we present a normalised sorted list
+    const allShipsInScan = []; // Keep a global list of all ships in scan so we present a normalised sorted list    
     const allFleets = Array.from(fleetHeader.parentNode.querySelectorAll(':scope > .left'));
     allFleets.forEach((el) => {
         const fleetShipsEl = Array.from(el.querySelectorAll('table tr'));
@@ -61,28 +62,25 @@
         }
     });
 
-    const addMissingShips = (fleet) => {
-        allShipsInScan.forEach((ship) => fleet.addComposition(ship, 0, 0));
-    }
-
     /*
      * Prepare totals to be used in templates
      */
 
     const groupFleetsByAlliance = (fleets) => {
+        const shipsInRow = []; // normalise the list of ships for all blocks on the same row
         const totalsByAlliance = [];
         if (processor.showFriendly) {
             const friendlyFleet = new dgFleet(processor.accountPlayer.name, { type: dgFleet.TYPE_FRIENDLY });
             fleets.filter((f) => f.isFriendly())
                 .forEach((f) => friendlyFleet.addFleet(f));
-            addMissingShips(friendlyFleet);
+            friendlyFleet.composition.forEach((s) => shipsInRow.includes(s.name) || shipsInRow.push(s.name));
             totalsByAlliance.push(friendlyFleet);
         }
         if (processor.showAllied) {
             const alliedFleet = new dgFleet(processor.accountPlayer.alliance.name, { type: dgFleet.TYPE_ALLIED });
             fleets.filter((f) => f.isAllied())
                 .forEach((f) => alliedFleet.addFleet(f));
-            addMissingShips(alliedFleet);
+            alliedFleet.composition.forEach((s) => shipsInRow.includes(s.name) || shipsInRow.push(s.name));
             totalsByAlliance.push(alliedFleet);
         }
         if (processor.showHostile) {
@@ -93,7 +91,7 @@
                     const allianceFleet = new dgFleet(a.name, { type: dgFleet.TYPE_HOSTILE });
                     fleets.filter((f) => f.isHostile() && f.player.alliance.name === a.name)
                         .forEach((f) => allianceFleet.addFleet(f));
-                    addMissingShips(allianceFleet);
+                    allianceFleet.composition.forEach((s) => shipsInRow.includes(s.name) || shipsInRow.push(s.name));
                     totalsByAlliance.push(allianceFleet);
                 });
             // add non-aligned players
@@ -106,10 +104,14 @@
                     const playerFleet = new dgFleet(p.name, { type: dgFleet.TYPE_HOSTILE });
                     fleets.filter((f) => f.isHostile() && f.player.id === p.id)
                         .forEach((f) => playerFleet.addFleet(f));
-                    addMissingShips(playerFleet);
+                    playerFleet.composition.forEach((s) => shipsInRow.includes(s.name) || shipsInRow.push(s.name));
                     totalsByAlliance.push(playerFleet);
                 });
         }
+        // add missing ships so its easy to compare groupedfleets
+        totalsByAlliance.forEach((f) => {
+            shipsInRow.forEach((ship) => f.addComposition(ship, 0, 0))
+        });
         return totalsByAlliance;
     };
 
