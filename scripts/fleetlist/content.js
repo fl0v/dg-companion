@@ -4,8 +4,6 @@
  * @TODO enable group by prefix (remember option in storage)
  */
 
-const jsonPageData = getJsonPageData();
-
 const coordsPattern = /(\d+)\.(\d+)\.(\d+).(\d+)[\s](.*)/;
 const searchMinLength = 3; // search only if atleast 3 chars
 

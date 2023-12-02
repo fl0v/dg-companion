@@ -6,8 +6,6 @@
  */
 (function () {
 
-    const jsonPageData = getJsonPageData();
-
     const searchMinLength = 3; // search only if atleast 3 chars
     const planetsList = [];
     const systemsList = [];

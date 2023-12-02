@@ -8,8 +8,6 @@
  * Index all researched/in queue items
  */
 
-const jsonPageData = getJsonPageData();
-
 const researchImgPattern = /\/([^\/]+)\.png/;
 const titlePattern1 = /Enables Construction of ([^<]+)</;
 const titlePattern2 = />([^<]+)</;

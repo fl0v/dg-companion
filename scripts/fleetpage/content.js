@@ -5,7 +5,6 @@
  * @TODO transfer all in fleet transfer page
  */
 (function () {
-    const jsonPageData = getJsonPageData();
     const fleetRightContainer = document.querySelector('#contentBox .right.fleetRight');
     const fleetItems = fleetRightContainer ? Array.from(fleetRightContainer.querySelectorAll('.entry')) : [];
     const shipPattern = /([\d,]+)x\s(.*)/; // 6,123x Fighter
