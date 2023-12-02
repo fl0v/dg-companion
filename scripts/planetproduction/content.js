@@ -4,6 +4,8 @@
  */
 (function () {
 
+    const jsonPageData = getJsonPageData();
+
     /*
      * 9999
      */

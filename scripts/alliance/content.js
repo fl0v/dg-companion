@@ -1,7 +1,8 @@
 /**
  * Average score + sorting
- */   
+ */
 
+const jsonPageData = getJsonPageData();
 const parentList = document.querySelector('.rankingsList');
 const rows = Array.from(parentList.querySelectorAll('.entry'));
 const header = parentList.querySelector('.tableHeader');
