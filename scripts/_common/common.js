@@ -84,6 +84,7 @@ const getJsonPageData = () => {
         return jsonPageData;
     });
 }
+getJsonPageData();
 
 const getJsonPlayerData = () => {
     return CacheCall.call('jsonPlayerData', () => {
