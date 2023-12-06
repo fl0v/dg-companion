@@ -110,7 +110,7 @@
         }
         // add missing ships so its easy to compare groupedfleets
         totalsByAlliance.forEach((f) => {
-            shipsInRow.forEach((ship) => f.addComposition(ship, 0, 0))
+            shipsInRow.forEach((ship) => f.addShip(ship, 0, 0))
         });
         return totalsByAlliance;
     };

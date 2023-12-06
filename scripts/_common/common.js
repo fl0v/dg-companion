@@ -7,6 +7,7 @@ const toggleElement = (el, toggle) => { el.style = toggle ? 'display:block;' : '
 const ucfirst = (str) => String(str).charAt(0).toUpperCase() + String(str).slice(1);
 const lcfirst = (str) => String(str).charAt(0).toLowerCase() + String(str).slice(1);
 const escapeRegExp = (str) => String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+const buildId = (str) => String(str).trim().toLowerCase().replace(/[^\w-]+/gi, '-');
 
 const MAX_INPUT_VALUE = '99999999';
 

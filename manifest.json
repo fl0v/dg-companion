@@ -140,7 +140,13 @@
             ],
             "js": [
                 "scripts/_common/common.js",
+                "scripts/_common/memo.js",
                 "scripts/_common/dg-item.js",
+                "scripts/_common/dg-planet.js",
+                "scripts/_common/dg-fleet.js",
+                "scripts/fleetscan/templates.js",
+                "scripts/fleetpage/templates.js",
+                "scripts/fleetpage/saved-fleets.js",
                 "scripts/fleetpage/content.js"
             ],
             "css": [

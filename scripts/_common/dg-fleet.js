@@ -11,10 +11,11 @@ class dgFleet {
     static SHIPS_ORDER = ['Fighter', 'Bomber', 'Frigate', 'Destroyer', 'Cruiser', 'Battleship', 'Hulk', 'Trader', 'Merchant', 'Freighter', 'Invasion Ship'];
 
     id;
-    name;
+    name = '';
+    status = '';
     moveTurns;
     hasShips = false;
-    score; // on radar
+    score = 0; // on radar
     type = dgFleet.TYPE_NEUTRAL;
 
     player = {
@@ -32,8 +33,20 @@ class dgFleet {
     compositionWfScore = 0; // actual score
 
     constructor(name, options) {
-        this.name = name;
+        this.setName(name);
         mergeData(this, options);
+    }
+
+    setScore(score) {
+        this.score = score;
+    }
+
+    setName(name) {
+        this.name = name;
+    }
+
+    setStatus(status) {
+        this.status = status;
     }
 
     setPlayer(data) {
@@ -54,7 +67,7 @@ class dgFleet {
         }
     }
 
-    addComposition(shipName, shipCount, score) {
+    addShip(shipName, shipCount, score) {
         const idx = this.composition.findIndex((s) => s && (s.name === shipName));
         score || (score = getItemScoreByName(shipName) * shipCount);
         if (idx > -1) {
@@ -67,7 +80,10 @@ class dgFleet {
                 score: score,
             });
         }
-        this.compositionWfScore += score; // @TODO check if its indeed real wf
+        if (getItemByName(shipName).warfleet) {
+            this.compositionWfScore += score;
+        }
+        this.score += score;
         shipCount > 0 && (this.hasShips = true);
     }
 
@@ -92,12 +108,18 @@ class dgFleet {
     isHostile() { return this.type === dgFleet.TYPE_HOSTILE; }
 
     addFleet(fleet) {
-        fleet.composition.forEach((s) => this.addComposition(s.name, s.count, s.score));
+        this.addComposition(fleet.composition);
+    }
+
+    addComposition(composition) {
+        composition.forEach((s) => this.addShip(s.name, s.count, s.score));
     }
 
     sortComposition() {
         dgFleet.sortShips(this.composition);
     }
+
+    getUrl = () => `/fleet/${this.id}/`;
 
     /**
      * Only used to enforce a normalised order of ships when we export/display fleet compositions

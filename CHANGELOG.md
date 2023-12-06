@@ -1,5 +1,7 @@
 # Version 0.0.10 (wip)
-- ...
+- Fleet memo using local storage
+- Save multiple fleets to generate combined stats
+- css refactoring
 
 # Version 0.0.9
 - Refactored fleet scan to use partial data from jsonPageData and added fleet abstraction

@@ -4,17 +4,3 @@
 
 #planetImage { position: relative; }
 #planetImage .planet-rating { position: absolute; bottom:0.2rem; left:0; }
-
-.copyPaste { display:inline-block; margin-left:5px; cursor:pointer; }
-.copyPaste > span { margin-left:5px; }
-.copyPaste .icon { 
-    display: inline-block;
-    vertical-align:middle;
-    width:15px; height:15px; 
-    background:transparent;
-    background-size: 15px 15px;
-    background-position: left;
-    background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiB2aWV3Qm94PSIwIDAgMzIgMzIiIGRhdGEtbmFtZT0iTGF5ZXIgMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgaWQ9IlNWR1JlcG9fYmdDYXJyaWVyIiBzdHJva2Utd2lkdGg9IjAiPjwvZz48ZyBpZD0iU1ZHUmVwb190cmFjZXJDYXJyaWVyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvZz48ZyBpZD0iU1ZHUmVwb19pY29uQ2FycmllciI+PHRpdGxlPjwvdGl0bGU+PHBhdGggZD0iTTI3LjIsMTAuMUgyNC40OFY3YTIuNDEsMi40MSwwLDAsMC0yLjQxLTIuNEg0LjQxQTIuNDEsMi40MSwwLDAsMCwyLDdWMTkuNWEyLjQxLDIuNDEsMCwwLDAsMi40MSwyLjRINy41MnYyLjcyYTIuOCwyLjgsMCwwLDAsMi44LDIuOEgyNy4yYTIuOCwyLjgsMCwwLDAsMi44LTIuOFYxMi45QTIuOCwyLjgsMCwwLDAsMjcuMiwxMC4xWk00LjQxLDIwYS41NC41NCwwLDAsMS0uNTQtLjU0VjdhLjU0LjU0LDAsMCwxLC41NC0uNTRIMjIuMDdhLjU0LjU0LDAsMCwxLC41NC41NFYxMC4xSDEwLjMyYTIuOCwyLjgsMCwwLDAtMi44LDIuOFYyMFptMjMuNzIsNC41OGEuOTQuOTQsMCwwLDEtLjkzLjk0SDEwLjMyYS45NC45NCwwLDAsMS0uOTMtLjk0VjEyLjlhLjk0Ljk0LDAsMCwxLC45My0uOTRIMjcuMmEuOTQuOTQsMCwwLDEsLjkzLjk0WiI+PC9wYXRoPjxwYXRoIGQ9Ik0yNC42NSwxNS42MkgxMi44N2EuOTQuOTQsMCwwLDAsMCwxLjg3SDI0LjY1YS45NC45NCwwLDAsMCwwLTEuODdaIj48L3BhdGg+PHBhdGggZD0iTTI0LjY1LDIwSDEyLjg3YS45My45MywwLDEsMCwwLDEuODZIMjQuNjVhLjkzLjkzLDAsMCwwLDAtMS44NloiPjwvcGF0aD48L2c+PC9zdmc+");
-    filter: invert(100%);
-}
