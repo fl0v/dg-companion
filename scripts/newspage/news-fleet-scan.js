@@ -67,7 +67,7 @@ class NewsFleetScan extends NewsParser {
     addFleetShips(playerName, fleetName, shipName, count) {
         const fleet = this.findFleet(playerName, fleetName);
         if (fleet) {
-            fleet.addComposition(shipName, count);
+            fleet.addShip(shipName, count);
         }
     }
 }

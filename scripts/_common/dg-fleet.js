@@ -54,7 +54,7 @@ class dgFleet {
         }
     }
 
-    addComposition(shipName, shipCount, score) {
+    addShip(shipName, shipCount, score) {
         const idx = this.composition.findIndex((s) => s && (s.name === shipName));
         score || (score = getItemScoreByName(shipName) * shipCount);
         if (idx > -1) {
@@ -92,7 +92,11 @@ class dgFleet {
     isHostile() { return this.type === dgFleet.TYPE_HOSTILE; }
 
     addFleet(fleet) {
-        fleet.composition.forEach((s) => this.addComposition(s.name, s.count, s.score));
+        this.addComposition(fleet.composition);
+    }
+
+    addComposition(composition) {
+        composition.forEach((s) => this.addShip(s.name, s.count, s.score));
     }
 
     sortComposition() {
