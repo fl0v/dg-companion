@@ -1,6 +1,11 @@
+/**
+ * Saves multiple fleets together to generate a combined total
+ * 
+ * @TODO leverage chrome.storage.session thru service workers https://developer.chrome.com/docs/extensions/reference/api/storage
+ */
 class SavedFleets {
 
-    storageKey = 'FleetsStat_5';
+    storageKey = 'savedFleets';
 
     turn = currentTurn();
     totalFleet = new dgFleet('Total');

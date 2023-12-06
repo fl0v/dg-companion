@@ -1,3 +1,8 @@
+/**
+ * Simple memo logic used for fleets, planets, ...
+ * 
+ * @TODO leverage chrome.storage.sync https://developer.chrome.com/docs/extensions/reference/api/storage
+ */
 class Memo {
     static PREFIX = 'memo-';
 
@@ -16,11 +21,18 @@ class Memo {
 
     load() {
         const itemId = this.contentId();
+        // chrome.storage.sync.get([itemId])
+        //     .then((data) => {
+        //         this.content = data[itemId];
+        //         console.log('loaded', itemId, this.content);
+        //     });
         this.content = localStorage.getItem(itemId);
-        console.log('loaded', itemId, this.content);
     }
 
     save() {
+        const itemId = this.contentId();
+        // chrome.storage.sync.set({ itemId: this.content })
+        //     .then(() => console.log('saved', itemId, this.content));
         localStorage.setItem(this.contentId(), this.content);
     }
 
