@@ -81,11 +81,11 @@
 
     /*
      * Saved fleets
-     *
-     * @TODO check if current fleet is already saved and auto refresh its composition
-     * @TODO warn if saved fleets are too old
+     *     
+     * @TODO remove any saved fleets on previous days
      */
     const totalFleets = new SavedFleets();
+    totalFleets.hasFleetId(fleet.id) && totalFleets.addFleet(fleet, true); // resave fleet if was added already
     fleetRightContainer.insertAdjacentHTML('beforeend', savedFleetsSectionTemplate(totalFleets, true));
     const savedFleetsInner = fleetRightContainer.querySelector('#saved-fleets .saved-fleets-inner');
 

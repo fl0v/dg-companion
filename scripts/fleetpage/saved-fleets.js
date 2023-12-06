@@ -16,6 +16,10 @@ class SavedFleets {
         this.loadFromStorage();
     }
 
+    hasFleetId(id) {
+        return this.allFleets[id] !== undefined;
+    }
+
     addFleet(addFleet, save) {
         let reset = false;
         if (this.allFleets[addFleet.id]) {
@@ -45,7 +49,7 @@ class SavedFleets {
 
     loadFromStorage() {
         const allFleets = JSON.parse(localStorage.getItem(this.storageKey));
-        Object.values(allFleets).forEach((f) => this.addFleet(new dgFleet(f.name, f)));
+        allFleets && Object.values(allFleets).forEach((f) => this.addFleet(new dgFleet(f.name, f)));
     }
 
     saveToStorage() {
