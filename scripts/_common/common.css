@@ -3,3 +3,5 @@
     text-shadow: -1px -1px 0 #2DD785, 1px -1px 0 #2DD785, -1px 1px 0 #2DD785, 1px 1px 0 #2DD785 !important;
     transition: all .4s ease-in-out;
 }
+
+.memo-input { width:100%; height:5rem; }
