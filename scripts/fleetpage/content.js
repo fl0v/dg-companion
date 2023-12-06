@@ -135,7 +135,7 @@
     const centerItem = document.querySelector('#contentBox .fleetLeftInnerSmall');
     if (centerItem) {
         centerItem.parentNode.insertAdjacentHTML('beforeend',
-            fleetPageSection({
+            pageSection({
                 id: 'fleet-memo',
                 title: 'Memo',
                 cssClass: 'left ofHidden lightBorder opacBackground seperator fleetLeftInnerSmall',

@@ -1,17 +1,7 @@
 
 const scoreTemplate = (score) => `<span class="score neutral right"><em>${formatNumber(score.toFixed(2))}</em></span>`;
 
-const fleetPageSection = (options) => `
-    <div id="${options.id}" class="${options.cssClass || 'right ofHidden lightBorder opacDarkBackground seperator seperatorLeft fleetRight'}"> 
-        <div class="header border">
-            <img src="/images/buttons/construction.png" class="icon" width="28" height="29">
-            ${options.title}
-        </div> 
-        ${options.content}                    
-    </div>
-`;
-
-const scoreSectionTemplate = (wfScore, totalScore) => fleetPageSection({
+const scoreSectionTemplate = (wfScore, totalScore) => pageSection({
     id: 'fleet-score',
     title: 'Score',
     content: `
@@ -50,7 +40,7 @@ const savedFleetsSectionTemplate = (savedFleets, addHeader) => {
         content.push('<div class="entry opacBackground text-center" style="padding: 4px">No fleets saved</div>');
     }
     if (addHeader) {
-        return fleetPageSection({
+        return pageSection({
             id: 'saved-fleets',
             title: 'Saved fleets',
             content: `<div class="saved-fleets-inner">${content.join("\n")}</div>`,

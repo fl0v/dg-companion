@@ -25,6 +25,9 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
   - paste planet coords in target input
   - fleet memo
   - save multiple fleets to generate combined stats
+- Planet overview pages
+  - planet memo
+  - 9999 for queue quantity
 - Navigation page
   - copy planet coords on click
 - Battle report page

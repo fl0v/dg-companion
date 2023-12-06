@@ -111,15 +111,18 @@
         },
         {
             "matches": [
+                "https://*.darkgalaxy.com/planet/*/",
                 "https://*.darkgalaxy.com/planet/*/production/",
                 "https://*.darkgalaxy.com/planet/*/training/"
             ],
             "js": [
                 "scripts/_common/common.js",
-                "scripts/planetproduction/content.js"
+                "scripts/_common/templates.js",
+                "scripts/_common/memo.js",
+                "scripts/planetoverviewpage/content.js"
             ],
             "css": [
-                "scripts/planetproduction/content.css"
+                "scripts/planetoverviewpage/content.css"
             ]
         },
         {
@@ -140,6 +143,7 @@
             ],
             "js": [
                 "scripts/_common/common.js",
+                "scripts/_common/templates.js",
                 "scripts/_common/memo.js",
                 "scripts/_common/dg-item.js",
                 "scripts/_common/dg-planet.js",

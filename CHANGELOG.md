@@ -1,5 +1,5 @@
 # Version 0.0.10 (wip)
-- Fleet memo using local storage
+- Fleet & planet memo using local storage
 - Save multiple fleets to generate combined stats
 - css refactoring
 
