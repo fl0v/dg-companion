@@ -17,17 +17,20 @@ const fleetScanFleetGroupTemplate = (fleet) => {
     const tplBody = fleet.composition
         //.filter()
         .reduce((carry, s) => carry + fleetScanShipTemplate(s.name, s.count), '');
+    const score = [];
+    fleet.compositionWfScore && score.push(`<b title="wf score">${fleet.compositionWfScore.toFixed(2)}</b>`);
+    fleet.score && score.push(`<b title="total score">${fleet.score.toFixed(2)}</b>`);
     return `
         <div class="lightBorder column">
             <div class="opacLightBackground ofHidden padding">
                 <div class="${fleet.type}">
-                    <div class="allianceName">${fleet.name}</div>
+                    <div class="fleetBlockTitle">${fleet.name}</div>
                 </div>
             </div>
             <table><tbody>
                 ${tplBody}
             </tbody></table>
-            <div class="score-container text-center neutral opacLightBackground">(score <b>${fleet.compositionWfScore.toFixed(2)}</b>)</div>
+            <div class="fleetBlockScoreContainer text-center neutral opacLightBackground">${score.length ? `(score ${score.join(' / ')})` : ''}</div>
         </div>
     `;
 }
@@ -47,7 +50,7 @@ const fleetScanPageRowTemplate = (title, groups) => {
     });
     return `
         <div class="header border">${title}</div>
-        <div class="d-flex">
+        <div class="d-flex-row-wrap ws-nowrap">
             ${tplBody}
         </div>
     `;
