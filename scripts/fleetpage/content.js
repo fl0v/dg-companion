@@ -119,5 +119,29 @@
         console.log(textStats());
     }
 
+    /*
+     * Fleet memo
+     */
+    if (fleetRightContainer) {
+        fleetRightContainer.insertAdjacentHTML('beforeend', `
+            <div id="fleet-memo" class="right ofHidden lightBorder opacDarkBackground seperator seperatorLeft fleetRight"> 
+                <div class="header border">
+                    <img src="/images/buttons/construction.png" class="icon" width="28" height="29">
+                    Memo
+                </div> 
+                <div class="entry opacBackground" style="padding: 4px">                
+                </div>             
+            </div>
+        `);
+        const memoContainer = fleetRightContainer.querySelector('#fleet-memo .entry');
+        const fleetIdUrlPattern = /\/([\d]+)\//g;
+        if (fleetIdUrlPattern.test(document.location.href)) {
+            const [, fleetId] = document.location.href.match(fleetIdUrlPattern);
+            (new Memo('fleet-' + fleetId)).init(memoContainer);
+        }
+
+    }
+
+
 })();
 

@@ -140,6 +140,7 @@
             ],
             "js": [
                 "scripts/_common/common.js",
+                "scripts/_common/memo.js",
                 "scripts/_common/dg-item.js",
                 "scripts/fleetpage/content.js"
             ],
