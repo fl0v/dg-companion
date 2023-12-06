@@ -6,6 +6,10 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
 - Get the extension from chrome web store https://chrome.google.com/webstore/detail/dark-galaxy-companion/hmchkjafjphldnhmlgbfkaemplnldkao
 - Visit https://www.darkgalaxy.com and signup/login to a running game
 
+Keep in mind although some info is exposed by the game as json, this extension still relies heavily on parsing the html,
+so in most cases it will cause unexpected results if used with other similar extensions or user scripts.
+That being said, i'm trying not to alter the page source logic (too much) so hopefully it wont break any other tools.
+
 ## Features:
 - Alliance ranking
   - average score + sorting
