@@ -83,7 +83,7 @@
      */
     if (planetName && processor.canExport) {
         planetName.insertAdjacentHTML('afterend', `
-            <span class="left copyPaste">
+            <span class="copyPaste reset-font cursor-pointer left">
                 <span class="xls"><i class="icon"></i> sheet</span>
                 <span class="chat"><i class="icon"></i> chat</span>
             </span>

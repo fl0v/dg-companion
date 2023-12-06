@@ -1,53 +1,11 @@
 /**
  * Total score
  * 
+ * @TODO quick switch to fleets waiting on the same planet
  * @TODO wait time wizard
  * @TODO transfer all in fleet transfer page
  */
 (function () {
-    const fleetRightContainer = document.querySelector('#contentBox .right.fleetRight');
-    const fleetItems = fleetRightContainer ? Array.from(fleetRightContainer.querySelectorAll('.entry')) : [];
-    const shipPattern = /([\d,]+)x\s(.*)/; // 6,123x Fighter
-    const scoreTemplate = (unitScore, label) => `
-        <span class="score neutral right"><em>${formatNumber(unitScore.toFixed(2))}</em> ${label}</span>
-    `;
-
-
-    const fleetComposition = [];
-    const [totalScore, wfScore] = fleetItems.reduce((carry, item) => {
-        if (shipPattern.test(item.innerText)) {
-            const [, cnt, name] = item.innerText.match(shipPattern);
-            const ss = parseValue(cnt) * getItemScoreByName(name);
-            fleetComposition.push({
-                cnt: cnt,
-                name: name,
-            });
-            carry[0] += ss;
-            if (getItemByName(name).warfleet) {
-                carry[1] += ss;
-            }
-            item.querySelector('div:last-child').insertAdjacentHTML('beforeend', `${scoreTemplate(ss, 'score')}`);
-        }
-        return carry;
-    }, [0, 0]);
-
-    fleetRightContainer && fleetRightContainer.insertAdjacentHTML('beforeend', `
-        <div class="right ofHidden lightBorder opacDarkBackground seperator seperatorLeft fleetRight"> 
-            <div class="header border">
-                <img src="/images/buttons/construction.png" class="icon" width="28" height="29">
-                Score
-            </div> 
-            <div class="entry opacBackground" style="line-height: 24px; padding: 4px"> 
-                <span class="left">WarFleet only</span>                 
-                <span class="right">${scoreTemplate(wfScore, 'score')}</span> 
-            </div> 
-            <div class="entry opacLightBackground" style="line-height: 24px; padding: 4px"> 
-                <span class="left">Total</span>                 
-                <span class="right">${scoreTemplate(totalScore, 'score')}</span> 
-            </div> 
-       </div>
-    `);
-
     /*
      * 999999
      */
@@ -75,73 +33,155 @@
     });
 
 
-    /*
-     * copy/paste summary
-     */
-    const fleetHeader = document.querySelector('#contentBox > .header');
+    const fleetRightContainer = document.querySelector('#contentBox .right.fleetRight');
     const fleetActivityContainer = document.querySelector('#contentBox .fleetRight > .fleetRight .entry');
-    const fleetQueue = Array.from(document.querySelectorAll('#fleetQueue .entry .nameColumn'));
-
-    if (fleetHeader && fleetActivityContainer) {
-        const [, fleetName] = /Fleet List -[\s«]+(.*)[»]?/i.exec(fleetHeader.innerText);
-        const fleetActivity = cleanText(fleetActivityContainer.innerText);
-        const fleetScore = `Score: ${formatNumber(totalScore)} / wf: ${formatNumber(wfScore)}`;
-        const fleetCompositionStr = fleetComposition.reduce((carry, fl) => carry + `${pe(fl.name, 13)} ${ps(fl.cnt, 6)}\n`, ``);
-        const fleetQueueStr = fleetQueue.reduce((carry, el) => carry + cleanText(el.innerText) + "\n", '');
-
-        fleetHeader.insertAdjacentHTML('afterbegin', `
-            <span class="right copy-hint cursor-pointer">Click to copy to clipboard</span>
-        `);
-        document.querySelector('#contentBox .copy-hint')
-            .addEventListener('click', e => {
-                e.preventDefault();
-                copyToClipboard(textStats(), 'Fleet summary copied to clipboard!', e.target);
-                return false;
-            });
-
-        const txtBorder = '====================';
-        const txtSpacer = '--------------------';
-        const textStats = () => {
-            const data = [
-                txtBorder,
-                `Turn: ${currentTurn()} / Fleet: "${fleetName.trim()}"`,
-                fleetActivity,
-                fleetScore,
-                txtSpacer,
-                fleetCompositionStr.trim(),
-                txtSpacer,
-                `Full queue:`,
-                fleetQueueStr.trim(),
-                txtBorder,
-            ];
-            return data.join("\n");
-        };
-        console.log(textStats());
+    const fleetHeader = document.querySelector('#contentBox > .header');
+    if (!fleetRightContainer || !fleetHeader || !fleetActivityContainer) {
+        return;
     }
+
+
+    /*
+     * Add some ids to fleet sections
+     */
+    Array.from(fleetRightContainer.querySelectorAll('.right > .header'))
+        .forEach((h) => h.parentNode.setAttribute('id', buildId(h.innerText)));
+
+
+    const [, fleetName] = /Fleet List -[\s«]+(.*)[»]?/i.exec(fleetHeader.innerText);
+    const [, fleetId] = /\/([\d]+)\//.exec(document.location.href);
+    const fleet = new dgFleet(cleanText(fleetName), {
+        id: fleetId,
+        status: cleanText(fleetActivityContainer.innerText),
+    });
+
+    /*
+     * Add ships
+     */
+    const fleetItems = Array.from(fleetRightContainer.querySelectorAll('.entry'));
+    const shipPattern = /([\d,]+)x\s(.*)/; // 6,123x Fighter
+    const totalScore = fleetItems.reduce((carry, item) => {
+        if (shipPattern.test(item.innerText)) {
+            const [, cnt, name] = item.innerText.match(shipPattern);
+            const score = parseValue(cnt) * getItemScoreByName(name);
+            fleet.addShip(name, parseValue(cnt), score);
+            item.querySelector('div:last-child').insertAdjacentHTML('beforeend', `${scoreTemplate(score)}`);
+            carry += score;
+        }
+        return carry;
+    }, 0);
+    fleet.setScore(totalScore);
+
+
+    /*
+     * Show score
+     */
+    fleetRightContainer.insertAdjacentHTML('beforeend', scoreSectionTemplate(fleet.compositionWfScore, fleet.score));
+
+
+    /*
+     * Saved fleets
+     *
+     * @TODO check if current fleet is already saved and auto refresh its composition
+     * @TODO warn if saved fleets are too old
+     */
+    const totalFleets = new SavedFleets();
+    fleetRightContainer.insertAdjacentHTML('beforeend', savedFleetsSectionTemplate(totalFleets, true));
+    const savedFleetsInner = fleetRightContainer.querySelector('#saved-fleets .saved-fleets-inner');
+
+    // add fleet
+    fleetRightContainer.querySelector('#fleet-composition .header')
+        .insertAdjacentHTML('beforeend', '<span class="saveFleet right" title="Click to save fleet"><i class="save-icon"></i></span>');
+    fleetRightContainer.querySelector('#fleet-composition .saveFleet')
+        .addEventListener('click', (event) => {
+            totalFleets.addFleet(fleet, true);
+            savedFleetsInner.innerHTML = savedFleetsSectionTemplate(totalFleets, false);
+        });
+
+    // remove fleet
+    savedFleetsInner.addEventListener('click', (event) => {
+        const clicked = event.target.closest('.removeFleet');
+        if (clicked) {
+            event.stopPropagation();
+            totalFleets.removeById(clicked.getAttribute('data-id'), true);
+            savedFleetsInner.innerHTML = savedFleetsSectionTemplate(totalFleets, false);
+            return false;
+        }
+    });
+
+    // copy to clipboard
+    const savedFleetsHeader = fleetRightContainer.querySelector('#saved-fleets .header');
+    savedFleetsHeader.insertAdjacentHTML('beforeend', `
+        <span class="copyPaste reset-font cursor-pointer right">
+            <span class="xls"><i class="icon"></i> sheet</span>
+            <span class="chat"><i class="icon"></i> chat</span>
+        </span>
+    `);
+    savedFleetsHeader.querySelector('.copyPaste .xls').addEventListener('click', e => {
+        e.preventDefault();
+        copyToClipboard(totalFleets.exportXls(), 'Saved fleets data copied to cliboard!', e.target);
+        return false;
+    });
+    savedFleetsHeader.querySelector('.copyPaste .chat').addEventListener('click', e => {
+        e.preventDefault();
+        copyToClipboard(totalFleets.exportText(), 'Saved fleets data copied to cliboard!', e.target);
+        return false;
+    });
+
 
     /*
      * Fleet memo
      */
-    if (fleetRightContainer) {
-        fleetRightContainer.insertAdjacentHTML('beforeend', `
-            <div id="fleet-memo" class="right ofHidden lightBorder opacDarkBackground seperator seperatorLeft fleetRight"> 
-                <div class="header border">
-                    <img src="/images/buttons/construction.png" class="icon" width="28" height="29">
-                    Memo
-                </div> 
-                <div class="entry opacBackground" style="padding: 4px">                
-                </div>             
-            </div>
-        `);
-        const memoContainer = fleetRightContainer.querySelector('#fleet-memo .entry');
-        const fleetIdUrlPattern = /\/([\d]+)\//g;
-        if (fleetIdUrlPattern.test(document.location.href)) {
-            const [, fleetId] = document.location.href.match(fleetIdUrlPattern);
-            (new Memo('fleet-' + fleetId)).init(memoContainer);
-        }
-
+    const centerItem = document.querySelector('#contentBox .fleetLeftInnerSmall');
+    if (centerItem) {
+        centerItem.parentNode.insertAdjacentHTML('beforeend',
+            fleetPageSection({
+                id: 'fleet-memo',
+                title: 'Memo',
+                cssClass: 'left ofHidden lightBorder opacBackground seperator fleetLeftInnerSmall',
+                content: `<div class="entry opacBackground memo-container"></div>`,
+            })
+        );
+        (new Memo('fleet-' + fleet.id)).init(document.querySelector('#fleet-memo .memo-container'));
     }
 
+
+    /*
+     * copy/paste summary
+     */
+    const fleetScore = `Score: ${formatNumber(fleet.score)} / wf: ${formatNumber(fleet.compositionWfScore)}`;
+    const fleetCompositionStr = fleet.composition.reduce((carry, fl) => carry + `${pe(fl.name, 13)} ${ps(fl.count, 6)}\n`, ``).trim();
+    const fleetQueue = Array.from(document.querySelectorAll('#fleetQueue .entry .nameColumn'));
+    const fleetQueueStr = fleetQueue.reduce((carry, el) => carry + cleanText(el.innerText) + "\n", '').trim();
+
+    fleetHeader.insertAdjacentHTML('afterbegin', `
+        <span class="right copy-hint reset-font cursor-pointer">Copy fleet summary to clipboard</span>
+    `);
+    document.querySelector('#contentBox .copy-hint')
+        .addEventListener('click', e => {
+            e.preventDefault();
+            copyToClipboard(textStats(), 'Fleet summary copied to clipboard!', e.target);
+            return false;
+        });
+
+    const txtBorder = '====================';
+    const txtSpacer = '--------------------';
+    const textStats = () => {
+        const data = [
+            txtBorder,
+            `Turn: ${currentTurn()} / Fleet: "${fleet.name}"`,
+            fleet.status,
+            fleetScore,
+            txtSpacer,
+            fleetCompositionStr,
+            txtSpacer,
+            `Full queue:`,
+            fleetQueueStr,
+            txtBorder,
+        ];
+        return data.join("\n");
+    };
+    console.log(textStats());
 
 })();
 

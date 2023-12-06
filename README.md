@@ -11,7 +11,7 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
   - average score + sorting
 - Global radar page
   - quick filters + quick search
-  - enemy attacking warning
+  - enemy attacks warning
   - systems shortcuts
 - Fleet list page
   - quick filter + quick search
@@ -19,10 +19,12 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
   - stats + summary + copy to clipboard
   - total resource warning
 - Fleet scan
-  - score, group by eta/alliance
+  - score, origin, group by eta/alliance
 - Fleet overview page
   - score + copy to clipboard
   - paste planet coords in target input
+  - fleet memo
+  - save multiple fleets to generate combined stats
 - Navigation page
   - copy planet coords on click
 - Battle report page
@@ -36,23 +38,6 @@ Ported tamper monkey scripts to chrome extension (https://github.com/fl0v/dg)
   - cosmetics + summary + copy to clipboard
 
 Checkout the [CHANGELOG](CHANGELOG.md) for change history.
-  
-### TODO  
-- add static flash box when there is 1 minute left untill turn update
-- auto refresh when turn update ends
-- Planet\ShipYard\Baraks: icon after ship name/soldier to add 999999 in queue input
-- Navigation link for any planet
-- Custom alliance colors (by tag)
-- Custom planet image set(Ex:  https://helloweenpt.com/darkgalaxy/images/planets/)
-- Planets tags
-- Enable/disable feature
-- Collect wf total from multiple fleets
-- Fleet sticky notes
-- Planet sticky notes
-- Copy/paste scan results
-- Copy/paste battlereport stats
-- Export planets csv
-- Export radar csv
 
 ## Want to help ?
 Checkout the [CONTRIBUTING](CONTRIBUTING.md) page.
