@@ -85,16 +85,27 @@
      * @TODO remove any saved fleets on previous days
      */
     const totalFleets = new SavedFleets();
-    totalFleets.hasFleetId(fleet.id) && totalFleets.addFleet(fleet, true); // resave fleet if was added already
+    totalFleets.hasFleetId(fleet.id) && totalFleets.addFleet(fleet, true); // refresh fleet data if it was saved already
     fleetRightContainer.insertAdjacentHTML('beforeend', savedFleetsSectionTemplate(totalFleets, true));
     const savedFleetsInner = fleetRightContainer.querySelector('#saved-fleets .saved-fleets-inner');
 
-    // add fleet
+    // save fleet action/icon
     fleetRightContainer.querySelector('#fleet-composition .header')
-        .insertAdjacentHTML('beforeend', '<span class="saveFleet right" title="Click to save fleet"><i class="save-icon"></i></span>');
+        .insertAdjacentHTML('beforeend', `
+            <span class="saveFleet right" title="Click to add/remove fleet to 'saved fleets'">
+                <i class="icon ${totalFleets.hasFleetId(fleet.id) ? 'save-filled-icon' : 'save-icon'}"></i>
+            </span>
+        `);
+    const saveIcon = fleetRightContainer.querySelector('#fleet-composition .saveFleet .icon');
     fleetRightContainer.querySelector('#fleet-composition .saveFleet')
         .addEventListener('click', (event) => {
-            totalFleets.addFleet(fleet, true);
+            saveIcon.classList.toggle('save-icon')
+            saveIcon.classList.toggle('save-filled-icon');
+            if (totalFleets.hasFleetId(fleet.id)) {
+                totalFleets.removeById(fleet.id, true);
+            } else {
+                totalFleets.addFleet(fleet, true);
+            }
             savedFleetsInner.innerHTML = savedFleetsSectionTemplate(totalFleets, false);
         });
 
@@ -103,6 +114,10 @@
         const clicked = event.target.closest('.removeFleet');
         if (clicked) {
             event.stopPropagation();
+            if (fleet.id == clicked.getAttribute('data-id')) {
+                saveIcon.classList.toggle('save-icon');
+                saveIcon.classList.toggle('save-filled-icon');
+            }
             totalFleets.removeById(clicked.getAttribute('data-id'), true);
             savedFleetsInner.innerHTML = savedFleetsSectionTemplate(totalFleets, false);
             return false;
