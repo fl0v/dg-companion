@@ -119,7 +119,7 @@ class dgFleet {
         dgFleet.sortShips(this.composition);
     }
 
-    getUrl = () => `/fleet/${this.id}/`;
+    getUrl = () => dgFleet.fleetUrl(this.id);
 
     /**
      * Only used to enforce a normalised order of ships when we export/display fleet compositions
@@ -132,4 +132,6 @@ class dgFleet {
             return (aOrder > bOrder) - (aOrder < bOrder);
         });
     }
+
+    static fleetUrl = (id) => `/fleet/${id}/`;
 }

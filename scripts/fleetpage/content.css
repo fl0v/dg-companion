@@ -24,8 +24,9 @@
     filter: invert(100%);
 }
 
+
 .saveFleet .icon {
-     cursor: pointer;
+    cursor: pointer;
     display: inline-block;
     vertical-align:top;
     width:24px; height:24px;     
@@ -47,5 +48,19 @@
  */
 .saveFleet .save-filled-icon {    
     background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyBmaWxsPSIjMDAwMDAwIiB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgaWQ9ImJvb2ttYXJrIiBkYXRhLW5hbWU9IkZsYXQgQ29sb3IiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY2xhc3M9Imljb24gZmxhdC1jb2xvciI+CjxwYXRoIGlkPSJwcmltYXJ5IiBkPSJNMTgsMkg2QTIsMiwwLDAsMCw0LDRWMjFhMSwxLDAsMCwwLC41Ljg2LDEsMSwwLDAsMCwxLDBMMTIsMTguMTVsNi41LDMuNzJBMSwxLDAsMCwwLDE5LDIyYS45LjksMCwwLDAsLjUtLjE0QTEsMSwwLDAsMCwyMCwyMVY0QTIsMiwwLDAsMCwxOCwyWiIgc3R5bGU9ImZpbGw6IHJnYigwLCAwLCAwKTsiPjwvcGF0aD4KPC9zdmc+");
+    filter: invert(100%);
+}
+/**
+ * link.svg
+ */
+.itemLink .view-icon {        
+    display: inline-block;
+    vertical-align: middle;
+    width:16px; height:16px;    
+    background:transparent;
+    background-size: 18px 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxzdmcgd2lkdGg9IjgwMHB4IiBoZWlnaHQ9IjgwMHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE2LjYzNzIgMTYuMTNMMTMuNSAxNi4xM0wxMy41IDE0LjYzTDE2LjYzNzIgMTQuNjNDMTguMDg5NyAxNC42MyAxOS4yNjcyIDEzLjQ1MjUgMTkuMjY3MiAxMkMxOS4yNjcyIDEwLjU0NzUgMTguMDg5NyA5LjM2OTk5IDE2LjYzNzIgOS4zNjk5OUwxMy41IDkuMzY5OTlMMTMuNSA3Ljg2OTk5TDE2LjYzNzIgNy44Njk5OUMxOC45MTgxIDcuODY5OTkgMjAuNzY3MiA5LjcxOTA2IDIwLjc2NzIgMTJDMjAuNzY3MiAxNC4yODA5IDE4LjkxODEgMTYuMTMgMTYuNjM3MiAxNi4xM1oiIGZpbGw9IiMwMDAwMDAiLz4NCjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNy4zNjI3OSA3Ljg3TDEwLjUgNy44NzAwMUwxMC41IDkuMzcwMDFMNy4zNjI3OSA5LjM3QzUuOTEwMjggOS4zNyA0LjczMjc5IDEwLjU0NzUgNC43MzI3OSAxMkM0LjczMjc5IDEzLjQ1MjUgNS45MTAyOCAxNC42MyA3LjM2Mjc5IDE0LjYzTDEwLjUgMTQuNjNMMTAuNSAxNi4xM0w3LjM2Mjc5IDE2LjEzQzUuMDgxODYgMTYuMTMgMy4yMzI3OSAxNC4yODA5IDMuMjMyNzkgMTJDMy4yMzI3OSA5LjcxOTA3IDUuMDgxODYgNy44NyA3LjM2Mjc5IDcuODdMNy4zNjI3OSA4LjU5NTgxTDcuMzYyNzkgNy44N1oiIGZpbGw9IiMwMDAwMDAiLz4NCjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNy41IDExLjI1TDE2LjUgMTEuMjVMMTYuNSAxMi43NUw3LjUgMTIuNzVMNy41IDExLjI1WiIgZmlsbD0iIzAwMDAwMCIvPg0KPC9zdmc+");
     filter: invert(100%);
 }

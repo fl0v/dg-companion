@@ -1,7 +1,7 @@
 ## Changelog
 
 ### Version 0.0.11 (wip)
-- ...
+- In fleet page: direct links to other fleets on the same planet
 
 ### Version 0.0.10
 - Fleet & planet memo using local storage

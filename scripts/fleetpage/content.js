@@ -1,7 +1,6 @@
 /**
  * Total score
  * 
- * @TODO quick switch to fleets waiting on the same planet
  * @TODO wait time wizard
  * @TODO transfer all in fleet transfer page
  */
@@ -77,6 +76,29 @@
      * Show score
      */
     fleetRightContainer.insertAdjacentHTML('beforeend', scoreSectionTemplate(fleet.compositionWfScore, fleet.score));
+
+
+    /*
+     * Fleet/planet direct links
+     */
+    const transferToPlanetPattern = /location\/([\d]+)/;
+    const transferToFleetPattern = /mobile\/([\d]+)/;
+    Array.from(fleetRightContainer.querySelectorAll('#transfer-targets a'))
+        .forEach((el) => {
+            const url = el.getAttribute('href');
+            if (transferToPlanetPattern.test(url)) {
+                const [, toPlanetId] = transferToPlanetPattern.exec(url);
+                el.parentNode.classList.add('d-flex');
+                el.parentNode.classList.add('flex-jcsb');
+                el.insertAdjacentHTML('afterend', `<a class="itemLink" href="${dgPlanet.planetUrl(toPlanetId)}"><i class="icon view-icon"></i></a>`);
+            } else if (transferToFleetPattern.test(url)) {
+                const [, toFleetId] = transferToFleetPattern.exec(url);
+                el.parentNode.classList.add('d-flex');
+                el.parentNode.classList.add('flex-jcsb');
+                el.insertAdjacentHTML('afterend', `<a class="itemLink" href="${dgFleet.fleetUrl(toFleetId)}"><i class="icon view-icon"></i></a>`);
+            }
+        });
+
 
 
     /*

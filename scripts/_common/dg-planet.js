@@ -59,6 +59,8 @@ class dgPlanet {
         return this.coords ? `${this.coords} ${this.name}` : '[invalid planet]';
     }
 
+    static planetUrl = (id) => `/planet/${id}/`;
+
 }
 
 
