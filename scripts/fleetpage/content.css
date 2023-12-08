@@ -1,6 +1,6 @@
  
 .copy-hint { padding:5px 10px; }
-.score { font-family: Tahoma, sans-serif; font-size:12px; }
+.score { font-family: Tahoma, sans-serif; font-size:12px; padding-right:4px; }
 .score em { color:#fff; }
 
 #saved-fleets .removeFleet { position:absolute; right:2px; top:5px; }

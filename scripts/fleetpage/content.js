@@ -30,6 +30,21 @@
             });
         }
     });
+    // transfer page headers
+    Array.from(document.querySelectorAll('form input[name="sourceId"]')).forEach((el) => {
+        const container = el.closest('.left');
+        const header = container ? container.querySelector('.header') : null;
+        if (container && header) {
+            header.insertAdjacentHTML('beforeend', `<span class="add-max-icon" title="Click to fill max value for all rows"></span>`);
+            header.addEventListener('click', e => {
+                if (e.target.classList.contains('add-max-icon')) {
+                    Array.from(container.querySelectorAll('.transferRow input[type="number"]')).forEach((item) => {
+                        item.value = MAX_INPUT_VALUE;
+                    });
+                }
+            });
+        }
+    });
 
 
     const fleetRightContainer = document.querySelector('#contentBox .right.fleetRight');
