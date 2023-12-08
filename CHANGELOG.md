@@ -2,6 +2,7 @@
 
 ### Version 0.0.11 (wip)
 - In fleet page: direct links to other fleets on the same planet
+- Memos as title for links to any fleet or planet (in planets list and fleet list pages)
 
 ### Version 0.0.10
 - Fleet & planet memo using local storage

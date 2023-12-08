@@ -103,6 +103,7 @@
             ],
             "js": [
                 "scripts/_common/common.js",
+                "scripts/_common/memo.js",
                 "scripts/planetspage/content.js"
             ],
             "css": [
@@ -131,6 +132,7 @@
             ],
             "js": [
                 "scripts/_common/common.js",
+                "scripts/_common/memo.js",
                 "scripts/fleetlist/content.js"
             ],
             "css": [

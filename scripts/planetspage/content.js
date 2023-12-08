@@ -149,7 +149,6 @@
     /*
      * Lets build a summary of all activity
      */
-
     let activity = {
         building: {},
         training: {},
@@ -217,7 +216,6 @@
     /*
      * add a nice top panel for the planet list
      */
-
     const resourceTemplate = (code, content) =>
         `
         <div class="left seperatorRight">
@@ -321,5 +319,20 @@
     };
 
     console.log(textStats());
+
+
+    /*
+     * Memos
+     */
+    const allFleetLinks = Array.from(document.querySelectorAll('#planetList .fleetList a'));
+    allFleetLinks.forEach((a) => {
+        const m = /\/fleet\/([\d]+)\//.exec(a.getAttribute('href'));
+        m && m[1] && a.setAttribute('title', Memo.fleet(m[1]).content);
+    });
+    const allPlanetsLinks = Array.from(document.querySelectorAll('#planetList .planetName a'));
+    allPlanetsLinks.forEach((a) => {
+        const m = /\/planet\/([\d]+)\//.exec(a.getAttribute('href'));
+        m && m[1] && a.setAttribute('title', Memo.planet(m[1]).content);
+    });
 
 })();

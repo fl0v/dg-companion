@@ -26,7 +26,7 @@ class Memo {
         //         this.content = data[itemId];
         //         console.log('loaded', itemId, this.content);
         //     });
-        this.content = localStorage.getItem(itemId);
+        this.content = localStorage.getItem(itemId) || '';
     }
 
     save() {
@@ -46,5 +46,8 @@ class Memo {
             this.save();
         });
     }
+
+    static planet = (id) => new Memo('planet-' + id);
+    static fleet = (id) => new Memo('fleet-' + id);
 
 }

@@ -103,11 +103,13 @@
             const url = el.getAttribute('href');
             if (transferToPlanetPattern.test(url)) {
                 const [, toPlanetId] = transferToPlanetPattern.exec(url);
+                el.setAttribute('title', Memo.planet(toPlanetId).content);
                 el.parentNode.classList.add('d-flex');
                 el.parentNode.classList.add('flex-jcsb');
                 el.insertAdjacentHTML('afterend', `<a class="itemLink" href="${dgPlanet.planetUrl(toPlanetId)}"><i class="icon view-icon"></i></a>`);
             } else if (transferToFleetPattern.test(url)) {
                 const [, toFleetId] = transferToFleetPattern.exec(url);
+                el.setAttribute('title', Memo.fleet(toFleetId).content);
                 el.parentNode.classList.add('d-flex');
                 el.parentNode.classList.add('flex-jcsb');
                 el.insertAdjacentHTML('afterend', `<a class="itemLink" href="${dgFleet.fleetUrl(toFleetId)}"><i class="icon view-icon"></i></a>`);
@@ -194,7 +196,7 @@
                 content: `<div class="entry opacBackground memo-container"></div>`,
             })
         );
-        (new Memo('fleet-' + fleet.id)).init(document.querySelector('#fleet-memo .memo-container'));
+        Memo.fleet(fleet.id).init(document.querySelector('#fleet-memo .memo-container'));
     }
 
 
