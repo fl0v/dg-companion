@@ -26,14 +26,14 @@
     /*
      * Planet memo
      */
-    const queueContainer = document.querySelector('#queue');
+    const container = document.querySelector('#available');
     const [, planetId] = /\/([\d]+)\//.exec(document.location.href);
-    if (queueContainer && planetId) {
-        queueContainer.insertAdjacentHTML('afterend',
+    if (container && planetId) {        
+        container.insertAdjacentHTML('beforeend',
             pageSection({
                 id: 'planet-memo',
                 title: 'Memo',
-                cssClass: 'ofHidden lightBorder opacDarkBackground seperator',
+                cssClass: 'ofHidden lightBorder opacDarkBackground', //'ofHidden lightBorder opacDarkBackground seperator',
                 content: `<div class="entry opacBackground memo-container"></div>`,
             })
         );
