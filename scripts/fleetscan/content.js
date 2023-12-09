@@ -78,7 +78,7 @@
         }
         if (processor.showAllied) {
             const alliedFleet = new dgFleet(processor.accountPlayer.alliance.name, { type: dgFleet.TYPE_ALLIED });
-            fleets.filter((f) => f.isAllied())
+            fleets.filter((f) => f.isAllied() || f.isFriendly())
                 .forEach((f) => alliedFleet.addFleet(f));
             alliedFleet.composition.forEach((s) => shipsInRow.includes(s.name) || shipsInRow.push(s.name));
             totalsByAlliance.push(alliedFleet);
@@ -108,7 +108,7 @@
                     totalsByAlliance.push(playerFleet);
                 });
         }
-        // add missing ships so its easy to compare groupedfleets
+        // add missing ships so its easy to compare grouped fleets
         totalsByAlliance.forEach((f) => {
             shipsInRow.forEach((ship) => f.addShip(ship, 0, 0))
         });

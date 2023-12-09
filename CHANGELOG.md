@@ -1,6 +1,7 @@
 ## Changelog
 
-### Version 0.0.12 (wip)
+### Version 0.0.12
+- bugfix: fleet scan alliance total should include own fleets
 
 ### Version 0.0.11
 - In fleet page: direct links to other fleets on the same planet
