@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 0.0.13 (wip)
+- ...
+
 ### Version 0.0.12
 - bugfix: fleet scan alliance total should include own fleets
 
