@@ -65,6 +65,15 @@
         item.querySelector('img').classList.add('cursor-pointer');
         item.querySelector('span').classList.add('coords-inner');
     });
+    /*
+     * News list page
+     */
+    Array.from(document.querySelectorAll('#contentBox .newsRow .coords')).forEach((item) => {
+        item.classList.add('coords-container');
+        item.querySelector('img').classList.add('coords-copy');
+        item.querySelector('img').classList.add('cursor-pointer');
+        item.querySelector('span').classList.add('coords-inner');
+    });
 
 
 
