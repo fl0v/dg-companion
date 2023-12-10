@@ -31,6 +31,7 @@
     allFleets.forEach((el) => {
         const fleetShipsEl = Array.from(el.querySelectorAll('table tr'));
         const fleetEl = el.querySelector(':scope > div .left b');
+        const etaEl = el.querySelector(':scope > div .right');
         const playerEl = el.querySelector('.playerName');
         if (!fleetEl || !fleetShipsEl.length) {
             return;
@@ -38,6 +39,7 @@
 
         const playerName = playerEl.innerText.trim();
         const fleetName = fleetEl.innerText.trim();
+        const [, eta] = etaEl ? /([\d]+)\sturns/.exec(etaEl.innerText) : [, 0];
         const fleetComp = [];
         fleetShipsEl.forEach((el) => {
             // each ship
@@ -46,7 +48,7 @@
                 name: cells[0].innerText.trim(),
                 count: parseValue(cells[1].innerText),
             };
-            processor.addFleetShips(playerName, fleetName, ship.name, ship.count);
+            processor.addFleetShips(playerName, fleetName, parseInt(eta, 10), ship.name, ship.count);
             allShipsInScan.includes(ship.name) || allShipsInScan.push(ship.name);
         });
 

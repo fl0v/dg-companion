@@ -57,15 +57,15 @@ class NewsFleetScan extends NewsParser {
     /**
      * Unfortunetly fleets with same name from same player will be grouped together
      */
-    findFleet(playerName, fleetName) {
+    findFleet(playerName, fleetName, eta) {
         const player = this.players.find((p) => p && (p.name === playerName));
         if (player && player.id && this.fleetsByPlayer[player.id]) {
-            return this.fleetsByPlayer[player.id].find((f) => f && (f.name === fleetName));
+            return this.fleetsByPlayer[player.id].find((f) => f && (f.name === fleetName) && (eta === undefined || f.moveTurns === eta));
         }
     }
 
-    addFleetShips(playerName, fleetName, shipName, count) {
-        const fleet = this.findFleet(playerName, fleetName);
+    addFleetShips(playerName, fleetName, eta, shipName, count) {
+        const fleet = this.findFleet(playerName, fleetName, eta);
         if (fleet) {
             fleet.addShip(shipName, count);
         }
