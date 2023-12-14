@@ -16,6 +16,7 @@ class dgFleet {
     moveTurns;
     hasShips = false;
     score = 0; // on radar
+    forcedScore = false;
     type = dgFleet.TYPE_NEUTRAL;
 
     player = {
@@ -38,6 +39,7 @@ class dgFleet {
     }
 
     setScore(score) {
+        this.forcedScore = true;
         this.score = score;
     }
 
@@ -83,7 +85,9 @@ class dgFleet {
         if (getItemByName(shipName).warfleet) {
             this.compositionWfScore += score;
         }
-        this.score += score;
+        if (!this.forcedScore) {
+            this.score += score;
+        }
         shipCount > 0 && (this.hasShips = true);
     }
 

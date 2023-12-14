@@ -22,8 +22,8 @@ class NewsFleetScan extends NewsParser {
             const fl = new dgFleet(item.name, {
                 id: item.id || 0,
                 moveTurns: item.moveTurns || 0,
-                score: item.score || 0,
             });
+            fl.setScore(item.score); // will force radar score so it is not incremented by addShip call
             item.player && fl.setPlayer(item.player);
             item.origin && fl.setOrigin(item.origin);
             item.destination && fl.setDestination(item.destination);

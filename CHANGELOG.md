@@ -1,7 +1,7 @@
 ## Changelog
 
 ### Version 0.0.13 (wip)
-- ...
+- bugfix: radar score for each fleet in fleetscan news
 
 ### Version 0.0.12
 - bugfix: fleet scan alliance total should include own fleets

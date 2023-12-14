@@ -52,7 +52,7 @@
             allShipsInScan.includes(ship.name) || allShipsInScan.push(ship.name);
         });
 
-        const fleetModel = processor.findFleet(playerName, fleetName);
+        const fleetModel = processor.findFleet(playerName, fleetName, parseInt(eta, 10));
         if (fleetModel) {
             const footer = [
                 `<div class="score-container neutral left">
