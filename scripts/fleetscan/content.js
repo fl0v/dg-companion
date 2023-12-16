@@ -39,7 +39,7 @@
 
         const playerName = playerEl.innerText.trim();
         const fleetName = fleetEl.innerText.trim();
-        const [, eta] = etaEl ? /([\d]+)\sturns/.exec(etaEl.innerText) : [, 0];
+        const [, eta] = etaEl && /([\d]+)\sturns/.test(etaEl.innerText) ? /([\d]+)\sturns/.exec(etaEl.innerText) : [, 0];
         const fleetComp = [];
         fleetShipsEl.forEach((el) => {
             // each ship
@@ -141,11 +141,14 @@
     const summaryContainer = document.querySelector('#fleetScanSummary');
 
     totalsByEta.forEach((t) => {
-        summaryContainer.insertAdjacentHTML('beforeend', `
-            <div class="lightBorder ofHidden opacDarkBackground fleetscanTotals">
-                ${fleetScanPageRowTemplate(t.name, t.grouped)}
-            </div>
-        `);
+        const hasShips = t.grouped.length > 0 && t.grouped.reduce((carry, fl) => carry || fl.hasShips, false)
+        if (hasShips) {
+            summaryContainer.insertAdjacentHTML('beforeend', `
+                <div class="lightBorder ofHidden opacDarkBackground fleetscanTotals">
+                    ${fleetScanPageRowTemplate(t.name, t.grouped)}
+                </div>
+            `);
+        }
     });
 
 })();

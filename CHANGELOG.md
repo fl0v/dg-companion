@@ -1,7 +1,7 @@
 ## Changelog
 
-### Version 0.0.14 (wip)
-- ...
+### Version 0.0.14
+- bugfix: fleet scan total/eta bugfix
 
 ### Version 0.0.13
 - bugfix: radar score for each fleet in fleet scan news
