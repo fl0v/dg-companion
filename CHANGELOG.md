@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 0.0.15 (wip)
+- ...
+
 ### Version 0.0.14
 - bugfix: fleet scan total/eta bugfix
 
