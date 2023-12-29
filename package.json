@@ -1,0 +1,22 @@
+{
+  "name": "dg-companion",
+  "version": "1.0.0",
+  "description": "Adds QoL features to Dark Galaxy interface (https:://www.darkgalaxy.com)",
+  "author": "Biggy",
+  "type": "module",
+  "scripts": {
+    "build": "node build/build.js"
+  },
+  "homepage": "https://github.com/fl0v/dg-companion#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fl0v/dg-companion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fl0v/dg-companion/issues"
+  },
+  "devDependencies": {
+    "archiver": "^6.0.1",
+    "jsonfile": "^6.1.0"
+  }
+}

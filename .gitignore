@@ -1,6 +1,7 @@
-/build
 /runtime
+/node_modules
 logs
+silo
 
 .wip
 .env
